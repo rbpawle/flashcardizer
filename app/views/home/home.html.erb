@@ -12,4 +12,9 @@
 		  <%= submit_tag "Submit brah", :name => "upload_button", :class => "uploadButton" %>
 		<% end %>
 	</div>
+	<div>
+		<% @subjects.each do |s| %>
+		<p><%= s %></p>
+		<% end %>
+	</div>
 </div>
