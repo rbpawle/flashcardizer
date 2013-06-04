@@ -1,0 +1,570 @@
+6/4/2013,Probabilistic Graphical Models,ML Class Revision-Regularization,How do we diagnose high vias vs. high variance?,"If both the error of the training set and the error of the cross-validation set are high, then this is underfit, or high bias. If the error of the cross-validation is high, but the error of the trianing set is low, then this is overfit, or high variance.",
+6/4/2013,Probabilistic Graphical Models,ML Class Revision-Regularization,Why don't you use the test set data for cross-validation?,"Because if you use the test set to choose the order of the model, you end up fitting the order of the model to the test set.",
+6/4/2013,Probabilistic Graphical Models,ML Class Revision-Regularization,How do you select your model during regression?,By using the cross validation set. Choose the order of the model which gives the lowest cost on the cross-validation set.,
+6/4/2013,Probabilistic Graphical Models,ML Class Revision-Regularization,How do you define the error function for logistic regression?,"it is equal to 1 when the hypothesis outputs greater than 0.5 and the example is false, or when the hypothesis outputs less than 0.5 and the example is true.",
+6/4/2013,Probabilistic Graphical Models,ML Class Revision-Regularization,How do you visualize the effect that adding the regularization parameter has on the cost function?,"imagine the cost function in 3-d, with theta_1 and theta_2 as the x-y axis, and the cost function as the z axis. What is the original cost function? What does it become when you add the regularization terms? ",
+6/4/2013,Probabilistic Graphical Models,ML Class Revision-Regularization,What are the terms for underfit and overfit?,"high bias and high variance, respectively",
+6/4/2013,Statistics,Line smoothing,What is double exponential smoothing?,"similar to exponential smoothing, except each next statistic is also affected by a term b, which is determined by previous statistics and a smoothing factor B.",
+6/4/2013,Statistics,Line smoothing,What is exponential smoothing?,"given discrete data points {x_1,...,x_n}, we form a new curve of points {s_1,...,s_n} which are defined as s_1 = x_0, and s_t is s_t-1 + alpha(x_t-1 - s_t-1). basically we compute each next s_t by modifying the previous s_t-1 by whatever alpha we choose.",
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Value of Perfect Information,"Consider the example of choosing between a job offered at two companies. Funding determines utility, state of the company determines funding, but we can't observe the state of the company directly. If we have a mole at one company, what determines how valuable that company is?","if there is a large difference in the chance of getting funding or not (based on the state of the company), then the value of information is higher. If the difference in expected utility between the two companies is high, the value of information is lower, as it only would change your mind about what company to choose in rare situations.","PGM notes, page 47"
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Value of Perfect Information,You just saw that the optimal decision only changes our mind if the second company is doing very well (s3). Recall that this only happens with prior probability 0.1. Do you think VPI will be high or low in this case?,The basic idea is that the gain in utility in this case has to be weighted by the probability of the state of the world that brings about that gain (i.e. the second company is doing very well). Because the probability of s3 is not very large we should not expect a very large gain in expected utility so the value of the information will likely be small.,
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Utilty Functions,What is a micromort?,The value of a one in a million chance of death. $20 in 1980.,
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Utilty Functions,What is the st petersburg paradox?,"the game is this: flip a coin n times until it lands heads, and pay out 2^n. What should people pay to play? The payout value is potentially infinite, but most people will only pay $2","PGM notes, page 46"
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Utilty Functions,"If the variables T, K, D, L, and F are all binary valued variables, and the utility function is decomposed into U(T)+U(K)+U(D,L)+U(L,F), how many different utility values have to be elicited to characterize the utility function?",12,
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Maximum Expected Utility,What is the value of delta^*_A?,"1 if a is equal to the argmax of A for mu(A,z), 0 otherwise","PGM notes, page 46"
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Maximum Expected Utility,What do we use Z for?,"Z is the parents of the action variables; the observations prior to A. This encapsulates information, I think. i.e. they are the information nodes","PGM notes, page 46"
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Maximum Expected Utility,Why is U only a function of the action and the state of the world?,Because that's how the utilty function is defined.,"PGM notes, page 45"
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Maximum Expected Utility,How do we choose decision rules?,We find the decision rule which gives us the highest utility function value.,"PGM notes, page 45"
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Maximum Expected Utility,What are information nodes?,They are nodes which influence action nodes,"PGM notes, page 45"
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Maximum Expected Utility,Do action nodes have CPDs?,"The actions themselves don't, but we create decision rules that do, in order to capture the randomness of information nodes","PGM notes, page 45"
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Maximum Expected Utility,What is the expected utility function?," it is defined as EU[D[a]]=sum(over all states of the world) of P(state of world|action) * utility(state of world,action)","PGM notes, page 44"
+6/3/2013,Probabilistic Graphical Models,Decision Theory-Maximum Expected Utility,What is a utility function?,it is a function U of states of the world (X) and possible actions (A).,"PGM notes, page 44"
+3/26/2014,Java,,What does the static keyword mean?,"same thing as self. in ruby, I think",
+5/31/2013,Data Science,Multiple Hypothesis Testing,What is the problem with multiple hypothesis tests?,"If you keep doing tests, eventually you'll have success.","DS notes, page 32"
+5/31/2013,Data Science,Multiple Hypothesis Testing,How do you correct for multiple tests?,"By using familywise error rate corrections. bonferroni finds alpha_c by dividing alpha (alpha is familywise error rate, I think it's related to p-value) by the number of hypotheses. Sidak correction asserts independence, and calls alpha equal to 1 - (1-alph_c)^k. then solve for alpha_c.","DS notes, page 32"
+5/31/2013,Data Science,Multiple Hypothesis Testing,What is the false discovery rate?,"essentially, it's precision with regards to correctly rejecting null hypotheses","DS notes, page 32"
+5/31/2013,Data Science,Multiple Hypothesis Testing,What is the Benjamani-Hochberg Procedure?,"1. compute the p-value of ech of m hypotheses, then order them in increasing order of p-value. compute for each: rank order of hypothesis / # of all hypotheses * alpha. reject all such that the p-value is not less than or equal to it.","DS notes, page 32"
+5/31/2013,Data Science,Recap & Big Data,What is the curse of big data?,correlations are bound to arise in large data sets,"DS notes, page 33"
+5/31/2013,Data Science,Recap & Big Data,"What happens as you increase N, the number of records?",Bias also tends to increase,"DS notes, page 33"
+5/31/2013,Data Science,Bayesian Intro,"Why did bayesian statistics fall out of favor, replaced with frequentist?",Because people could use different priors and get totally different results,"DS notes, page 33"
+5/30/2013,Data Science,Pig Intro,What is Pig? Is it a language?,"No, it's a layer above MR that produces MR jobs.","DS notes, page 28"
+5/30/2013,Data Science,Pig Intro,What is the benefit of using Pig?,"It is much faster to develop MR jobs, due to using relational algebra statements rather than writing mappers and reducers",DS notes page 28
+5/30/2013,Data Science,Pig Functions,How does Pig's group by work?,"It is simply a map reduce job; input is tuples, and each tuple is emited with the value you're asking for as the key, and the rest of the tuple as the value. these are then combined by key during reduce.","DS notes, page 28"
+5/30/2013,Data Science,Pig Join and Co-Group Join,How does cogroup work?,"it's essentially a join, in that it grabs all records with matching keys and throws them into a bag. empty set given when there are no matches for one side.","DS notes, page 29"
+5/30/2013,Data Science,Pig Join and Co-Group Join,What are the three problems that occur in MR jobs? What algorithms are used to address these?,"When one table is small, we can replicate this table across all other machines in memory, and hence perform the join ahead of time--Replication. When one reducer gets stuck with a bunch of mapped keys, we can then split up that reducer into more machines--Skew. When your dataset is already sorted, you can perform the join during the map phase--Merge","DS notes, page 29"
+5/30/2013,Data Science,Pig Join and Co-Group Join,What is the difference between cogroup and join?,"join is two steps--create the groups, and then merge them into one tuple each. cogroup is just the first step.","DS notes, page 29"
+5/30/2013,Data Science,Pig Evaluation,How does Pig apply relational algebra?,"It looks at the group/foreach, etc commands, and finds where tasks could be better done in the map function","DS notes, page 30"
+5/30/2013,Data Science,Statistics Intro,What is a test statistic?,it is a function of the sample; it is a numerical summary of the data set.,http://en.wikipedia.org/wiki/Test_statistic
+5/30/2013,Data Science,Publication Bias,What explains the cause of the truth wearing off over multiple trials?,The fact that outstanding results are the ones that get published.,
+5/30/2013,Data Science,Publication Bias,What is publication bias?,,
+5/30/2013,Data Science,"Effect size, Meta-Analysis, and Heteroskedasticity",What is the effect size?,Also known as Standard Mean Difference. It is the (mean of experimental group) - (mean of control group) / standard deviation,"DS notes, page 30"
+5/30/2013,Data Science,"Effect size, Meta-Analysis, and Heteroskedasticity","If a 95% confidence interval of the effect size includes 0.0, what does this tell us?","This tells us that the p-value is less than 0.05, and hence not statistically significant.","DS notes, page 30"
+5/30/2013,Data Science,"Effect size, Meta-Analysis, and Heteroskedasticity",What are the ways of averaging the effects of different experiments across studies? what is this called?,This is Meta-Analysis. We give more weight to more precise studies using either simple method (weight is determined by sample size) or the inverse-variance (weight is determined by variance of study),"DS notes, page 31"
+5/30/2013,Data Science,"Effect size, Meta-Analysis, and Heteroskedasticity",What is heteroskedasticity?,When members of a population have differing amounts of variance.,"DS notes, page 31"
+5/30/2013,Data Science,Fraud and Benford's Law,What is benford's law? How can it be used to detect fraud?,"Fraud is done when data is created with a logistic regression function. Benford's law states that in any sample of a population, the numbers associated with each sample will have a 30% chance of having a first digit of 1. It's been shown that numbers generated with logistic regression do not follow this law. Data must span many orders of magnitude","DS notes, page 31"
+5/30/2013,Probability,Bayesian Statistics,What is a conjugate prior?,"THe question is whether or not a conjugate prior exists for a liklihood function. (I don't fully understand how this is useful, but bear with me.) if the posterior distribution and the prior distribution are in the same family as the prior probability distribution, then the prior and posterior are conjugate distrubutions, and the prior is a conjugate prior for the liklihood.",
+5/30/2013,Probability,Bayesian Statistics,What is the liklihood function?,"It describes the liklihood that, given a set of observations, the parameters are biased in a certain way. I'm still not really sure what it's used for. It isn't the probability of a parameter, though.",
+5/29/2013,Data Science,Eventual Consistency,What are the phases of two-phase commit,1.action leading to commit occurs 2. master prepares 3. slaves write to logs 4. slaves respond with 'ready' 5. master sends commit command,"DS notes, page 23"
+5/29/2013,Data Science,Eventual Consistency,What are the three qualities databases can have?,"Consistency, Availability, and Partitioning. Consistency means all nodes have the same data, availability means the system can be interacted with in the presence of failures, partitioning means that if two parts of a system can't take to each other, can they make progress on their own?","DS notes, page 23"
+5/29/2013,Data Science,Example: Memcached,What are the types of data organization in NoSQL systems?,"document (nested values), extensible record (families of attributes have a schema, but new attributes may be added), key-value object (set of k-v's, no schema, no nesting)","DS notes, page 24"
+5/29/2013,Data Science,Example: Memcached,What are the features of NoSQL?,check notes,"DS notes, page 24"
+5/29/2013,Data Science,Example: Memcached,What are the major impact systems?,"memcached (fast, scalable, no fault tolerance), dynamo (eventual consistency), bigtable (record storage scaled to 1000s of machines)","DS notes, page 24"
+5/29/2013,Data Science,Example: Memcached,How does consistent hashing work?,"each node knows the range that other servers deal with, and passes the key to them in log-n time","DS notes, page 24"
+5/29/2013,Data Science,Example: Dynamo,When do vector clocks conflict?,Vector clocks conflict when all values in one clock are not later than or equal to all values in the other clock.,"DS notes, page 25"
+5/29/2013,Data Science,Example: Dynamo,What is dynamo?,"It is a key-value structure like memcache, and 99% of requests respond in 300ms","DS notes, page 25"
+5/29/2013,Data Science,Example: Dynamo,When is reconciliation done?,At read time,"DS notes, page 25"
+5/29/2013,Data Science,Example: Dynamo,What is configurable consistency?,"I'm not 100% sure what it is, but it has to do with the R, W, and N factors. R is the # of nodes needed for successful read, W is same for write, and N is replication factor (not 100% sure but I think that's the number of nodes). If R+W > N, then you can claim consistency. If R + W < N, there is lower latency.","DS notes, page 25"
+5/29/2013,Data Science,Example:CouchDB,What are the major qualities of couchDB?,"The transactions are records-based (rather than granular k-v's, I think), it uses mapreduce for joins/analytics, and you can define views","DS notes, page 26"
+5/29/2013,Data Science,Example:CouchDB,What are the qualities of updates?,"Full consistency within a document, lock-free concurrency (optimistic, which I don't know the meaning of), no multi-row transactions","DS notes, page 26"
+5/29/2013,Data Science,Example:CouchDB,How are joins simulated?,"Done using mapreduce. Beyond that I'm a little confused. In the example, he talks about emiting a different k-v pair in the map function for different types of data--i.e. a different key for posts and for comments.","DS notes, page 26"
+5/29/2013,Data Science,Example:BigTable,Describe bigTable,"It uses record-based transactions, joins are compatible with MR, there are integrity constraints. The data model is sparse, distributed, persistent multi-dimensional sorted map. Data is sorted by time.","DS notes, page 26"
+5/29/2013,Data Science,Example:BigTable,How are tablets used? How are they kept track of? How are they updated?,"tablets hold data that is of similar timestamp(and maybe other qualities?). during a read operation, the sstables (tables on hard disk I guess?) are combined with memtable (memtable holds writes, I think), and when memtable gets too large, it either gets written to a new sstable, or all sstables are combined into one sstable","DS notes, page 26"
+5/29/2013,Data Science,Example:Other Google Systems,What are the other google systems mentioned?,"HBase, Megastore, Spanner, Tenzing","DS notes, page 27"
+5/29/2013,Data Science,Response to NoSQL Systems,How can you avoid using joins?,By nesting records underneath parent records; i.e. organizing them into one access path. This is how DBs were originally structured,"DS notes, page 27"
+5/29/2013,Data Science,Response to NoSQL Systems,Why do enterprises avoid NoSQL?,"DB's need to be correct for financial transactions. Also with 10k db's, there is a need for standardization--not usually doable in nosql systems","DS notes, page 27"
+5/28/2013,Probabilistic Graphical Models,Inference-MAP Estimation-Max Sum Message Passing,How do we find the max args of a group of factors?,"Use belief propagation. Use simple factor summation at each step of the message passing algorithm (I think), and take the combination of arguments that yeilds the largest value. The value of the factor will match over different parameters","PGM notes, page 43"
+5/28/2013,Probabilistic Graphical Models,Inference-MAP Estimation-Finding a MAP Assignment,"What was she talking about in the video when she had passed the message to the middle factor, and recuded the table to two variables and took the values from them as maximums?",,
+5/28/2013,Probabilistic Graphical Models,Inference-MAP Estimation-Max Sum Message Passing,What do you do when the maxes are not unique?,"Either make arbitrary changes to inputs in order to get different values, or use traceback procedure that builds MAP assignment one variable at a time.","DS notes, page 23"
+5/28/2013,Data Science,NoSQL Introduction,What is the motivation for NoSQL?,to have systems that scale to large amounts of servers,"DS notes, page 23"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Clique Tree Independence,What is the theorem given in this section?,That a tree T satisfies the RIP if and only if all variables on ones side of the sepset are independent from all variables on the other side given the sepset variables.,"PGM notes, page 39"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation,How do you construct a clique tree given a graph?,,
+5/24/2013,Probabilistic Graphical Models,,How do you construct a graph from a set of factors?,,
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Clique Tree Independence,What is the minimal complexity incurred by any clique tree?,I guess it's the minimal amount of variables needed to create a sepset that makes two nodes independent,"PGM notes, page 39"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Clique Trees and VE,When do we use Variable Elimination?,"I think it's to create beliefs about factors. as we propagate through the tree and generate cliques, we build beliefs","PGM notes, page 40"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Clique Trees and VE,Why do we iterate over all variables in VE? What is left if we go through them all?,"We're actually iterating over the variables to gain beliefs about them across all variables--I think variable elimination is necessary in order to gain fine-grained understanding of individual factors, over all other factors","PGM notes, page 40"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Clique Trees and VE,Why does VE induce a tree? Why does it satisfy family preservation and RIP?,"it's a tree because each cluster has one parent; it's family preserving because each factor is used in some elimination step and therefor included in scope of associated psi; it obeys RIP because you know, because, it's a theorem.","PGM notes, page 40"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Clique Trees and VE,What is the cost of VE?,About the same as passing messages in one direction,"PGM notes, page 40"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-BP in Practice,What is the best type of BP?,Asynchronous with smoothing,"PGM notes, page 41"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-BP in Practice,What is informed message scheduling?,It uses tree reparameterization in order to calibrate messages.,"PGM notes, page 41"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-BP in Practice,What is message dampening?,using a different formula in computing messages; using weights to create new messages,"PGM notes, page 41"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Loopy BP and Message Decoding,What coding theories use belief propagation?,"Turbo codes, low-density parity checking codes","PGM notes, page 42"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Loopy BP and Message Decoding,What type of belief propagation is used in turbo codes?,Loopy,"PGM notes, page 42"
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Loopy BP and Message Decoding,,,
+5/24/2013,Probabilistic Graphical Models,Inference-Belief Propagation-Loopy BP and Message Decoding,,,
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Properties of Belief Propagation,What does it mean to say that a cluster graph is calibrated?,"If every pair of adjacent clusters Ci,Cj agree on their sepset Sij; sum of all beliefs are the same","PGM notes, page 36"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Properties of Belief Propagation,What is a sepset?,,
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Properties of Belief Propagation,What happens at the convergence of belief propagation?,cluster graph beliefs are calibrated,"PGM notes, page 37"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Properties of Belief Propagation,What do we get as a result of cluster graph beliefs?,"We get an alternative, calibrated parameterization of the unnormalized density (the unnormalized probability), because when we divide the cluster beliefs by the sepset beliefs, we get the product of all psi's, which is the unnormlaized measure","PGM notes, page 37"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Clique Tree Algorithm,What is a clique tree?,"It is an undirected tree. nodes are clusters, and edges between nodes are sepsets","PGM notes, page 37"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Clique Tree Algorithm,What is the correct expression for a given message from one cluster to another?,"sum of all psi's over all variables not included in the next cluste, times the prior message","PGM notes, page 37"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Clique Tree Algorithm,"When your factors are CPD's, how many cliques will they be assigned to?",only one,"PGM notes, page 37"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Clique Tree Algorithm,How does the running intersection property change when you consider clique trees?,There is only one unique path from one node to the next. (Although I thought this was the case before.),"PGM notes, page 37"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Clique Tree Algorithm,Are the resulting beliefs from the clique tree algorithm correct?,yes,"PGM notes, page 37"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Clique Tree Computation,Why does delta(B) never change?,Because the sum over A of psi1 is always the same,"PGM notes, page 38/39"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Clique Tree Computation,What's the order in which messages are passed?,"From leaf inward. for each node, no message is passed until all are received.","PGM notes, page 38/39"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Clique Tree Computation,How do we get the posterior distribution of variables appearing together in a clique?,"By summing out irrelevant variables from any other clique containing the variables we want. If we get evidence Z=z, and if X appears in clique with Z, multiply that clique by indicator function, re-normalize","PGM notes, page 38/39"
+5/23/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Clique Tree Computation,How do we get the posterior distribution of variables that do not appear together in a clique?,"Follow the same as for variables that do appear together, but apply this to all messages that affect the node we're interested in.","PGM notes, page 38/39"
+5/21/2013,Probabilistic Graphical Models,Inference:Belief Propagation,What problem does belief propagation solve?,"In markov graphs, we may have a group of factors that assign different values to random variables, and these values might not match between factors. belief propagation reconciles the factor differences.","PGM notes, page 33"
+5/21/2013,Probabilistic Graphical Models,Inference:Belief Propagation,What is the belief propagation algorithm?,1. Assign each factor to a cluster. 2. Construct initial potentials. 3. Initialize all messages to 1. 4. Repeat: select edge and pass delta as defined in notes. 4. Compute beliefs using formula in notes--don't create feedback loops,"PGM notes, page 34"
+5/21/2013,Probabilistic Graphical Models,Inference:Belief Propagation,How useful is belief propagation?,"It may not always converge, and the resulting beliefs are pseudo-marginals. But it's fast, I guess.","PGM notes, page 35"
+5/21/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Properties of cluster Graphs,What is the Running Intersection Property?,"For clusters that contain X, there's a path that contain X between those clusters. These paths must be unique--that is, paths can't form a loop.","PGM notes, page 35"
+5/21/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Properties of cluster Graphs,What is the Family Preservation property?,"It says that for every factor in the set of factors, there is a cluster such that the scope of that factor is equal to the cluster.","PGM notes, page 35"
+5/21/2013,Probabilistic Graphical Models,Inference:Belief Propagation-Properties of cluster Graphs,What is a Bethe cluster graph?,"It is a graph that makes clusters out of all factors, and also adds singleton factors for each one","PGM notes, page 35"
+5/20/2013,Data Science,MapReduce-Matrix Multiply Example,"Why do we emit an i,j from A for each one of the columns in B?","DS notes, page 19",
+5/20/2013,Data Science,MapReduce-Matrix Implementation Overview,What parallel architecture does MapReduce used? What is shared in it?,"DS notes, page 19",
+5/20/2013,Data Science,MapReduce-Matrix Implementation Overview,How many times is each chunk replicated on a distributed file system?,"DS notes, page 19",
+5/20/2013,Data Science,MapReduce-Matrix Implementation Overview,"What are the phases in MapReduce, in general and in Hadoop?","DS notes, page 20",
+5/20/2013,Data Science,MapReduce-Parallel Databases,What is a parallel query? How does it differ from a distributed query?,"DS notes, page 21",
+5/20/2013,Data Science,MapReduce-Parallel Databases,How does Teradata implement their parallel query structure?,"DS notes, page 21",
+5/20/2013,Data Science,MapReduce-Comparing MR and DBs,What is one way that relational DBs are more scaleable than MR?,"DS notes, page 22",
+5/20/2013,Data Science,MapReduce-Experimental Results: MR and DB,In what ways do DB's outperform MR? In what ways does MR outperform DBs?,"DS notes, page 22/23",
+5/16/2013,Data Science,Relational Algebra,What are the three types of database functions? when are they used?,"DS notes, page 11",
+5/16/2013,Data Science,Relational Algebra,What are two execution plans used by database optimizers? what determines what plan is used?,"DS notes, page 11",
+5/16/2013,Data Science,Relational Algebra,What is logical data independence?,"DS notes, page 13",
+5/16/2013,Data Science,Relational Algebra,What is physical data independence?,"DS notes, page 13",
+5/16/2013,Data Science,MapReduce-Scalability,What is scaling up? What is scaling out?,"DS notes, page 14",
+5/16/2013,Data Science,MapReduce-Scalability,What is read trimming? How does it change processing time?,"DS notes, page 14",
+5/16/2013,Data Science,MapReduce-Scalability,What is the pattern that takes place when mapreduce is applied?,"DS notes, page 15",
+5/16/2013,Data Science,MapReduce-MapReduce Abstractions,"In MapReduce, why must key-value pairs be relatively small?",The pairs must be small enough to fit on one machine,
+5/16/2013,Data Science,MapReduce-MapReduce Abstractions,What is the MapReduce data model?,"DS notes, page 16",
+5/16/2013,Data Science,MapReduce-MapReduce Abstractions,What is the pseudocode representation of MapReduce?,"DS notes, page 17",
+5/16/2013,Data Science,MapReduce-MapReduce Pseudocode,Where is the biggest bottleneck of MapReduce?,"DS notes, page 17",
+5/16/2013,Data Science,MapReduce-MapReduce Pseudocode,What is the best way of improving MapReduce performance?,"DS notes, page 17",
+5/16/2013,Data Science,MapReduce-MapReduce Text Examples,What is an inverted index?,"DS notes, page 17",
+5/16/2013,Data Science,MapReduce-MapReduce Text Examples,What function can stay constant while the other changes?,"DS notes, page 17",
+5/16/2013,Data Science,MapReduce-MapReduce Text Examples,What does a map function do with a document that is too large to handle?,"DS notes, page 17",
+5/16/2013,Data Science,"MapReduce-MapReduce Relational Join, Social Example",Are kv pairs passed to different nodes based on their key during the shuffle phase?,,
+5/16/2013,Data Science,"MapReduce-MapReduce Relational Join, Social Example",Why is the reduce task in a relational join a cartesian product?,"DS notes, page 18","The Map phase produces key-value pairs that have a key that is being joined on, then distributes the tuples to the Reducers where each Reducer is given only tuples with the same key. Because each Reducer has a only tuples with the same key that we are joining on, a cartesian product will produce the correct answer for the join."
+5/16/2013,Data Science,Programming Assignment 2,How do you replicate matrix multiplication for sparse tables using sql?,,
+5/16/2013,Data Science,Programming Assignment 2,What is one way of finding the list of documents most relevant to a search?,,
+5/16/2013,Probabilistic Graphical Models,Programming Assignment 3,Why are they called singleton factors?,because they operate on single characters--which are the 16x8 matrices,
+5/15/2013,Probabilistic Graphical Models,Programming Assignment 2,How do you compute the number of parameters in a CPD?,m outcomes * n evidence states is the # of entries in the CPD; m-1 outcomes * n evidence states is the # of parameters,
+5/15/2013,Probabilistic Graphical Models,Programming Assignment 2,What is a decoupled network?,,
+5/15/2013,Probabilistic Graphical Models,Programming Assignment 2,How do you find the total number of independent paramters in a coupled network?,"https://class.coursera.org/pgm-003/forum/thread?thread_id=255 krassimir's answer is right, just don't multiply by the number of different types of nodes",
+5/14/2013,Probabilistic Graphical Models,Programming Assignment 2,How do I vectorize this shit?,,
+5/14/2013,Probabilistic Graphical Models,Programming Assignment 2,"In problem 5 (in assignment 2), how do you index genotype variables?",they are actually the variables of each individual,
+5/13/2013,Probabilistic Graphical Models,Programming Assignment 2,In what order do variable assignments change in the assignment table?,"first variable iterates through its values while holding the second constant, and so on for the third",
+5/13/2013,Probabilistic Graphical Models,Programming Assignment 2,What is a gene copy?,,
+5/12/2013,Data Science,Motivating Relational Algebra,What was the original database structure? What were the difficulties? What was its successor? What problems did its successor solve?,"DS notes, page 6",
+5/12/2013,Data Science,Relational Algebra,What is the connection between mathematical algebra and relational algebra?,"DS notes, page 7",
+5/12/2013,Data Science,Relational Algebra,What is the fundamental problem that relational databases solve?,"DS notes, page 6 (briefly, the answer is physical data independence)",
+5/12/2013,Data Science,Relational Algebra,"Which is more efficient, set semantics or bag semantics?","DS notes, page 9",
+5/12/2013,Data Science,Relational Algebra,How does the DB handle statements that are logically equivalent?,"DS notes, page 9",
+5/10/2013,Linux,tar,What is a tar.gz file?,an uncompressed archive,
+5/10/2013,Linux,tar,How do you uncompress a tar.gz file?,,
+5/9/2013,Probabilistic Graphical Models,Bayesian Network Fundamentals,"How do you get the marginal factor from a group of factors, and with evidence?",Programming assignment 1,
+5/9/2013,Probabilistic Graphical Models,Bayesian Network Fundamentals,How can you vectorize your code? What functions can you use?,Programming assignment 1,
+5/9/2013,Probabilistic Graphical Models,Bayesian Network Fundamentals,,,
+5/9/2013,Probabilistic Graphical Models,Bayesian Network Fundamentals,,,
+5/9/2013,Probabilistic Graphical Models,Bayesian Network Fundamentals,,,
+5/9/2013,Probabilistic Graphical Models,Bayesian Network Fundamentals,,,
+5/9/2013,Probabilistic Graphical Models,Bayesian Network Fundamentals,,,
+5/6/2013,Probabilistic Graphical Models,Knowledge Engineering,What are the three pairs of choices to make in constructing models?,PGM notes page 31,
+5/6/2013,Probabilistic Graphical Models,Knowledge Engineering,"In predicting the weather based only on the attire of individuals entering a building, would it make sense to construct a Naive Bayes model where the clothing of individuals is independent given the weather?",,
+5/6/2013,Probabilistic Graphical Models,Knowledge Engineering,When would one use a linear gaussian? a conditional linear gaussian?,PGM notes page 32,
+5/2/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is I-equivalence?,,
+5/2/2013,Probabilistic Graphical Models,Markov Network Fundamentals,"In an undirected graph, what is a clique?",,search online
+5/2/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is the relevance of cliques in constructing a probability distribution for an undirected graph?,,search online
+5/2/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is a polytree?,,search online
+5/2/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is a directed tree?,,search online
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What does degenerative mean?,,
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What does it mean to capture independencies in P?,,"PGM notes, page 26"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,Why are sparse graphs desirable?,,"PGM notes, page 26"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is a minimal I-map? Will it capture I(P)?,,"PGm notes, page 26"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is a perfect map?,,"PGM notes, page 26"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,"Is the diamond Markov map for A, B, C, D where P satisfies A indep from C given B, D and B indep from D given A, C a perfect map?",,"PGM notes, page 26"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,Are perfect maps unique?,,"PGM notes, page 27"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is the new unnormalized probability function under log-linear models?,,"PGM notes, page 28"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What are features in log-linear models?,,"PGM notes, page 28"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What happens when we define w = -log(a)?,,"PGM notes, page 28"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is w in log-linear models? How are they developed?,,"PGM notes, page 28"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is mu used to define? What are some examples of different mu functions?,,"PGM notes, page 29"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is an MRF?,,"PGM notes, page 29"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,"In shared features, what is the energy function applied to?",,"PGM notes, page 30"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,How do we define repeated features?,,"PGM notes, page 30"
+4/30/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What are the benefits of using shared features in log-linear models?,,"PGM notes, page 30"
+4/29/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is time invariance?,"It means that it doesn't matter when the observations are made, the effects are the same. i.e. if X(t) = Y(t), then X(t + delta) = Y(T + delta)",
+4/29/2013,Probabilistic Graphical Models,Template Models,What is the markov assumption?,a stochastic process has the Markov property if the CPD of future states depends only on the present state.,
+4/29/2013,Probabilistic Graphical Models,Structured CPDs,What is the graphical model of a continuous variable?,Similar to other models--a handful of variables affect the observation variable,
+4/29/2013,Probabilistic Graphical Models,Structured CPDs,What function represents this kind of model?,"a linear Gaussian. For Y determined by X1,...,Xk, Y ~ N(w0 + sum(wi * Xi) ; stddev^2). variance does not depend on parents.",
+4/29/2013,Probabilistic Graphical Models,Structured CPDs,What is a conditional linear gaussian?,"Same as above, except Y is also affected by A. In this case, variance can depend on A. ",
+4/29/2013,Probabilistic Graphical Models,Structured CPDs,What is the shape of the robot motion model?,,
+4/29/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,How do deterministic functions affect independence in Bayesian networks?,"if a node B is deterministic and influenced by A, then A's value determines what B is.",
+4/29/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What does a double-circle in a network graph indicate?,"That the independence of that node is conditional, I think",
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is a pairwise Markov network?,"A pairwise Markov network is an undirected graph whose nodes at X1,...,Xn and each edge Xi-Xj is associated with a factor Psi(Xi, Xj)",
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,How do we get the probability distribution of a pairwise Markov network?,"multiply all factors in the network by each other and divide by the partition function, i.e. the normalizing constant, i.e. the sum of all factors",
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,"From a probability distribution of a Markov network, how do we get the probability distribution of a single pair?",reduce out the other factors,
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,"Consider a fully connected pairwise network over X1,...,Xn where each Xi has d values. How many parameters does this network have?",O(n^2 * d^2),
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,Why must we move away from the probability distribution construction introduced before in pairwise Markov networks?,Because there will be O(d^n) free parameters for a full probability distribution,
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is a Gibbs distribution?,"it is defined by general factors Phi_i(Di) where each D has a scope of more than 2 variables. big_phi = {phi_i(D1),...,phi_k(Dk)}. unnormalized measure of (X1,...,Xn) = product of all phi_i's of (Di). Partition function Z_phi = sum of all unnormalized measures over all X's. final Gibbs probability distribution is the partition function multiplied by the unnormalized measure.",
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is an induced markov network of a Gibbs distribution?,It is the graph implied by the distribution functions.,
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,When does P factorize over H?,,PGM notes page 22
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,When is a trail in a markov network active?,,
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,Why is it impractical to apply naive Bayes to problems in which lots of features are correlated?,,
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,"What is the definition of conditional random field, and how does it differ from Gibbs?",,
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,"What happens if you introduce a new factor phi(D), where D is in X?",,"PGM notes, page 24"
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What function do we use to represent our phi(D)'s?,,"PGM notes, page 24"
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What does it mean to say that two nodes X and Y are separated in H given Z?,,PGM notes page 25
+4/29/2013,Probabilistic Graphical Models,Markov Network Fundamentals,What is the relationship between independence and factorization in Markov networks?,,"PGM notes, page 25"
+4/26/2013,Ruby,General,"what's wrong with this: strings.each {|s| s = s + ""banana""}","the members of strings won't get updated, they're just copies I guess.",
+4/25/2013,Probabilistic Graphical Models,Template Models,What is a HMM?,It is a structured transition model which describes the CPD of each state of moving into each of the other states on the next temporal step,
+4/25/2013,Probabilistic Graphical Models,Template Models,What is HMM a subset of?,It is a subclass of Dynamic Bayesian Networks.,
+4/25/2013,Probabilistic Graphical Models,Template Models,What does it mean that HMMs seem unstructured at the level of R.V.'s?,,
+4/25/2013,Probabilistic Graphical Models,Template Models,What is a plate model?,It is a graphical representation of objects of the same type and same probabilistic model.,
+4/25/2013,Probabilistic Graphical Models,Template Models,What is the difference between nested and overlapping plates?,"In nested plates, all models nested in another plate are explicitly affected by that plate's model. overlapping plates are for models that are not influenced by other models.",
+4/25/2013,Probabilistic Graphical Models,Template Models,What are the input parameters?,"They are parameters for each model that affect that model, independent (?) of the affects of other models",
+4/25/2013,Probabilistic Graphical Models,Template Models,What is collective inference?,It is looking at a number of instantiations of these plates and observing behavior on an aggregate level--this gives us more power than just seeing how posterior probabilities are affected by changing our inputs (I think),
+4/25/2013,Probabilistic Graphical Models,Template Models,What is the plate dependency model?,"For a template variable A(U1,...,Uk) where Ui are the object types, the variable has parents B1(U1),...,Bm(Um). Each U1 is a subset of the set {U1,...,Uk}. This is to say that you can't have indexes in parents that are not in the children.",
+4/25/2013,Probabilistic Graphical Models,Template Models,"With a set of nested/overlapping plates, each variable is defined by their object types. What would a given instance of an variable that is within three nested/overlapping plates represent? Would it represent instances of the object types (the Uis mentioned above), or instances of the variables themselves (the A's mentioned above)","It would represent instances of the variables, not instances of the object types. It's the difference between grouping things by what they are, rather than by their characteristics. In the quiz example, teachers and courses overlap and are nested within schools. at the deepest nested level, we're looking at teachers from a given school teaching a certain class, rather than teachers of expertise E teaching a class of difficulty D at a school at location L. E,D,L are parameters, not the things we are observing.",
+4/25/2013,Probabilistic Graphical Models,Template Models,Let A and B be random variables inside a common plate indexed by i. Is there an instance of A and an instance of B for every i?,Yes.,
+4/25/2013,Probabilistic Graphical Models,Structured CPDs,What's the difficulty in using tabular representations of CPDs for all CPDs?,"There are 2^number of parents of possibilities for a given node, leaving to huge CPD tables",
+4/25/2013,Probabilistic Graphical Models,Structured CPDs,What is context-specific independence?,"it's when P satisfies (X independent of Y given certain assignment(s) c GIVEN Z, assignment(s) c)",
+4/25/2013,Probabilistic Graphical Models,Structured CPDs,What is a multiplexer CPD?,"It is a tree structure where the main node has multiple dependencies, plus a dependency A which tells the main node which one of the other dependencies the main node is to take the value of. the main node depends on one of the values in some contexts, determined by the other dependency, and not in others.",
+4/25/2013,Probabilistic Graphical Models,Structured CPDs,What is a noisy CPD?,"It is a tree that separates the variables being activated or not from their probabilities in inducing the target variable to be true. there is also a leak probability, which is the probability of the target variable being activated on its own.",
+4/25/2013,Probabilistic Graphical Models,Structured CPDs,What context-specific independencies are induced by a noisy OR CPD?,"X1 is conditionally indpendent from X2 when we observe Y = 0, as Y = 0 blocks the trail of influence from Y to X.",
+4/25/2013,Probabilistic Graphical Models,Structured CPDs,What is meant by there being no interaction between causes?,"dunno, they can influence one another.",
+4/25/2013,Probabilistic Graphical Models,Structured CPDs,"In the sigmoid CPD, what happens when one Xi goes from 0 to 1?",the probability increases by a factor of e^wi.,
+4/25/2013,Probabilistic Graphical Models,Structured CPDs,"In the sigmoid CPD, what happens as the parents Xi are turned on, and the larger wi's are?",the more likely Y is true.,
+4/24/2013,Linux,General,How do you find your ip address?,/sbin/ifconfig,
+4/24/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What are the two types of factor reduction?,"When you reduce out a variable by choosing one value for it (marginalization?), and when you reduce out a variable by normalizing the remaining variables over all values of the variable you want to remove (renormalization?)",
+4/24/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,How do you draw a graph where two nodes are conditional upon each other?,I guess this just wouldn't be a bayesian network?,
+4/24/2013,Probabilistic Graphical Models,Template Models,What is a template variable?,It is a model that is repeated throughout a model--there is sharing between and within these models,
+4/24/2013,Probabilistic Graphical Models,Template Models,What is a template model?,template models are languages that specify how ground variables inherit dependency model from template,
+4/24/2013,Probabilistic Graphical Models,Template Models,What benefits do template models provide over normal bayesian networks?,None except that it's easier to construct large networks using the same CPDs,
+4/24/2013,Probabilistic Graphical Models,Template Models,What assumptions do we make in temporal models?,"markov assumption, time invariance",
+4/24/2013,Probabilistic Graphical Models,Template Models,How do we factor the CPD of a transition model?,"We're finding P(W`,V`,L`,F`,O`|WVLF). Use the chain rule. see notes.",
+4/24/2013,Probabilistic Graphical Models,Template Models,What is a 2TBN?,"It is a two-time-slice bayesian network. it is a model over X1, ..., Xn specified as a BN fragment such that (1) the nodes include X`1, X`n and a subset of X1,...,Xn, (2) only the nodes X`1 have parents and a CPD, (3) the 2TBN defines a conditional distribution P(X`|X) = Pi from 1 to n of P(X`i|Parent)",
+4/24/2013,Probabilistic Graphical Models,Template Models,What is a DBN?,"It is a Dynamic Bayesian Network over X1,...Xn defined by a 2TBN BN-> over X1,...,Xn, and a Bayesian network BN(0) over X(0)1,...,X(0)n",
+4/24/2013,Probabilistic Graphical Models,Template Models,What is a Ground Network?,"Also called an unrolled network. For a trajectory over 0,...,T we defined a ground network such that (1) the dependency model for X(0)1,...,X(0)n is copied from BN(0), and the dependency model for X(t)1,...X(t)n for all t > 0 is copied from BN->",
+4/22/2013,Probabilistic Graphical Models,Intro,"What do each Probabilistic, Graphical, and Models mean?","Probabilistic: brings a declarative representation with clear semantics, powerful reasoning patterns, and established learning methods. Graphical: lots of variables captured in random variables. Models: Declarative representation of our view of the world.",
+4/22/2013,Probabilistic Graphical Models,Intro,What is a Bayesian network?,it is a directed graph where the nodes are random variables,
+4/22/2013,Probabilistic Graphical Models,Intro,What is a markov network?,It is an undirected graph,
+4/22/2013,Probabilistic Graphical Models,Intro,What is one problem with pure machine learning?,It isn't as specific as probabilistic graphical models are; remember the image segmentation of the cow and the car.,
+4/22/2013,Probabilistic Graphical Models,Intro,What is renormalization?,it is setting one variable to a constant value and finding the probability distribution of the remaining variables by dividing each of those variables' probabilities by the sum of all probabilities.,
+4/22/2013,Probabilistic Graphical Models,Intro,What is marginalization?,It is removing one variable from the distribution entirely,
+4/22/2013,Probabilistic Graphical Models,Intro,What is a factor?,"It is a function or a table of values. It is defined as Phi(X_1, ... , X_n) => real-numbered value. Its scope is all the random variables which comprise it.",
+4/22/2013,Probabilistic Graphical Models,Intro,What is an unnormalized measure?,"It is when you hold one variable constant to one value across all other values of other variables, without normalizing those values. It is a factor.",
+4/22/2013,Probabilistic Graphical Models,Intro,What is factor marginalization?,It is reducing out variables of a factor by adding up all values of other variables across all values of the variable you are removing,
+4/22/2013,Probabilistic Graphical Models,Intro,What is factor reduction?,"removing one variable using factor marginalization, i think",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,"Given a bayesian network, what would the CPDs look like?","Each node of the graph has a CPD. The CPD is the distribution of probabilities for that node, across all the variables which influence that node.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is the chain rule for Bayesian Networks?,"It is a factor product. It is written as the product of each CPD. P(X_i,...,X_n) = Pi(P(X_i | Parents_G(X_i)). For example, P(A,B,C) = P(A|B,C)P(B|C)P(C)",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,Why is the Bayesian network a legal distribution?,"Because P >= 0, and Sigma(P) = 1",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What does well-defined mean?,It means the distribution sums to 1 over all examples,
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is causal reasoning?,"When you observe a cause, and see what that does to the probability of the effect.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is evidential reasoning?,"When you observe an effect, and see what that does to the probability of the cause.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is intercausal reasoning?,"When you observe one variable, and then observe another, and see what that second observation does to a given cause or affect.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is explaining away?,"It is when one cause is understood to be sufficient explanation for a certain phenomena--this changes the probability that it can be attributed to another phenomena, I thikn.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,In what networks can X influence Y?,"X -> Y, X <- Y, X -> W -> Y, X <- W <- Y",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,When can it not?,"X -> W <- Y, also called a v-structure",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,When is a trail active?,When it has no v-structures,
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,When can X influence Y given evidence about Z?,"X->Y, X<-Y, X->W->Y (when W is not in Z, not when it is), X<-W<-Y (when W is not in Z, not when it is), X<-W->Y (when W is not in Z, not when it is), X->W<-Y (when W or one of it descendants IS in Z, not when it is not)",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is the definition of when a trail is active?,"A trail X_1 - ... - X_n is active given Z if for any v-structure X_i-1 -> X_i <- X_i+1, we have that X_i or one of its descendants is in Z (is observed), and no other X_i is observed.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is the definition of independence?,"P satisfies A is independent from B if P(A,B) = P(A)P(B), P(A|B) = P(A), and P(B|A) = P(B). each of these is equivalent.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is conditional independence?,When knowledge about some other variable C influences P(A|B),
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,How can variables lose their independence?,"sometimes, gaining knowledge about other variables will cause variables to lose independence, as in v-structures.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,"Can variables be independent conditional on knowing one value of a variable, but lose its independence upon knowing another value of that variable?","pretty sure yes, but the arithmetic doesn't seem to check out.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What independence assumption does Naive Bayes make?,"given the class variables, each observed variable is independent of the other observed variables",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is the odds ratio?,"probability that the class is c1 given x_1,...,x_n divided by probability that the class is c_2 given x_1,...,x_n. not sure what this is useful for, though.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is one reason Naive Bayes is so powerful?,Because we only have to think about pairwise interactions between the class variable and individual features,
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is the independence assumption made in Naive Bayes?,"Given a class, all features X_i and X_j are independent from each other",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is Bernoulli Naive Bayes?,When each feature takes a value of 0 or 1,
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is multinomial Naive Bayes?,When each feature takes one of many values,
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,When is Naive Bayes useful?,When there are many features and each one is weakly relevant,
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,When is Naive Bayes not useful?,When the independence assumptions made are not correct; that is when features are actually strongly correlated,
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What does the independence assumption make possible?,"The statement that P(C,X_1,...,X_n) = P(C) * product over all X's( P(X_i given C))",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What was learned from the Pathfinder medical diagnosis?,"Don't use zero probabilities--even if an event is rare, it is still possible, and zeros screw up predictions",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is an independent parameter?,"In a CPD P(X|Y_1,...,Y_r), if each Y_i has k_i values, then we have a total of k_1*...*k_r*(m-1) independent parameters. I guess the parameters refers to the number of different values that can be entered as parameters to the equation that are independent from each other. it only applies to the graphical models of nodes that are conditional upon other nodes. if the node affects another node, then the affecting node is not affected by the affected node's paramters.",
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What is an I-map?,a map K is an independence map of G if every independence relationship in K is also in G,
+4/22/2013,Probabilistic Graphical Models,Bayes Network Fundamentals,What are the rules you need to apply when finding conditional probabilities given some other conditional probabilities?,"law of total probability, bayes' theorem, definition of conditional probability",
+4/16/2013,Ruby,General,Are collections passed by reference or by value to arguments?,by reference,
+4/16/2013,Ruby,General,How do you sort a hash by value?,"Hash[hash.sort_by {|key, value| value}]",
+4/11/2013,Machine Learning,Newton's method,What is the algorithm that Newton's method follows?,"create a function f(theta) = derivative of cost function with respect to theta(theta). graph it with respect to theta. pick random theta. draw a tangent at this point, then find where that tangent is equal to zero. Find theta at that point. set theta to that value, repeat.",
+4/11/2013,Machine Learning,Newton's method,What is the formula for the assignment of the next theta?,theta_next = theta - cost function first derivative(theta) / cost function second derivative(theta),
+4/11/2013,Machine Learning,Newton's method,How is the above derived?,theta_next = theta minus (theta - theta_next). theta - theta_next = f(theta) / f`(theta). plug in from there.,
+4/11/2013,Machine Learning,Newton's method,How is the vectorized version different?,The formula for updating is theta_next := theta - Hessian matrix inverse * first derivative of cost function with respect to all thetas (a vector where each element is a partial derivative to feature i). ,
+4/11/2013,Machine Learning,Newton's method,What is the formula for the derivative vector for the cost function?,1/m * sum from 1 to m of (hypothesis_fxn(x_i) - y_i) * x(i). ,
+4/11/2013,Machine Learning,Newton's method,What is the formula for the Hessian matrix?,H = 1/m * sum from 1 to m of hypothesis_fxn(x_i) * hypothesis_fxn(1-hypothesis_fxn(x_i)) * (x_i) * (x_i`),
+4/11/2013,Machine Learning,Newton's method,What is the general form for vectorized newton's method?,check notes-- theta_next = theta - Hessian inverse times upside-down delta of cost function,
+4/11/2013,Machine Learning,Newton's method,How do you check that newton's method has converged?,"By plotting J(theta) against # of iterations, and see if there is any more improvement left to gain",
+4/11/2013,Machine Learning,Gradient descent vs. Newton's method,What are the advantages of gradient descent?,"each iteration is cheap, O(n).",
+4/11/2013,Machine Learning,Gradient descent vs. Newton's method,What are the advantages of newton's method?,"No parameter selection of alpha, needs fewer iterations.",
+4/11/2013,Machine Learning,Gradient descent vs. Newton's method,What is the threshold when you should choose newton's method or gradient descent?,"The threshold is related to the number of features. If n < 1000, use newton's method, as calculating the inverse of the Hessian matrix is straightforward. If n is around 50k, probably use gradient descent. if n is around 100k, definitely use gradient descent.",
+4/11/2013,Machine Learning,The Problem of Overfitting,What is overfitting?,"When the hypothesis function is too sensitive, as it matches the training examples too well. i.e. it does not generalize well to new examples",
+4/11/2013,Machine Learning,The Problem of Overfitting,What is it caused by?,too many features,
+4/11/2013,Machine Learning,The Problem of Overfitting,What are the solutions?,"throw out features (1) manually, or (2) with model selection algorithms. or, use regularization",
+4/11/2013,Machine Learning,The Problem of Overfitting,When does regularization work well?,When there are many features and each contributes a little to predicting y.,
+4/11/2013,Machine Learning,Regularization: Optimization Objective,How do we regularize?,By shrinking thetas uniformly.,
+4/11/2013,Machine Learning,Regularization: Optimization Objective,What is the new cost functioN?,J(theta) = 1/(2m) * sum from 1 to m((hypothesis_fxn(x_i) - y_i)^2 + lambda * sum from 1 to n of theta_j^2). note we do not penalize theta_0,
+4/11/2013,Machine Learning,Regularization: Optimization Objective,Why does shrinking thetas smoothen the curve?,?,
+4/11/2013,Machine Learning,Regularization: Common Variations,What happens if the training set is large?,We don't have to worry so much about regularization,
+4/11/2013,Machine Learning,Regularization: Common Variations,What is l_2-norm regularization?,lambda * sum(1 to n of theta_j^2) ~ theta` * theta ~ ||theta||_2 ^2,
+4/11/2013,Machine Learning,Regularization: Common Variations,What is l_1-norm regularization?,lambda * sum(1 to n of |theta_j|) ~ ||theta_0||_1,
+4/11/2013,Machine Learning,Regularization: Common Variations,What is the alternate version of the cost function?,"instead of lambda/2*m, use lambda/2 against the sum of squared thetas. so that regularizaiton does not scale with m.",
+4/11/2013,Machine Learning,Regularized Linear Regression,How does the update statement change for regularized linear regression?,"For updating thetas of features 1 through j, subtract lambda/m * theta_j from the derivative of the cost function (see notes)",
+4/11/2013,Machine Learning,Regularized Linear Regression,note that (1 - alpha*lambda/m) - number < 1,Why?,
+4/11/2013,Machine Learning,Regularized Linear Regression,What is the normal equation adjusted for regularized linear regression?,theta = (X` * X + lambda * identity matrix with top left corner equal to 0)^-1 * X` * y,
+4/11/2013,Machine Learning,Regularized Linear Regression,What problem does the regularization of the normal equation solve?, (X` * X + lambda * identity matrix with top left corner equal to 0) will now be invertible if there are more features than training examples (or other way around? I forget),
+4/11/2013,Machine Learning,Regularized Logistic Regression,How do we change our logistic cost function to account for regularization?,add lambda/(2*m) * sum from 1 to n (theta_j^2) to it,
+4/11/2013,Machine Learning,Regularized Logistic Regression,How do we change our gradient descent update function to account for regularization?,"for j > 0, subtract lambda/m * theta_j from it",
+4/11/2013,Machine Learning,Regularized Logistic Regression,How do we change the formula for newton's method?,theta_new = theta - Hessian_inverse * gradient vector remains the same. However the Hessian matrix gets lambda/m * identity matrix with top left corner set to zero added to it,
+4/11/2013,Machine Learning,Regularized Logistic Regression,How do we ensure that gradient descent is working?,make sure the cost function is decreasing over number of iterations,
+4/11/2013,Machine Learning,Naive Bayes - Generative learning algorithms,What is a discriminative algorithm?,"algorithms like logistic regression, which aim to draw a line between two pre-defined sets of examples",
+4/11/2013,Machine Learning,Naive Bayes - Generative learning algorithms,What is a generative algorithm?,"It is an algorithm that analyses two sets of examples and figures out what their relative probabilities of occurance and co-occurance are, and then draws from that example the probability of future examples belonging to those sets",
+4/11/2013,Machine Learning,Naive Bayes - Generative learning algorithms,"Say you've figured out p(x|y=0) and p(x|y=1), and 0 and 1 are the only possible values for y, and you know p(y). how do you compute p(x)?",p(x) is equal to p(x & y) summed over all y. so we calculate p(x|y=1)*p(y=1) + p(x|y=0)*p(y=0),
+4/11/2013,Machine Learning,Naive Bayes - Text Classification,How do we go about classifying an email as spam?,"first create a vector that is based on a dictionary. the vector has binary values; 0 if the word does not exist in the email, 1 if it does. then populate vectors based on emails and the word occurences of words in the dictionary",
+4/11/2013,Machine Learning,Support Vector Machines,What is a support vector?,training example (represented by a vector) that lies closest to the margin between classifications,
+4/11/2013,Machine Learning,Support Vector Machines,What does a support vector machine do?,It maximizes the margin around the hyperplane which separates classifications,
+4/11/2013,Machine Learning,Support Vector Machines,What is a hyperplane?,"It is an n-dimensional plane that lines in n+1 dimensional space. for example a line on a 2-D graph, or a plane on a 3D graph.",
+4/11/2013,Machine Learning,Transfer Learning,What is lift?,,
+4/11/2013,Machine Learning,Transfer Learning,What is the difference between source task and target task?,source tasks are behavior from a large set of campaigns and user activity. target task is only specific to one campaign/client,
+4/11/2013,Machine Learning,Transfer Learning,What are the two stages of transfer learning?,"the first is to generate learning based on a wide set of data, including data gathered from outside a campaign (before a campaign starts, there is no data to learn from it, so we have to use something). the second is to use the scores of several algorithms run in stage one, and combine those scores with information about the user, to generate scores for user",
+4/11/2013,Machine Learning,Transfer Learning,What is transfer learning?,"learning that is done for a task that doesn't exactly match the target task, but is still useful in improving the learning of the target task",
+4/11/2013,Machine Learning,Transfer Learning,,,
+4/11/2013,Machine Learning,Transfer Learning,,,
+4/11/2013,Machine Learning,Transfer Learning,,,
+4/11/2013,Machine Learning,Transfer Learning,,,
+4/11/2013,Math,Probability-Bayes,What is Bayes' rule?,p(x|y) = p(y|x) * p(x) / p(y),
+4/11/2013,Math,Probability-Bayes,Where does Bayes' rule come from?,p(x|y) = p(x & y) / p(y) and hence p(y|x) = p(x & y) / p(x),
+4/10/2013,Machine Learning,Normal Equation,What is the normal equation?,theta = inv(X * X`) * X` * y,
+4/10/2013,Machine Learning,Normal Equation,What is the normal equation used in place of?,"Gradient descent, though there are still places where gradient descent is useful, as in logistic regresison",
+4/10/2013,Machine Learning,Logistic Regression,"You could use linear regression and a threshold value to classify, but what is the problem with that?","If you have training examples that throw off the curve, the line that is drawn may not be accurate. See video 16 of 30 on openclassroom.",
+4/10/2013,Machine Learning,Logistic Regression,How do you create a probability function from the cost function?,use the sigmoid function. 1 / (1 + e ^z). plug your regression model into z. this gives a uniform mapping from 0 to 1.,http://openclassroom.stanford.edu/MainFolder/CoursePage.php?course=MachineLearning
+4/10/2013,Machine Learning,Optimization Objective,Why not choose the squared error as the cost function to use when training theta?,"because many cost functions turn out to be non-convex, and finding global minimum is difficult",
+4/10/2013,Machine Learning,Optimization Objective,Why do we want to choose a cost function that penalizes answers so much?,"In order to train theta to avoid these high values. remember that our hypothesis function is now the sigmoid function, which predicts values between 0 and 1. so it won't put out values of 0 or 1, so we never get to infinity or to 0. we just want to make sure the cost function makes sense--the further off it is, the higher the cost.",
+4/10/2013,Machine Learning,Optimization Objective,What function will we choose?,"for y = 1, -log(h_theta(x)). for y = 0, -log(1 - h_theta(x))",
+4/10/2013,Machine Learning,Optimization Objective,Why don't we use the squared error?,"Because it is of quadratic form, and will only give a cost of 1 at most--we want a higher penalty for being wrong.",
+4/10/2013,Machine Learning,Optimization Objective,What is the compact version of the cost function?,-y*log(h_theta(x)) - (1-y) * log(1 - h_theta(x)),
+4/10/2013,Machine Learning,Optimization Objective,Why is the above cost funciton formula equivalent to the discrete definition?,,
+4/10/2013,Machine Learning,Optimization Objective,"Why did we choose the log function specifically for the cost function, whereas there are so many curves that go from 0 to infinity over [0,1]?","Because of maximum likelihood estimation. if it is applied to logistic regression model, we get the exact function we just came up with. Also, because the function is convex and has a global minimum.",
+4/10/2013,Machine Learning,Logistic Regression-Gradient Descent,What is the derivative of the logistic regression cost function with respect to theta_j?,same form as with linear regression: theta := theta - alpha * [1/m * sum from 1 to m of((hypothesis_fxn(x_i) - y_i)],
+4/10/2013,Machine Learning,Logistic Regression-Gradient Descent,What is the general update function form?,theta := theta - alpha * cost function first derivative(theta),
+4/10/2013,Math,Linear Algebra,"What is a non-invertible matrix, and how can it come about?","Also known as singular or degenerate, non-invertable matrixes have no inverse. Non-square matrices are usually non-invertible (but may have left- or right inverses). ",
+4/9/2013,Machine Learning,Cost Function video,What is the cost function?,1/(2m) * sum(from i = 1 to m) of (h_sub_theta(x_i)) - y_i)^2.,
+4/9/2013,Machine Learning,Cost Function video,What do we do with the cost function?,It is used in linear regression. we choose theta so as to minimize the cost function.,
+4/9/2013,Machine Learning,Gradient Descent video,What is gradient descent?,"It is the process by which we choose theta to minimize the cost function J(theta). You start with a vector of thetas, then keep changing theta so as to reduce J(theta) until we end up at a minimum.",
+4/9/2013,Machine Learning,Gradient Descent video,What is one problem with gradient descent?,it is possible to fall into local optima rather than global optima,
+4/9/2013,Machine Learning,Gradient Descent video,Give the formal definition of gradient descent,"repeat until convergence: theta_j := theta_j - alpha * J_prime(theta). J_prime(theta) is the first derivative of J with respect to theta_j. update is carried out simultaneously for all thetas 0-n. i.e. compute right-hand side for all i, then update theta_i's",
+4/9/2013,Machine Learning,Gradient Descent video,What is alpha in the gradient descent formula?,the learning rate,
+4/9/2013,Machine Learning,Gradient Descent video,What does the learning rate control?,It controls the size of the step we take downward in each iteration,
+4/9/2013,Machine Learning,Gradient Descent video,What happens as the local minimum is approached?,The steps taken by gradient descent will be smaller. So there is no need to decrease alpha over time.,
+4/9/2013,Machine Learning,Gradient Descent for Linear Regression,What is the derivative of the cost function with respect to theta_j?,"I'm not typing that, look it up",
+4/9/2013,Machine Learning,Gradient Descent for Linear Regression,What does the cost function for linear regression always look like?,"it always looks like a bow-shaped curve, with one global optima.",
+4/9/2013,Machine Learning,Gradient Descent for Linear Regression,"What is a different name for gradient descent, and why?","Batch gradient descent--""batch"" because all examples are examined at the same time.",
+4/9/2013,Machine Learning,Gradient Descent for Linear Regression,What is the m of the cost function?,,
+4/9/2013,Machine Learning,Vectorized Implementation,What is the prediction formula in vectorized form?,prediction = theta` * x (` means transpose),
+4/9/2013,Machine Learning,Vectorized Implementation,What is the gradient descent equation in vectorized form?,theta = theta - alpha * delta. delta = 1/m * sum from i=1 to m of (h_theta(x_i) - y_i) * x_i,
+4/9/2013,Machine Learning,Feature Scaling,What is one problem with gradient descent?,"Features may not be on the same scale as each other. i.e. the size of a house is much larger than the number of bedrooms. if you look at the contours of the cost function, in these cases, the elipses will be extremely distorted. gradient descent will take many more steps to finish when this happens.",
+4/9/2013,Machine Learning,Feature Scaling,How do you fix the issue with features with unproportional scales?,"by dividing each feature by a certain number--for example, divide each square footage number by the difference between the maximum and minimum of numbers in the set, and likewise with number of bedrooms. i.e. normalize them. you can also use x_1 - c_1 to make sure each feature has mean of 0.",
+4/9/2013,Machine Learning,Learning Rate,How do you choose the ideal learning rate?,"If you graph the minimized cost function against the number of iterations, it will be a gradually decreasing curve, as the cost function gets smaller with more iterations. try several rates on different orders of magnitude, I guess.",
+4/9/2013,Machine Learning,Learning Rate,What is a convergence test?,"If your learning rate is too large, it may cause the iterations vs. cost function curve to diverge.",
+4/9/2013,Machine Learning,Features and Polynomial Regression,How do you create polynomial regression?,by squaring/cubing/square-rooting the values of certain features and applying the same kind of theta coefficients.,
+4/9/2013,Work,Akamai,How is the akid determined if not by a cookie?,It seems it actually is determined by a cookie.,
+4/8/2013,Machine Learning,,What is the difference between regression and classification?,"Regression predicts real values--it answers questions such as 'how much' or 'how many'. classification gives discrete output, and answers questions such as 'what classification does this data point fall into'?",
+4/8/2013,Machine Learning,,What are features of a classifier?,"Characteristics of data points, as in cancer analysis, it may be age, size of tumor, clusters of tumors, etc.",
+4/8/2013,Machine Learning,,What are input variables?,Another word for features,
+4/8/2013,Machine Learning,,What are output variables?,another word for target variables,
+4/8/2013,Machine Learning,,What is the hypothesis function?,It is the function that maps input variables to output variables. It is used in linear regression,
+4/8/2013,Machine Learning,,How is the hypothesis function represented?,"It is either a linear, quadratic, or other degree of polynomial function",
+4/8/2013,Machine Learning,,What are the hypothesis function coefficients represented by?,theta,
+4/8/2013,Machine Learning,,What is another expression for the hypothesis function?,h(x) = sum from i to n of (theta_i * x_i),
+4/8/2013,Machine Learning,,What is the vector notation of the hypothesis function?,theta transposed * X,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What is the subject of the paper?,They present experiences from building a web-scale user modeling platform for optimizing display advertising targeting.,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,the platform allows for per-campaign maximization of conversions,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,"two challenges: how to efficiently process billions of users daily, and how to build per-campaign convresion modes given low conversion rates",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,conversion rates are much lower than click rates?,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What mchanisms do they use for building web-scale user profiles daily?,,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,How do they reduce latency of processing?,,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What technique do they use to scale the number of handled campaigns/models?,,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,How does the advertizer select the population segment?,based on a set of locations and demographic attributes. these are obtained from registration databases/past user activity.,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What is used in contrast with segment targeting?,"behavioral targeting; users are categorized by parenting, auto, health, and these user buckets are purchased by advertisers",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,what is one weakness of demographic/behavioral targeting?,"the segments of users are not created using any feedback from individual advertisers, and usually represent large interest groupos. also, the targeting methods are based on clicks rather than on actual purchases",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What is the difficulty of using advertiser data in addition to demographic/behavioral targeting?,"now the platform has to find a different segment for each advertiser, and thus solve orders of magnitude more optimization problems",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,Why does the platform have to find a different segment for each advertiser?,,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,"In this paper, the behavioral targeting problem is framed as a per-campaign optimization problem.",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What are the two core issues in building and operating the system?,1. high data volumes 2. sparseness of conversions,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,one issue they had to solve was how to bulid user profiles in an efficient way while efficiently expanding these profiles daily,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,another problem is how to cope with the disk input/output when processing billions of users,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,another problem is dealing with optimizing multiple campaigns at the same time; and hence the need to form positive and negative training instances for each of the campaigns in an independent fashion; also the problem of repetitive processing of the same user over different campaigns,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,"How do they determine feature weights? should user activity counts represent feature weights, or are more sophisticated techniques needed?",,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,Should all user activities be treated in a similar way regardless of their timings? or should short-term or long-term user history be given a higher importance?,more recent is better,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,"they optimize existing campaignswhere advertisers pay per conversion (cost-per-action, CPA campaigns)",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,they assume that the events prior to the conversion contain indications of its occurence. events after the conversion are not considered,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,user history is a sequence of events relative to some target time T. Two event spaces: feature window and target window.,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,"a user is a positive example if the user history correlates to a conversion, and a negative example if the user history does not",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What is the training data defined as?,"see page 2, second column, under formulas",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What does the user representation method consist of?,"a function theta, check page 2 bottom of second column",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What events are considered in a user's historical record?,"both active and passive behaviors. active are search queries, clicks, etc. passive is browsing.",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,Which is more valuable to modeling a user's conversion behavior--active or passive?,a combination of each is the most powerful.,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What types of events are considered?,"pages visited: features are extracted from the id of the url (id created by clustering subdirectories), and the cateogry of the page from an existing page categorizer. search queries: features are the query category, clicks from the query, and the unigrams/bigrams in the query; also the category of the search query based on an existing hierarchical query categorizer, graphical ads: views and clicks on ads--features extracted are the ad category, click info, and id of ad, and categorizing views/clicks to an existing hierarchical ad categorizer",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,"in order to create an incremental daily updating system, user history is aggregated on the daily level. counts of webpage hits are recorded, not timestamps. ",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,"JSON format is used to represent user activities on-disk. for in-memory representation, they use C++ maps (a balanced binary search tree)",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,How do they keep the user profiles updated in an incremental way?,by using a round-robin; the oldest day is replaced with the most recent day in JSON,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,,"instead of having u(T) user records to be joined at the beginning of the training pipeline, they up of having 2-3 records to join",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,How do they join user records?,"they make a given user mapped to the same reducer on each daily run. once all records of a given user are available at the same reducer, they merge all activities from the different input user records into one in-memory user record. they then optimize the round-robin activity maintenance effect to avoid parsing all activities of user records--instead, they directly access the first day of history covered by the activities map and delete it. this changes it from linear time to logarithmic time.",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What is the relative frequency bag of events?,,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What is the frequency of an event?,number of days in which use has performed the event; recall the types of events above,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,Do they apply a threshold for the most useful features?,"Yes. it is denoted as the example existence thresholding. features are only included when they are available in at least p negative training examples, and q positive training examples. p = 100 and q = 1",
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What is AUC?,are under the curve,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,Why is AUC important?,has to do with ki?,
+4/5/2013,Data Reading Group-Web-Scale User Modeling for Targeting,,What types of feature weighting are used?,"weighting by activity counts, recency-based feature weighting",
+4/5/2013,Machine Learning,,What are SVMs?,,
+4/5/2013,Machine Learning,,What does the Receiver Operating Characteristic curve describe?,It illustrates the performance of a binary classifier system as its discrimination threshold is varied.,http://openclassroom.stanford.edu/MainFolder/CoursePage.php?course=MachineLearning
+4/5/2013,Map Reduce,,What is a reducer?,,
+4/5/2013,Ruby,,How do you iterate through each line of a file?,"first open a file for reading, then call file.each_line do |line| on it.",
+4/4/2013,Javacript,,What happens when you surround a variable with $() in javascript?,"$ is shorthand for the library used, such as $ is short for jQuery. jQuery() is a function that returns an element given an identifier. hence. $() returns an identifier.",http://osric.com/chris/accidental-developer/2008/04/the-javascript-dollar-sign-function/  http://api.jquery.com/jQuery/
+4/4/2013,Javascript,,what's the difference between $.get and $.ajax?,$.ajax is a pure http request that accepts configurations. $.get is $.ajax with some of those configurations already set.,http://stackoverflow.com/questions/3870086/difference-between-ajax-and-get-and-load
+4/4/2013,Rails,,How do you get a controller to respond with xml?,"in the controller, use render(object_to_convert_to_xml.to_xml)",
+4/4/2013,Rails,,How do you get a controller to respond with xml based on a view?,"in the controller, put: response.headers['Content-type'] = 'text/xml; charset=utf-8'
+                render :layout => false. also, create a view with .xml.erb extension, with whatever <%= %> tags that make sense to fill it out.",
+4/3/2013,Javascript,,How do you sent a http post request to redirect with javascript?,"                function post_to_url(path, params, method) {
+                        method = method || ""post""; // Set method to post by default, if not specified.
+
+                        // The rest of this code assumes you are not using a library.
+                        // It can be made less wordy if you use one.
+                        var form = document.createElement(""form"");
+                        form.setAttribute(""method"", method);
+                        form.setAttribute(""action"", path);
+
+                        for(var key in params) {
+                                  if(params.hasOwnProperty(key)) {
+                                      var hiddenField = document.createElement(""input"");
+                                      hiddenField.setAttribute(""type"", ""hidden"");
+                                      hiddenField.setAttribute(""name"", key);
+                                      hiddenField.setAttribute(""value"", params[key]);
+
+                                      form.appendChild(hiddenField);
+                                   }
+                        }
+
+                        document.body.appendChild(form);
+                        form.submit();
+                }",http://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
+4/3/2013,Javascript,,What is a closure?,"it is a funciton that contains both the function and the environment in which the function was created; hence, you can have variables that were passed into that function as parameters when that function was defined.",https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Closures#Creating_closures_in_loops.3a_A_common_mistake
+4/3/2013,Javascript,,How do you parse xml?,"call $parseXML on the xml, and then call $(data).find(""<tag here>"").each for each tag you want to get",
+4/2/2013,Rails,,What does having a Javascript runtime even mean? is it like the JVM?,,
+4/2/2013,Rails,,What does extract_options! do?,"it takes a list of args, and puts them into an arguments array and an options hash, respectively",
+4/2/2013,Ruby-HTTP,,How do you sent HTTPS post requests with ruby?,"require both 'uri' and 'net/https'. create http objects like normal, but set http.use_ssl to true.",http://stufftohelpyouout.blogspot.com/2010/05/how-to-fix-nethttpbadresponse-wrong.html
+4/1/2013,Machine Learning-Zero-Shot Learning Through Cross-Modal Transfer,,What is this paper about?,"The paper describes a process for identifying an object based on a natural language description of it. The paper introduces a zero-shot model that can predict both seen and unseen classes. i.e. it can identify whether an image is of something from an unknown class, or from a known class.",
+4/1/2013,Machine Learning-Zero-Shot Learning Through Cross-Modal Transfer,,What are the two main ideas that the model is based on?,"1. images are mapped into a semantic space of words that is learned by a neural network model. The word vectors learn an image mapping into a large text corpus, and are implicitly grounded by the visual modality. 2. the model compensates for the possibility of images of unknown classes; the model incorporates an outlier detection probability which determines whether a new image is on the manifold of known categories.",
+4/1/2013,Machine Learning-Zero-Shot Learning Through Cross-Modal Transfer,,What approaches are used for capturing semantic similarity between words?,"Distributional approaches. In these approaches, words are represented as vectors of distributional characteristics--such as their co-occurrences with words in context.",
+4/1/2013,Machine Learning-Zero-Shot Learning Through Cross-Modal Transfer,,How did they learn semantic relationships and class membership of images?,by projecting the image feature vectors onto the 50-dimensional word space.,
+4/1/2013,Machine Learning-Zero-Shot Learning Through Cross-Modal Transfer,,How do they create the word vectors for each image?,,
+3/29/2013,Internet,,What is TDL?,top-level domain,
+3/29/2013,Machine Learning,,"When training a feature set, how many examples should be positive? how many should be negative?",,
+3/29/2013,Machine Learning,,What should be the test size as compared to the total size of the data set?,,
+3/29/2013,Machine Learning,,What is the negative success ratio?,The number of correctly identified bad URLs (URLs not belonging to that language) divided by the total number of bad URLs,
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,What two parameters need to be specified in the n-gram technique process?,"1. the number of n-grams (either the k most frequent n-grams, or all n-grams that occur more than k times). 2. the notion of similarity needs to be defined (rank-order statistic that compares two different frequency ranks, or relative entropy as a distance measure)",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,How were words as features used?,"URLs are split up into their words, as divided by punctuation, with common URL words removed (http, www, com, etc). the algorithms keep track of how many tokens are used how many times with corresponding language URLs",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,How were trigrams as features used?,"It starts with the tokens mentioned above, then splits each token into however many n-grams there are.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,How were custom-made features used?,"They used a fixed number of special features for each URL, mostly derived from dictionaries and information concerning the top-level domain",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,What is a greedy step-wise forward feature selection algorithm?,"It was used for the decision tree; at each step, the single feature which gives the biggest performance boost is added.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,What was training on content used?,"They downloaded the web page for all URLs in the training set, and used the terms in the web page as well as the tokens derived from the URL for training. This artificial lengthening was done to obtain more training data without using more URLs.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,What was their baseline algorithm?,"the country code top-level domain only. it takes the ccTLD of a URL, checks the official language for the ccTLD's country, and assigns the corresponding language to the URL.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,How did they apply Naive Bayes?,"It assumes statistical independence of the individual features given the language, then applies the maximum liklihood principle in order to find the language which is most likely to generate the observed feature vector.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,How did they apply Decision trees?,"They built a binary tree where the inner nodes corresponded to tests on a single feature, and each leaf corrsponds to a classification. The tree is constructed greedily, where at each step the feature which reduces the classification the most is added as a node.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,How did they apply Relative Entropy?,"First the algorithm learns a probability distribution for each of the possible languages in the training set, by computing the average distribution for each language. Every feature vector from the test set is converted into a probability distribution. Each feature vector is assigned to the class with the lowest relative entropy bretween the trained average distribution and the test feature vector distribution.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,How did they apply Maximum Entropy?,"The idea is to find a distribution over the observed features which explains the observed data, but which also tries to maximize the entropy in this distribution. This results in a constrained optimization problem which is then solved using an iterative scaling approach.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,How can you boost recall and precision?,"By using two different algorithms. One is the primary, the other is the helper. For recall, if the main algorithm denies that a page belongs to a language, the helper algorithm is consulted. if the helper accepts it, then the page is assigned to the language. For precision, the converse happens; if the algorithm accepts the page, the helper algorithm is consulted, and the page is only accepted if both agree.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,How was the data used in training?,"250k URLs for each language were trained against 250k randomly chosen from the four other languages, rather than 250k vs. the 1m of the non-language URLs. This is because the second method would have caused too many negative examples to train against.",
+3/29/2013,Machine Learning-Web Page Language Identification Based on URLs,,,The algorithms are binary classifiers on each language; i.e. there are five different binary decisions to be made.,
+3/28/2013,Linux,,How do you add a user to sudo?,sudo adduser <user> sudo,
+3/28/2013,Machine Learning,,What is precision?,(number of correct results/(number of correct results + number of incorrect results)),
+3/28/2013,Machine Learning,,What is recall?,number of correct results/number of all samples that should have been correct results,
+3/28/2013,Machine Learning,,What is F-score?,2*precision*recall/(precision + recall),
+3/28/2013,Machine Learning,,What is a feature?,a dimension that is computed by a ML algorithm,
+3/28/2013,Machine Learning,,What is an SVN?,support vector machine. that's all I know,
+3/28/2013,Machine Learning,,What is Naive Bayes?,,
+3/28/2013,Machine Learning,,What is a token?,"it is a substring of a URL for example, which is used to analyze and categorize URLs containing that substring",
+3/28/2013,Machine Learning,,What is an n-gram?,"it is a substring n characters long of a token. so for example, ""reg"" is a trigram of ""regular"". it helps to sort out misspellings. characted-based markov models for language classification are a variant of the n-gram approach.",
+3/28/2013,Machine Learning,,"When applying ML techniques, what does one have to determine?","1. what features to select, and 2. what ML algorithm to use",
+3/28/2013,Machine Learning,,What is Maximum Entropy/Impreoved Iterative Scaling?,a document is belonging to the language with the highest conditional probability given the word distribution in the document. Entropy can also be considered uncertainty,
+3/28/2013,Machine Learning,,What does a feature vector contain?,feature vector contains one dimension per feature,
+3/28/2013,Machine Learning-Web Page Language Identification Based on URLs,,What is character-based Markov model?,It determines the probability that certain sequences of characters are generated. it is assumed that the next character only depends on a certain number of previous characters--these 'windows' are n-grams,
+3/28/2013,Machine Learning-Web Page Language Identification Based on URLs,,What are used to train Prediction by Partial Match compression models?,Markov models,
+3/28/2013,Machine Learning-Web Page Language Identification Based on URLs,,What do n-gram based techniques build as part of the process?,an n-gram distribution for each language in the training set,
+3/28/2013,Machine Learning-Web Page Language Identification Based on URLs,,How is a document classified by the n-gram technique?,It belongs to the language with the most similar n-gram distribution,
+3/28/2013,Rails,,What is the standard way of storing hashes in databases?,using serialization; json or yaml (or marshal which is stored as a binary),
+3/27/2013,DC,,What is the gateway based on?,AMFPHP,
+3/27/2013,DC,,Do we have HTML5?,"Yes, we have test cases working",
+3/27/2013,DC,,What is frame1/frame0?,,
+3/27/2013,DC,,what does cully do when he gets the new file?,he pushes it to frame0,
+3/27/2013,DC,,Do we get bidder variables?,no,
+3/27/2013,DC,,,"cully takes the swf, puts it into actionscript controller.",
+3/27/2013,DC,,,we come from agency side,
+3/27/2013,DC,,what is dynamic creative?,"the ability to change the look/feel and how it interacts with the user, in real time, customized based on a set of rules provided by (client, client services, etc)",
+3/27/2013,DC,,"Do we make swfs based on client, or based on campaign?",,
+3/27/2013,DC,,How does the HTML5 stuff work?,,
+3/27/2013,DC,,What is a tag?,,
+3/27/2013,DC,,what are the different behavior based retargeting strategies?,1.prospecting 2. browsing 3. shopping cat 4. conversion 5. reengagement,
+3/27/2013,DC,,how does pixel free work?,,
+3/27/2013,DC,,what is the name for the retargeting strategies as a whole?,ecommerce,
+3/27/2013,DC,,,we're building different use cases for different industries as choices for clients to choose from in our product,
+3/27/2013,DC,,what is cost-plus?,,
+3/27/2013,DC,,What is PSERV?,"client services, beyond that I'm not sure",
+3/27/2013,MySQL,,"What keyword allows you to get records with values within a range, including the endpoints?",BETWEEN,
+3/27/2013,Rails,,,"you can store boolean values (true, false, as opposed to 0,1) by specifying it in the migration",
+3/27/2013,Rails-ActiveRecord,,"What method allows specifying conditions, that isn't find(:conditons => ...?",where,
+3/26/2013,Linux,curl,how do you get the headers from a request?,curl <url> -I,
+3/26/2013,Programming-General,,What is a namespace?,,
+3/26/2013,Rails,,How is a session stored? (Aside from it being a hash),it is used by controllers,http://guides.rubyonrails.org/security.html
+3/26/2013,Rails,,How do you set up Devise?,,
+3/26/2013,Rails-usage,,How do you generate attr_accessible variables when generating a model?,"rails generate <model> <variable>. note that this is not the usual format, i.e.""<variable>:<data_type>""",
+3/26/2013,Rails-usage,,Why did including gem 'therubyracer' fix the 'Could not find a JavaScript runtime' error?,,
+3/26/2013,Web Apps,,"How does HTTP authentication work, compared to how cookie authentication works?",,
+3/26/2013,Web Apps,,What is a session?,it is a way of allowing the user to interact with a website/app without having to send authentication details every time.,http://guides.rubyonrails.org/security.html
+3/26/2013,Web Apps,,What is a session id?,a 32-character string of hexadecimal numbers generated by the md5 hash,http://guides.rubyonrails.org/security.html
+3/26/2013,Web Apps,,What does URI stand for?,Uniform Resource Identifier,
+3/25/2013,MySQL,,How do you add a column to a table with a default value?,alter table users add column signed_in bool default 0;,
+3/25/2013,MySQL,,How do you get the structure of a table?,describe <table>;,
+3/25/2013,Ruby-Usage,,"What do the return codes (true, false) of require mean?",,
+3/21/2013,Programming-General,,What is a JobQueue?,,
+3/21/2013,Ruby-Usage,,Why use symbols as hash keys in Ruby?,,http://stackoverflow.com/questions/8189416/why-use-symbols-as-hash-keys-in-ruby
+3/20/2013,MySQL,,"Does it cost anything to have null fields? i.e., does having a nullable field, and many records with that field null, add any extra storage cost per record? or is it zero because there is no data in that field?",,
+3/19/2013,SVN,,How do you restore a locally deleted file?,,
+3/18/2013,MediaMath,,How is ADS a client of MediaMath if we bought them?,,
+3/18/2013,MediaMath,,What is Codex?,,
+3/18/2013,Ruby,,How do you sum the contents of an array?,,
+3/18/2013,Ruby,,What does inject do?,a.inject(:+),
+3/14/2013,Linux,,How do you create a symbolic link?,ln -s {path/to/executable} {name/of/link},
+3/14/2013,Linux,,How do you get all running processes?,ps aux,
+3/14/2013,Linux,,How do you unzip a .tar.bz2?,tar xvjf {file},
+3/14/2013,MySQL,,What's the difference between DATETIME and TIMESTAMP?,"DATETIME stores an arbitrary amount of dates. TIMESTAMP is just a front for the Unix timestamp. TIMESTAMP takes 4 bytes to store, DATETIME takes 8 bytes.",
+3/6/2013,Linux,,How do you stop a cron job that is running?,"Find out what the process id of the cron job is, and kill -9 on that process id.",
+3/6/2013,Programming-General,,When do you use a cache?,,
+3/6/2013,Programming-General,,What is a cache?,"Two main types--memory cache and disk cache. memory cache is held in SRAM, as opposed to DRAM. SRAM is faster. Current computers use L2 or L3 cache. When accesses are made from disk, the most recent contents are kept in memory.",
+3/5/2013,Adroit,,What should you do before deploying code to production servers?,make sure it works?,
+3/5/2013,Linux,,How do you find out what cron jobs are running?,ps -ef | grep bash,
+3/5/2013,Linux,,"When you run ps, there are two process ids listed for each process. what is the difference between them?",the first is the process's pid. the second is that process's parent pid,
+3/5/2013,PHP,,What do you use to encode urls?,"urlencode(), duh",
+3/4/2013,Linux,,How do you determine your system's processor type?,"cat /proc/cpuinfo for procesor info, uname -a for operating system type",http://www.optilabs.eu/en/blog/detail/best-ways-to-find-linux-cpu-information-how-to-get-linux-processor-info
+3/4/2013,Programming,,Name the 5 software domains,"web development, mobile applications, desktop applications, scientific programming, windows deployment. this is not an exhaustive list.",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Programming-General,,What does first class function mean?,"this means that functions are treated as first-class citizens. that is, they can be passed as arguments, they can be returned from other functions, just like objects and other data structures are.",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Programming-Optimization,,What is the problem with dynamic typing?,"No problem. optimization is done with tracing JIT's, method JITs, and predictive type inferencers",
+3/4/2013,Programming-Optimization,,What is a JIT?,stands for Just In Time.,
+3/4/2013,Programming-Optimization,,"What is faster, reading a field from a struct in C, or reading an attribute in Python?","apparently, they are both the same speed",
+3/4/2013,Programming-Optimization,,"What two things, broadly, cause slowness?",data structures and algorithms,
+3/4/2013,Programming-Optimization,,Are hashes and objects the same thing?,err... no.,
+3/4/2013,Programming-Optimization,,"Name three things that take time in programming. (sorry, I'm still learning how to write questions.)","hash table lookups, allocations, copying",
+3/4/2013,Programming-Optimization,,Why is python slower than c in a function that returns an array of squares?,"because on each pass of the loop, python reallocates the side of the array, whereas this is done beforehand in C",
+3/4/2013,Programming-Optimization,,Why can't we just make Ruby/Python/JS faster?,"because we're missing APIs for this. not sure what this means, exactly",
+3/4/2013,Programming-Optimization,,Why are APIs necessary for Python/Ruby/Javascript?,apis are needed in order to preallocate for data,
+3/4/2013,Python,,What is Python's version of an array?,a list,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,What is Python's version of a hash?,a list,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,What is a map?,"it takes two arguments, first is a method name, second is a list. it applies the method to each member of the list.",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,What is a filter?,"similar to a map, it takes two arguments, a method name, and a list. the method is a boolean method, and the filter returns all members of the list that return true when passed to the method.",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,What is an anonymous function?,"used in maps and filters, they are defined inline with the map/filter arguments",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,"With optional arguments, how are method calls made?","they can be made by omitting them, by specifying arg = param in the arg list, or by inputting them in the list as usual.",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,Are there blocks in python?,no,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,How is Python's map function superior to Ruby's?,"It forces the coder to factor things out into granular methods. much easier to read and fix, more maintainable",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,Does Python support inner methods?,yes,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,What is a tuple?,it is a list that can't change,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,How is Python's importing more fine-grained?,"You don't import huge libraries, you import the pieces you need. You say 'from xyzlib import somemethod'. you can also import any number of methods from a module",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,What values evaluate to false?,"0,{},None,(nil),[],(),''",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,What takes the place of Rubys Enumerable functionality?,"built in functions like map, reduce, filter",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,Are case statements supported?,No. if-else instead.,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,Are there default return values in Python?,no,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,What is a default argument to all methods?,self,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,"Are there module mixins, as in Ruby?",no,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Python,,Why might Python be superior?,1. bigger community 2. more consistent syntax 3. the source of imported functionality is obvious 4. explicit class & method structure makes code easier to follow,
+3/4/2013,Regular Expressions,,What does [/w+-d+/] mean?,"arbitrary number of letters, then a hyphen, then an arbitrary number of integers",
+3/4/2013,Ruby-Usage,,How can you emulate first-class functions in Ruby?,using procs,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Ruby-Usage,,What is a proc?,it is an object that calls a function with fixed arguments. see the proc description page,https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/4/2013,Ruby-Usage,,What is the Enumerable map method?,"it is a block method, and it returns an Enumerable with each member of the original Enumerable applied to the code specified in the block",https://speakerdeck.com/mleone/python-for-ruby-programmers
+3/1/2013,Ruby,,What's the difference between a do block and a {||} block?,"do-end seems to be used when you don't want to do anything with the return value of the block, braces are used when you do want to do something with it",
+3/1/2013,Ruby-Core,,"When you call a method inside a method such as self.method, and this is done within a self.method, which method is getting called, an object method, or a class method?",,
+3/1/2013,Ruby-Usage,,How do you print leading zeros?,,
+3/1/2013,Ruby-Usage,,"What does each part of < ""%03d"" % 5 > mean?","Left side is a printf format string, right side is the value to put into those spaces. 03 means pad the number to 3 spaces",
+3/1/2013,Ruby-Usage,,What does the * in [*1..30] do?,,
+5/30/2012,Computer Architecture,Memory,What is UMA? What is NUMA?,"UMA is uniform memory access. NUMA is non-uniform memory access. in UMA, all processors access memory via a shared bus. in NUMA, each processor has its own memory block it can access, and can access other processors' memory blocks via a bus.",
+5/30/2012,Computer Architecture,Memory,What is processor affinity?,"It comes up in NUMA, where memory is associated with processors. The problem is when a thread is moved to another processor, without the memory moving with it. Processor affinity means that processors do not lose the local memory they're working with.",
+5/30/2012,Computer Architecture,Memory,What is data placement? What is optimal data placement?,"data placement refers to where the data sits in memory with relation to the processor. The more often that data can effectively be placed in memory local to the processor that needs it, the more overall access time will benefit from the architecture.",

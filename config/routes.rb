@@ -1,6 +1,7 @@
 Flashcardizer::Application.routes.draw do
-  get "home/home"
   root :to => 'home#home'
+  get "home/home"
+  post "/upload" => "home#upload"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

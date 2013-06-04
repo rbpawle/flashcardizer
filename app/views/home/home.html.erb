@@ -1,9 +1,15 @@
 <div class="container">
+  <% flash.each do |key, value| %>
+  <div class="notice">
+    <%= value %>
+    <% flash.delete(key) %>
+  </div>
+  <% end %>
 	<div class="upload">
-    <%= f.fields_for @logo do |logo_f| %>
-      <%= logo_f.label :logo, "Logo" %>
-      <%= logo_f.file_field :logo, :name => ("campaign_image[" + @logo.image_type + "]") %>
-      <%= logo_f.submit "", :name => "upload_button[#{@campaign.id}]", :class => "uploadButton" %>
-    <% end %>
+		<%= form_tag '/upload', :multipart => true do %>
+		  <%= label_tag :csv, "CSV" %>
+		  <%= file_field_tag :csv, :name => "upload_file" %>
+		  <%= submit_tag "Submit brah", :name => "upload_button", :class => "uploadButton" %>
+		<% end %>
 	</div>
 </div>
