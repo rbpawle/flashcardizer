@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def home
-  	@welcome = "Welcome to your new home."
+  	@flashcard = Flashcard.new
   end
 end
