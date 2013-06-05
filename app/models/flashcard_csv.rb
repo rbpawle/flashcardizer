@@ -18,7 +18,7 @@ class FlashcardCSV < ActiveRecord::Base
   			category.save
   		end
 			Flashcard.new(:date => row["date"], :subject_id => subject.id, :category_id => category.id,
-				:question => row["question"], :answer => row["answer"], :source => "source", :from_csv => true,
+				:question => row["question"], :answer => row["answer"], :source => row["source"], :from_csv => true,
 				:subject => subject.subject, :category => category.category).save
   	end
   end
