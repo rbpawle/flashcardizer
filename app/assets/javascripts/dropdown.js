@@ -3,6 +3,7 @@ function selectedSubject()
 	var subject_id = $("#subject_id").children("option").filter(":selected").val();
 	$("#categories").children().hide();
 	$("#category_" + subject_id).show();
+	$(".category_flashcards").hide();
 	$("#category_button_" + subject_id).show();
 }
 
