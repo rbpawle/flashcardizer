@@ -20,11 +20,6 @@ function selectedCategory()
 			dont_show = i;
 		}
 	});
-	do {
-		show = Math.floor(Math.random() * $("#category_flashcards_" + category_id).children().length);
-	} 
-	while (show != dont_show);
-	$("#category_flashcards_" + category_id).children()[show].show();
 }
 
 function showAnswer(flashcard_answer_identifier)
