@@ -18,19 +18,20 @@
 	<div id="categories">
 		<% @subjects.each do |s| %>
 			<% c = @categories[s.id] %>
-			<%= collection_select(:category, s.id, c, :id, :category, options ={}, html_options={:onchange=>"selectedCategory()", :hidden => true}) %>
-			<%= button_tag "Let's reinforce some knowledge.", :id => "category_button_" + s.id.to_s, :hidden => true, :onclick => "selectedCategory()" %>
+			<%= collection_select(:category, s.id, c, :id, :category, options ={}, html_options={:onchange=>"displayQuestion()", :hidden => true}) %>
+			<%= button_tag "Let's reinforce some knowledge.", :id => "category_button_" + s.id.to_s, :hidden => true, :onclick => "displayQuestion()" %>
 		<% end %>
 	</div>
 	<div id="flashcards">
 		<% @flashcards.each do |category_id, flashcards| %>
-		<div id="category_flashcards_<%= category_id %>" hidden="hidden">
+		<div class="category_flashcards" id="category_flashcards_<%= category_id %>" hidden="hidden">
+			<p>Questions in this section: <%= flashcards.length %></p>
 			<% flashcards.each do |flashcard| %>
-				<div id="flashcard_<%= flashcard.id %>">
+				<div class="unseen flashcard" id="flashcard_<%= flashcard.id %>">
 					<p class="flashcard_question">
 						<%= flashcard.question %>
 					</p>
-					<%= button_tag "Fuck it. Show me the answer.", :id => "show_answer_" + flashcard.id.to_s, :onclick => "showAnswer('#flashcard_answer_" + flashcard.id.to_s + "')" %>
+					<%= button_tag "Fuck it. Show me the answer.", :id => "show_answer_" + flashcard.id.to_s, :onclick => "toggleAnswer('#flashcard_answer_" + flashcard.id.to_s + "')" %>
 					<p class="flashcard_answer", id="flashcard_answer_<%= flashcard.id %>", hidden="hidden">
 						<%= flashcard.answer %>
 					</p>

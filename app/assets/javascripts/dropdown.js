@@ -6,23 +6,32 @@ function selectedSubject()
 	$("#category_button_" + subject_id).show();
 }
 
-function selectedCategory()
+function displayQuestion()
 {
-	subject_id = $("#subject_id").children("option").filter(":selected").val();
-	category_id = $("#category_" + subject_id).children("option").filter(":selected").val();
-	console.log(category_id);
-	$("#flashcards").children().hide();
-	$("#category_flashcards_" + category_id).show();
-	$("#category_flashcards_" + category_id).children().hide();
-	$("#category_flashcards_" + category_id).each(function() {
-		if($(this).is(":visible")) {
-			dont_show = i;
-		}
-	});
+	var subject_id = $("#subject_id").children("option").filter(":selected").val();
+	var category_id = $("#category_" + subject_id).children("option").filter(":selected").val();
+	var this_set = "#category_flashcards_" + category_id;
+	var unseen_class = "unseen";
+	n_unseen_cards = $(this_set).children("." + unseen_class).length;
+	if(n_unseen_cards == 0) {
+		$(this_set).children(".flashcard").addClass(unseen_class);
+		n_unseen_cards = $(this_set).children("." + unseen_class).length;
+	}
+	var r = Math.floor(Math.random() * n_unseen_cards);
+	card_to_show = $(this_set).children("." + unseen_class).eq(r);
+	card_to_show.removeClass(unseen_class);
+	//hide all category_flashcards, show this category_flashcards, hide all flashcards, show the card_to_show
+	$(".category_flashcards").hide();
+	$(this_set).show();
+	$(".flashcard").hide();
+	card_to_show.show();
 }
 
-function showAnswer(flashcard_answer_identifier)
+function toggleAnswer(flashcard_answer_identifier)
 {
-	console.log(flashcard_answer_identifier);
-	$(flashcard_answer_identifier).show();
+	if($(flashcard_answer_identifier).is(":visible")) {
+		$(flashcard_answer_identifier).hide();
+	} else {
+		$(flashcard_answer_identifier).show();
+	}
 }
