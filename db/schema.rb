@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130605121918) do
+ActiveRecord::Schema.define(:version => 20130605175230) do
 
   create_table "categories", :force => true do |t|
     t.string   "subject"
@@ -37,6 +37,8 @@ ActiveRecord::Schema.define(:version => 20130605121918) do
     t.integer  "subject_id"
     t.integer  "category_id"
     t.boolean  "from_csv"
+    t.string   "subject"
+    t.string   "category"
   end
 
   create_table "subjects", :force => true do |t|
