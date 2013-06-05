@@ -5,6 +5,7 @@
     <% flash.delete(key) %>
   </div>
   <% end %>
+  <!--
 	<div class="upload">
 		<%= form_tag '/upload', :multipart => true do %>
 		  <%= label_tag :csv, "CSV" %>
@@ -12,6 +13,7 @@
 		  <%= submit_tag "Submit brah", :name => "upload_button", :class => "uploadButton" %>
 		<% end %>
 	</div>
+	-->
 	<div id="subjects">
 		<%= collection_select(:subject, :id, @subjects, :id, :subject, options ={}, html_options={:onchange=>"selectedSubject('show')"}) %>
 	</div>
