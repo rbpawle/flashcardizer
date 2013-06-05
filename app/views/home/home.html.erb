@@ -12,9 +12,31 @@
 		  <%= submit_tag "Submit brah", :name => "upload_button", :class => "uploadButton" %>
 		<% end %>
 	</div>
-	<div>
+	<div id="subjects">
+		<%= collection_select(:subject, :id, @subjects, :id, :subject, options ={}, html_options={:onchange=>"selectedSubject()"}) %>
+	</div>
+	<div id="categories">
 		<% @subjects.each do |s| %>
-		<p><%= s %></p>
+			<% c = @categories[s.id] %>
+			<%= collection_select(:category, s.id, c, :id, :category, options ={}, html_options={:onchange=>"selectedCategory()", :hidden => true}) %>
+			<%= button_tag "Let's reinforce some knowledge.", :id => "category_button_" + s.id.to_s, :hidden => true, :onclick => "selectedCategory()" %>
+		<% end %>
+	</div>
+	<div id="flashcards">
+		<% @flashcards.each do |category_id, flashcards| %>
+		<div id="category_flashcards_<%= category_id %>" hidden="hidden">
+			<% flashcards.each do |flashcard| %>
+				<div id="flashcard_<%= flashcard.id %>">
+					<p class="flashcard_question">
+						<%= flashcard.question %>
+					</p>
+					<%= button_tag "Fuck it. Show me the answer.", :id => "show_answer_" + flashcard.id.to_s, :onclick => "showAnswer('#flashcard_answer_" + flashcard.id.to_s + "')" %>
+					<p class="flashcard_answer", id="flashcard_answer_<%= flashcard.id %>", hidden="hidden">
+						<%= flashcard.answer %>
+					</p>
+				</div>
+			<% end %>
+		</div>
 		<% end %>
 	</div>
 </div>
