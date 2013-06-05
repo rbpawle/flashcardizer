@@ -14,7 +14,6 @@ function selectedCategory()
 	$("#flashcards").children().hide();
 	$("#category_flashcards_" + category_id).show();
 	$("#category_flashcards_" + category_id).children().hide();
-	var dont_show = 0;
 	$("#category_flashcards_" + category_id).each(function() {
 		if($(this).is(":visible")) {
 			dont_show = i;
