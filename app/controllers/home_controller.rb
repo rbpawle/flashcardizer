@@ -48,6 +48,5 @@ class HomeController < ApplicationController
 					:subject_id => subject.id, :date => Date.today).save
 			end
 		end
-  	redirect_to "/"
   end
 end

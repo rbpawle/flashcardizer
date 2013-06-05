@@ -78,15 +78,14 @@ function send_create_request_ajax() {
 	$('form').submit(function() {
 		var valuesToSubmit = $(this).serialize();
 		console.log($(this));
-		url_dest = $(this).attr('action').toString();
-		$.post({
-		    url: url_dest, //sumbits it to the given url of the form
+		$.ajax({
+		    url: $(this).attr('action'), //sumbits it to the given url of the form
 		    data: valuesToSubmit,
 		    dataType: "JSON", // you want a difference between normal and ajax-calls, and json is standard
-		}).success(function(json){
-			console.log("success");
-		    //act on result.
+		    type: $(this).attr('method')
 		});
+		$("#flashcard_question").val("");
+		$("#flashcard_answer").val("");
 		return false; // prevents normal behaviour
 	});
 }
