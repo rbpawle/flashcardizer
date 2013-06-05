@@ -73,3 +73,20 @@ function editFlashcard(flashcard_id) {
 	$("#flashcard_question").val($("#flashcard_question_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
 	$("#flashcard_answer").val($("#flashcard_answer_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
 }
+
+function send_create_request_ajax() { 
+	$('form').submit(function() {
+		var valuesToSubmit = $(this).serialize();
+		console.log($(this));
+		url_dest = $(this).attr('action').toString();
+		$.post({
+		    url: url_dest, //sumbits it to the given url of the form
+		    data: valuesToSubmit,
+		    dataType: "JSON", // you want a difference between normal and ajax-calls, and json is standard
+		}).success(function(json){
+			console.log("success");
+		    //act on result.
+		});
+		return false; // prevents normal behaviour
+	});
+}

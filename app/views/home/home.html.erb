@@ -49,13 +49,13 @@
 			<% end %>
 		</div>
 		<div id="update_form">
-			<%= form_for @new_flashcard, :url => {:action => "create"} do |f| %>
+			<%= form_for @new_flashcard, :url => {:action => "create"}, :method => "post" do |f| %>
 				<%= f.text_field :id, options = {:hidden => true} %>
 				<div class="update_subject_field"><div class="update_field_label">Subject: <%= f.text_field :subject %></div></div>
 				<div class="update_category_field"><div class="update_field_label">Category: <%= f.text_field :category %></div></div>
 				<div class="update_question_field"><div class="update_field_label">Question: <%= f.text_area :question, :size => "100x4" %></div></div>
 				<div class="update_answer_field"><div class="update_field_label">Answer: <%= f.text_area :answer, :size => "100x4"%></div></div>
-				<div class="update_submit"><%= f.submit "Create" %></div>
+				<div class="update_submit"><%= f.submit "Create", :onclick => "send_create_request_ajax()"  %></div>
 			<% end %>
 		</div>
 	</div>
