@@ -51,17 +51,19 @@ function displayQuestion()
 	card_to_show.show();
 }
 
-function toggleAnswer(flashcard_answer_identifier)
+function toggleAnswer(flashcard_id)
 {
-	splited = flashcard_answer_identifier.split("_");
-	flashcard_id = splited[splited.length - 1];
-	edit_button_identifier = "#edit_flashcard_" + flashcard_id
-	if($(flashcard_answer_identifier).is(":visible")) {
-		$(flashcard_answer_identifier).hide();
-		$(edit_button_identifier).hide();
+	var answer_identifier = "#flashcard_answer_shown_" + flashcard_id;
+	var button_identifier = "#edit_flashcard_" + flashcard_id;
+	var source_identifier = "#flashcard_source_shown_" + flashcard_id;
+	if($(answer_identifier).is(":visible")) {
+		$(answer_identifier).hide();
+		$(button_identifier).hide();
+		$(source_identifier).hide();
 	} else {
-		$(flashcard_answer_identifier).show();
-		$(edit_button_identifier).show();
+		$(answer_identifier).show();
+		$(button_identifier).show();
+		$(source_identifier).show();
 	}
 }
 
@@ -72,6 +74,7 @@ function editFlashcard(flashcard_id) {
 	$("#flashcard_category").val($("#category_" + subject_id).children("option").filter(":selected").html().replace(/&amp;/g, '&'));
 	$("#flashcard_question").val($("#flashcard_question_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
 	$("#flashcard_answer").val($("#flashcard_answer_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
+	$("#flashcard_source").val($("#flashcard_source_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
 }
 
 function send_create_request_ajax() { 

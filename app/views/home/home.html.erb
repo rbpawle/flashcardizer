@@ -31,8 +31,9 @@
 			<% flashcards.each do |flashcard| %>
 				<div class="unseen flashcard" id="flashcard_<%= flashcard.id %>">
 					<div class="flashcard_question" id="flashcard_question_shown_<%= flashcard.id %>"><%= flashcard.question %></div>
-					<%= button_tag "Fuck it. Show me the answer.", :id => "show_answer_" + flashcard.id.to_s, :onclick => "toggleAnswer('#flashcard_answer_shown_" + flashcard.id.to_s + "')" %>
-					<div class="flashcard_answer", id="flashcard_answer_shown_<%= flashcard.id %>", hidden="hidden"><%= flashcard.answer %><div class="source"><%= flashcard.source %></div></div>
+					<%= button_tag "Fuck it. Show me the answer.", :id => "show_answer_" + flashcard.id.to_s, :onclick => "toggleAnswer('" + flashcard.id.to_s + "')" %>
+					<div class="flashcard_answer", id="flashcard_answer_shown_<%= flashcard.id %>", hidden="hidden"><%= flashcard.answer %></div>
+					<div class="flashcard_source", id="flashcard_source_shown_<%= flashcard.id %>", hidden="hidden"><%= flashcard.source %></div>
 						<%= button_tag "That's not even close to right. Let me edit it.", :id => "edit_flashcard_" + flashcard.id.to_s, :hidden => true, :onclick => "editFlashcard(" + flashcard.id.to_s + ")" %>
 				</div>
 			<% end %>
