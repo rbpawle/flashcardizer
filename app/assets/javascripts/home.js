@@ -44,6 +44,11 @@ function displayQuestion()
 	var r = Math.floor(Math.random() * n_unseen_cards);
 	card_to_show = $(this_set).children("." + unseen_class).eq(r);
 	card_to_show.removeClass(unseen_class);
+	//update question number
+	var last_question_n = parseInt($("#current_question_number_" + category_id).html());
+	var total_questions = parseInt($("#total_questions_for_" + category_id).html());
+	var next_question_n = (last_question_n % total_questions) + 1;
+	$("#current_question_number_" + category_id).html(next_question_n);
 	//hide all category_flashcards, show this category_flashcards, hide all flashcards, show the card_to_show
 	$(".category_flashcards").hide();
 	$(this_set).show();

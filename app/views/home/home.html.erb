@@ -27,7 +27,7 @@
 	<div id="flashcards">
 		<% @flashcards.each do |category_id, flashcards| %>
 		<div class="category_flashcards" id="category_flashcards_<%= category_id %>" hidden="hidden">
-			<div>Questions in this section: <%= flashcards.length %></div>
+			<div class="question_numbers">Question <span class="current_question_number" id="current_question_number_<%= category_id %>">0</span> of <span class="category_total_questions" id="total_questions_for_<%= category_id %>"><%= flashcards.length %></span>.</div>
 			<% flashcards.each do |flashcard| %>
 				<div class="unseen flashcard" id="flashcard_<%= flashcard.id %>">
 					<div class="flashcard_question" id="flashcard_question_shown_<%= flashcard.id %>"><%= flashcard.question %></div>
