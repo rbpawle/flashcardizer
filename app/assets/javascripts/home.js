@@ -77,8 +77,8 @@ function editFlashcard(flashcard_id) {
 	$("#flashcard_source").val($("#flashcard_source_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
 }
 
-function send_create_request_ajax() { 
-	$('form').submit(function() {
+function send_create_request_ajax() {
+	$('form').unbind('submit').submit(function() {
 		var valuesToSubmit = $(this).serialize();
 		console.log($(this));
 		$.ajax({

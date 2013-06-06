@@ -30,6 +30,9 @@ class HomeController < ApplicationController
   		params[:flashcard][:question].empty? || params[:flashcard][:answer].empty?
   		flash[:notice] = "Something's missing..."
   	else
+			#delete at provided id
+			f = Flashcard.where(:id => params[:flashcard][:id])
+			f[0].delete unless f.empty?
 			subject = Subject.where(:subject => params[:flashcard][:subject]).first
 			if subject.nil?
 				subject = Subject.new(:subject => params[:flashcard][:subject])
