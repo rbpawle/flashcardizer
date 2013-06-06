@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   	@categories = {}
   	@flashcards = {}
   	@subjects.each do |s|
-  		@categories[s.id] = Category.where(:subject => s.subject).sort! {|a,b| a.subject.downcase <=> b.subject.downcase }
+  		@categories[s.id] = Category.where(:subject => s.subject).sort! {|a,b| a.category.downcase <=> b.category.downcase }
   	end
   	@categories.each do |subject_id, categories|
   		categories.each do |category|
