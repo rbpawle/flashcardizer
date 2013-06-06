@@ -26,29 +26,30 @@ class HomeController < ApplicationController
   end
   
   def create
-  	if params[:flashcard][:subject].empty? || params[:flashcard][:category].empty? ||
-  		params[:flashcard][:question].empty? || params[:flashcard][:answer].empty?
+  	p = params[:flashcard]
+  	if p[:subject].empty? || p[:category].empty? ||
+  		p[:question].empty? || p[:answer].empty?
   		flash[:notice] = "Something's missing..."
   	else
 			#delete at provided id
-			f = Flashcard.where(:id => params[:flashcard][:id])
+			f = Flashcard.where(:id => p[:id])
 			f[0].delete unless f.empty?
-			subject = Subject.where(:subject => params[:flashcard][:subject]).first
+			subject = Subject.where(:subject => p[:subject]).first
 			if subject.nil?
-				subject = Subject.new(:subject => params[:flashcard][:subject])
+				subject = Subject.new(:subject => p[:subject])
 				subject.save
 			end
-			category = Category.where(:subject => params[:flashcard][:subject], :category => params[:flashcard][:category]).first
+			category = Category.where(:subject => p[:subject], :category => p[:category]).first
 			if category.nil?
-				category = Category.new(:subject => params[:flashcard][:subject], :category => params[:flashcard][:category])
+				category = Category.new(:subject => p[:subject], :category => p[:category])
 				category.save
 			end
-			flashcard = Flashcard.where(:subject => params[:flashcard][:subject], :category => params[:flashcard][:category],
-				:question => params[:flashcard][:question], :answer => params[:flashcard][:answer])
+			flashcard = Flashcard.where(:subject => p[:subject], :category => p[:category],
+				:question => p[:question], :answer => p[:answer], :source => p[:source])
 			if flashcard.empty?
-				Flashcard.new(:subject => params[:flashcard][:subject], :category => params[:flashcard][:category],
-					:question => params[:flashcard][:question], :answer => params[:flashcard][:answer], :category_id => category.id,
-					:subject_id => subject.id, :date => Date.today).save
+				Flashcard.new(:subject => p[:subject], :category => p[:category],
+					:question => p[:question], :answer => p[:answer], :category_id => category.id,
+					:subject_id => subject.id, :source => p[:source], :date => Date.today).save
 			end
 		end
   end
