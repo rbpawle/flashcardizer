@@ -19,7 +19,7 @@
 	font-size:large;
 }
 
-.container {
+#container {
 	margin-top:70px;
 	margin-left:70px;
 	margin-right:70px;
@@ -49,12 +49,25 @@
 
 .question_prefix .answer_prefix .source_prefix {
 	display:inline-block;
+	color:red;
+	float:left;
 	width:50px;
 	padding:10px;
 }
 
 .question .answer .source {
 	display:inline-block;
+	float:left;
 	width:100px;
 	padding:10px;
+}
+
+ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+
+li {
+	display:inline;
 }

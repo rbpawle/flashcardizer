@@ -21,6 +21,7 @@ Be able to assign big idea, detail to question
 Search box
 Login
 Graph of questions/day, etc
+Tabs between question and add question
 
 ====Bugs====
 The category dropdown seems to be updating when page is refreshed, but the category for add isn't. (not sure if this problem persists.)

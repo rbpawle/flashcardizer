@@ -62,10 +62,12 @@ function displayQuestion()
 		card_to_show = $(this_set).children("." + unseen_class).eq(r);
 	} while(card_to_show.attr('id') == last_seen_card_id);
 	card_to_show.removeClass(unseen_class);
-	card_to_show.addClass(last_seen_class);
+	var total_questions = parseInt($("#total_questions_for_" + category_id).html());
+	if(total_questions > 1) {//we don't want to add last_seen if there is only one question, that gives us an infinite loop
+		card_to_show.addClass(last_seen_class);
+	}
 	//update question number
 	var last_question_n = parseInt($("#current_question_number_" + category_id).html());
-	var total_questions = parseInt($("#total_questions_for_" + category_id).html());
 	var next_question_n = (last_question_n % total_questions) + 1;
 	$("#current_question_number_" + category_id).html(next_question_n);
 	//hide all category_flashcards, show this category_flashcards, hide all flashcards, show the card_to_show
@@ -87,16 +89,16 @@ function toggleAnswer(flashcard_id)
 
 function hideAnswer(flashcard_id) {
 	$("#flashcard_answer_shown_"	+ flashcard_id).hide();
-	$("#edit_flashcard_"					+ flashcard_id).hide();
+	$("#update_flashcard_"				+ flashcard_id).hide();
 	$("#flashcard_source_shown_"	+ flashcard_id).hide();
-	$("#show_answer_"							+ flashcard_id).html("Fuck it. Show me the answer.");
+	$("#show_answer_"							+ flashcard_id).show();
 }
 
 function showAnswer(flashcard_id) {
 	$("#flashcard_answer_shown_"	+ flashcard_id).show();
-	$("#edit_flashcard_"					+ flashcard_id).show();
+	$("#update_flashcard_"				+ flashcard_id).show();
 	$("#flashcard_source_shown_"	+ flashcard_id).show();
-	$("#show_answer_"							+ flashcard_id).html("Ah fuck, I knew that. Let me try again.");
+	$("#show_answer_"							+ flashcard_id).hide();
 }
 
 function editFlashcard(flashcard_id) {
@@ -107,6 +109,7 @@ function editFlashcard(flashcard_id) {
 	$("#flashcard_question").val($("#flashcard_question_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
 	$("#flashcard_answer").val($("#flashcard_answer_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
 	$("#flashcard_source").val($("#flashcard_source_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
+	showWindow("#update_window");
 }
 
 function send_create_request_ajax() {
@@ -122,4 +125,9 @@ function send_create_request_ajax() {
 		$("#flashcard_answer").val("");
 		return false; // prevents normal behaviour
 	});
+}
+
+function showWindow(window) {
+	$("#container").children(".window").hide();
+	$(window).show();
 }
