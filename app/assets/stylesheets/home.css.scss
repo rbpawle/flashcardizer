@@ -2,6 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.subject_dropdown {
+	width: 400px;
+}
+
+.category_dropdown {
+	width: 400px;
+}
+
 .update_field_label {
 	width:100px;
 	display:inline;
@@ -29,6 +37,24 @@
 	margin-bottom:10px;
 }
 
+.flashcard_source {
+	margin-top:10px;
+	margin-left:10px;
+	margin-bottom:10px;
+}
+
 .notice {
 	color:red;
+}
+
+.question_prefix .answer_prefix .source_prefix {
+	display:inline-block;
+	width:50px;
+	padding:10px;
+}
+
+.question .answer .source {
+	display:inline-block;
+	width:100px;
+	padding:10px;
 }

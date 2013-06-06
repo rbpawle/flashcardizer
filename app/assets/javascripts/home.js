@@ -6,7 +6,6 @@ function selectedSubject(origin)
 		$("#categories").children().hide();
 		$("#category_" + subject_id).show();
 		$(".category_flashcards").hide();
-		$("#category_button_" + subject_id).show();
 		break;
 	case "update":
 		var subject_id = $("#subject_update_id").children("option").filter(":selected").val();
@@ -19,12 +18,15 @@ function selectedSubject(origin)
 }
 
 function selectedCategory(origin) {
-	var subject_id = $("#subject_update_id").children("option").filter(":selected").val();
-	var category_id = $("#category_update_" + subject_id).children("option").filter(":selected").val();
 	switch(origin){
 	case "show":
-		break; //nothing to do yet
+		var subject_id = $("#subject_id").children("option").filter(":selected").val();
+		$("#next_question_button_" + subject_id).show();
+		displayQuestion();
+		break;
 	case "update":
+		var category_id = $("#category_update_" + subject_id).children("option").filter(":selected").val();
+		var subject_id = $("#subject_update_id").children("option").filter(":selected").val();
 		$("#flashcard_category").val($("#category_update_" + subject_id).children("option").filter(":selected").html());
 		break;
 	}
@@ -35,15 +37,32 @@ function displayQuestion()
 	var subject_id = $("#subject_id").children("option").filter(":selected").val();
 	var category_id = $("#category_" + subject_id).children("option").filter(":selected").val();
 	var this_set = "#category_flashcards_" + category_id;
+	//among unseen flashcards in this round, pick one at random that hasn't been seen.
+	//also make sure we don't show the last-seen card this time.
+	var last_seen_class = "last_seen";
+	var last_seen_card = $(this_set).children("." + last_seen_class);
+	if (last_seen_card.length == 0) {
+		var last_seen_card_id = -1;
+	}else {
+		//make sure the answer is hidden
+		var last_seen_card_id = last_seen_card.attr('id');
+		split_last_card = last_seen_card_id.split("_");
+		flashcard_id = split_last_card[split_last_card.length - 1];
+		hideAnswer(flashcard_id);
+		$(this_set).children().removeClass(last_seen_class);
+	}
 	var unseen_class = "unseen";
-	n_unseen_cards = $(this_set).children("." + unseen_class).length;
-	if(n_unseen_cards == 0) {
+	var n_unseen_cards = $(this_set).children("." + unseen_class).length;
+	if(n_unseen_cards == 0) { //if none unseen, make all unseen
 		$(this_set).children(".flashcard").addClass(unseen_class);
 		n_unseen_cards = $(this_set).children("." + unseen_class).length;
 	}
-	var r = Math.floor(Math.random() * n_unseen_cards);
-	card_to_show = $(this_set).children("." + unseen_class).eq(r);
+	do {
+		var r = Math.floor(Math.random() * n_unseen_cards);
+		card_to_show = $(this_set).children("." + unseen_class).eq(r);
+	} while(card_to_show.attr('id') == last_seen_card_id);
 	card_to_show.removeClass(unseen_class);
+	card_to_show.addClass(last_seen_class);
 	//update question number
 	var last_question_n = parseInt($("#current_question_number_" + category_id).html());
 	var total_questions = parseInt($("#total_questions_for_" + category_id).html());
@@ -58,18 +77,26 @@ function displayQuestion()
 
 function toggleAnswer(flashcard_id)
 {
-	var answer_identifier = "#flashcard_answer_shown_" + flashcard_id;
-	var button_identifier = "#edit_flashcard_" + flashcard_id;
-	var source_identifier = "#flashcard_source_shown_" + flashcard_id;
+	var answer_identifier = "#flashcard_answer_shown_"	+ flashcard_id;
 	if($(answer_identifier).is(":visible")) {
-		$(answer_identifier).hide();
-		$(button_identifier).hide();
-		$(source_identifier).hide();
+		hideAnswer(flashcard_id);
 	} else {
-		$(answer_identifier).show();
-		$(button_identifier).show();
-		$(source_identifier).show();
+		showAnswer(flashcard_id);
 	}
+}
+
+function hideAnswer(flashcard_id) {
+	$("#flashcard_answer_shown_"	+ flashcard_id).hide();
+	$("#edit_flashcard_"					+ flashcard_id).hide();
+	$("#flashcard_source_shown_"	+ flashcard_id).hide();
+	$("#show_answer_"							+ flashcard_id).html("Fuck it. Show me the answer.");
+}
+
+function showAnswer(flashcard_id) {
+	$("#flashcard_answer_shown_"	+ flashcard_id).show();
+	$("#edit_flashcard_"					+ flashcard_id).show();
+	$("#flashcard_source_shown_"	+ flashcard_id).show();
+	$("#show_answer_"							+ flashcard_id).html("Ah fuck, I knew that. Let me try again.");
 }
 
 function editFlashcard(flashcard_id) {
@@ -85,7 +112,6 @@ function editFlashcard(flashcard_id) {
 function send_create_request_ajax() {
 	$('form').unbind('submit').submit(function() {
 		var valuesToSubmit = $(this).serialize();
-		console.log($(this));
 		$.ajax({
 		    url: $(this).attr('action'), //sumbits it to the given url of the form
 		    data: valuesToSubmit,

@@ -3,15 +3,10 @@ TODO:
 ====Nuts & Bolts====
 Make 'create' ajax call more dynamic. i.e. update the list of flashcards, as well as subject/category dropdowns.
 
-
 ====Aesthetics====
 Adjust margins
 
 ====Interface====
-Make subject and category dropdowns visible at first.
-Button to show question shouldn't appear under category has been selected. The first question should appear at that time.
-Change "let's generate knowledge" to something that makes sense.
-Make it so that question reel never displays last-displayed question
 Show date of question
 Change 'category' to 'topic'
 Confirm added question
