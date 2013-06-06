@@ -2,27 +2,71 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.subject_dropdown {
-	width: 400px;
-}
-
-.category_dropdown {
-	width: 400px;
-}
-
-.update_field_label {
-	width:100px;
-	display:inline;
-}
-
-.flashcard {
-	font-size:large;
-}
 
 #container {
 	margin-top:70px;
 	margin-left:70px;
 	margin-right:70px;
+}
+
+#tabs {
+	float: left;
+	border-bottom-width: 0;
+	margin: 0 0.5em 0 0;
+}
+
+//***nav bar***//
+#nav_bar {
+}
+
+ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+
+li {
+	display: inline;
+	margin: 0 0.5em 0 0;
+}
+a {
+}
+
+a:link, a:visited {
+	font-weight: bold;
+	font-family: sans-serif;
+	color: #000099;
+	background-color: #3399FF;
+	text-align: center;
+	padding: 6px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+a:hover, a:active {
+background-color: #0066FF;
+}
+
+.tab {
+	clear: both;
+	width: 800px;
+	padding-top: 20px;
+}
+
+/***flashcard tab***/
+.subject_dropdown {
+	width: 400px;
+	float:left;
+}
+
+.category_dropdown {
+	width: 400px;
+	float:left;
+}
+
+/***flashcards***/
+.flashcard {
+	font-size:large;
 }
 
 .flashcard_question {
@@ -43,10 +87,6 @@
 	margin-bottom:10px;
 }
 
-.notice {
-	color:red;
-}
-
 .question_prefix .answer_prefix .source_prefix {
 	display:inline-block;
 	color:red;
@@ -62,12 +102,11 @@
 	padding:10px;
 }
 
-ul {
-	list-style-type:none;
-	margin:0;
-	padding:0;
+.notice {
+	color:red;
 }
 
-li {
+.update_field_label {
+	width:100px;
 	display:inline;
 }

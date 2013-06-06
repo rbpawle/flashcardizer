@@ -109,7 +109,7 @@ function editFlashcard(flashcard_id) {
 	$("#flashcard_question").val($("#flashcard_question_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
 	$("#flashcard_answer").val($("#flashcard_answer_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
 	$("#flashcard_source").val($("#flashcard_source_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
-	showWindow("#update_window");
+	showTab("#update_tab");
 }
 
 function send_create_request_ajax() {
@@ -127,7 +127,7 @@ function send_create_request_ajax() {
 	});
 }
 
-function showWindow(window) {
-	$("#container").children(".window").hide();
-	$(window).show();
+function showTab(tab) {
+	$("#tabs").children().hide();
+	$(tab).show();
 }
