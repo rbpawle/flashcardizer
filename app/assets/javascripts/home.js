@@ -9,7 +9,7 @@ function selectedSubject(origin)
 		break;
 	case "update":
 		var subject_id = $("#subject_update_id").children("option").filter(":selected").val();
-		$("#categories_update").children().hide();
+		$(".update_category_dropdown").hide();
 		$("#category_update_" + subject_id).show();
 		//for update form
 		$("#flashcard_subject").val($("#subject_update_id").children("option").filter(":selected").html());
@@ -21,7 +21,8 @@ function selectedCategory(origin) {
 	switch(origin){
 	case "show":
 		var subject_id = $("#subject_id").children("option").filter(":selected").val();
-		$("#next_question_button_" + subject_id).show();
+		console.log("#next_question_button");
+		$("#next_question_button").show();
 		displayQuestion();
 		break;
 	case "update":
@@ -30,6 +31,14 @@ function selectedCategory(origin) {
 		$("#flashcard_category").val($("#category_update_" + subject_id).children("option").filter(":selected").html());
 		break;
 	}
+}
+
+function selectedDate() {
+	var date = $("#the_date_dropdown").children("option").filter(":selected").val();
+	console.log("trying to click #date_" + date);
+	$(document).ready(function(){
+		$("#date_" + date).trigger('click');
+	});
 }
 
 function displayQuestion()
@@ -106,9 +115,9 @@ function editFlashcard(flashcard_id) {
 	$("#flashcard_id").val(flashcard_id);
 	$("#flashcard_subject").val($("#subject_id").children("option").filter(":selected").html().replace(/&amp;/g, '&'));
 	$("#flashcard_category").val($("#category_" + subject_id).children("option").filter(":selected").html().replace(/&amp;/g, '&'));
-	$("#flashcard_question").val($("#flashcard_question_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
-	$("#flashcard_answer").val($("#flashcard_answer_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
-	$("#flashcard_source").val($("#flashcard_source_shown_" + flashcard_id).html().replace(/&amp;/g, '&'));
+	$("#flashcard_question").val($("#flashcard_question_text_" + flashcard_id).html().replace(/&amp;/g, '&'));
+	$("#flashcard_answer").val($("#flashcard_answer_text_" + flashcard_id).html().replace(/&amp;/g, '&'));
+	$("#flashcard_source").val($("#flashcard_source_text_" + flashcard_id).html().replace(/&amp;/g, '&'));
 	showTab("#update_tab");
 }
 
@@ -130,4 +139,12 @@ function send_create_request_ajax() {
 function showTab(tab) {
 	$("#tabs").children().hide();
 	$(tab).show();
+}
+
+function dropDownDates() {
+	if($("#the_date_dropdown").is(":visible")) {
+		$("#the_date_dropdown").hide();
+	} else {
+		$("#the_date_dropdown").show();
+	}
 }

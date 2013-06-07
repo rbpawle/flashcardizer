@@ -2,17 +2,22 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-#container {
-	margin-top:70px;
-	margin-left:70px;
-	margin-right:70px;
+$lightest_blue:#60b0d0;
+$light_blue:#3aa6d0;
+$mid_blue:#0b5fa5;
+body{
+	background-color: $lightest_blue;
+	font-family:sans-serif;
 }
 
-#tabs {
-	float: left;
-	border-bottom-width: 0;
-	margin: 0 0.5em 0 0;
+#container {
+	background-color:$mid_blue;
+	padding-top:3em;
+	padding-left:3em;
+	padding-right:3em;
+	max-width:50em;
+	min-height:50em;
+	border-radius:1em;
 }
 
 //***nav bar***//
@@ -23,13 +28,18 @@ ul {
 	list-style-type:none;
 	margin:0;
 	padding:0;
+	display:table;
 }
 
 li {
 	display: inline;
+	display:table-cell;
 	margin: 0 0.5em 0 0;
 }
-a {
+#nav_bar a {
+	display:block;
+	border-radius:0.5em;
+	margin:1em;
 }
 
 a:link, a:visited {
@@ -38,75 +48,123 @@ a:link, a:visited {
 	color: #000099;
 	background-color: #3399FF;
 	text-align: center;
-	padding: 6px;
 	text-decoration: none;
 	text-transform: uppercase;
+	padding: 1em;
 }
 
 a:hover, a:active {
-background-color: #0066FF;
+	background-color: #0066FF;
+}
+
+/***tabs content***/
+#tabs {
+	float: left;
+	border-bottom-width: 0;
+	margin: 0 0.5em 0 0;
+	padding-left:1em;
 }
 
 .tab {
 	clear: both;
-	width: 800px;
-	padding-top: 20px;
+}
+
+select, .button{
+	height:3em;
+	padding-left:2em;
+	padding-right:2em;
+	border-radius:2em;
+	margin:0.5em;
+	border:none;
 }
 
 /***flashcard tab***/
-.subject_dropdown {
-	width: 400px;
+#flashcard_dropdowns{
 	float:left;
+	display:table;
 }
 
-.category_dropdown {
-	width: 400px;
-	float:left;
+.flashcard_dropdown {
+	display:table-cell;
 }
 
-/***flashcards***/
+.subject_dropdown, category_dropdown {
+	float:left;
+	width:20em;
+}
+
+#the_date_dropdown {
+	position:absolute;
+}
+
+.the_date_dropdown_ul {
+	display:table;
+}
+
+.date_anchors{
+	display:table-row;
+}
+
+/***content of flashcards***/
+
+.category_flashcards{
+	float:left;
+	display:table none;
+}
+
 .flashcard {
 	font-size:large;
+	width:50em;
+	display:table;
+	display:table-row;
 }
 
-.flashcard_question {
-	margin-top:10px;
-	margin-left:10px;
-	margin-bottom:10px;
+.question, .answer, .source{
+	color:#89C16C;
 }
 
-.flashcard_answer {
-	margin-top:10px;
-	margin-left:10px;
-	margin-bottom:10px;
-}
-
-.flashcard_source {
-	margin-top:10px;
-	margin-left:10px;
-	margin-bottom:10px;
-}
-
-.question_prefix .answer_prefix .source_prefix {
-	display:inline-block;
-	color:red;
-	float:left;
-	width:50px;
-	padding:10px;
-}
-
-.question .answer .source {
-	display:inline-block;
-	float:left;
-	width:100px;
-	padding:10px;
+.question_prefix .answer_prefix .source_prefix{
 }
 
 .notice {
 	color:red;
 }
 
+/***update tab***/
+#update_form {
+	width:42em;
+}
+
 .update_field_label {
-	width:100px;
+	width:4em;
+	padding:1em;
+	float:left;
 	display:inline;
 }
+
+.update_subject, .update_category {
+	height:5em;
+}
+
+.update_field{
+	height:5em;
+}
+
+.text_box{
+	margin-top:1em;
+	height:2em;
+	width:20em;
+	float:right;
+	border:none;
+}
+
+.text_area{
+	height:5em;
+	width:42em;
+	border:none;
+}
+
+#create_button{
+	float:right;
+}
+

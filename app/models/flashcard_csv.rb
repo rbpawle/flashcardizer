@@ -1,4 +1,5 @@
 require 'csv'
+require 'fileutils'
 
 class FlashcardCSV < ActiveRecord::Base
   attr_accessible :csv, :name
@@ -19,5 +20,15 @@ class FlashcardCSV < ActiveRecord::Base
 				:question => row["question"], :answer => row["answer"], :source => row["source"], :from_csv => true,
 				:subject => subject.subject, :category => category.category).save
   	end
+  end
+  
+  def self.fix_csv_dates
+  	temp = File.open(Rails.root.to_s + "/corrected_tests.temp.csv", "w")
+  	CSV.foreach(Rails.root.to_s + "/corrected_tests.csv", :headers => ["date", "subject", "category", "question", "answer", "source"]) do |row|
+  		date_a = row["date"].split("/")
+  		new_date = date_a[2] + "-" + date_a[0] + "-" + date_a[1]
+  		temp << '"' + new_date + '","' + row["subject"].to_s.gsub('"', "'") + '","' + row["category"].to_s.gsub('"', "'") + '","' + row["question"].to_s.gsub('"', "'") + '","' + row["answer"].to_s.gsub('"', "'") + '","' + row["source"].to_s.gsub('"', "'") + "\"\n"
+  	end
+  	temp.close
   end
 end

@@ -5,7 +5,7 @@
     <% flash.delete(key) %>
   </div>
   <% end %>
-  <!--
+  
 	<div class="upload">
 		<%= form_tag '/upload', :multipart => true do %>
 		  <%= label_tag :csv, "CSV" %>
@@ -13,7 +13,7 @@
 		  <%= submit_tag "Submit brah", :name => "upload_button", :class => "uploadButton" %>
 		<% end %>
 	</div>
-	-->
+	
 	<div id="nav_bar">
 		<ul>
 			<li><a href="#" onclick="showTab('#flashcards_tab')">Flashcards</a></li>
@@ -22,34 +22,60 @@
 	</div>
 	<div id="tabs">
 		<div class="tab" id="flashcards_tab">
-			<div id="subjects">
-				<%= collection_select(:subject, :id, @subjects, :id, :subject, options = {:prompt => "Subject"}, html_options = {:class => "subject_dropdown", :onchange=>"selectedSubject('show')"}) %>
-			</div>
-			<div id="categories">
-				<% @subjects.each do |s| %>
-					<% c = @categories[s.id] %>
-					<%= collection_select(:category, s.id, c, :id, :category, options = {:prompt => "Category"}, html_options = {:class => "category_dropdown", :onchange=>"selectedCategory('show')", :hidden => true}) %>
-					<%= button_tag "Hit me with another.", :id => "next_question_button_" + s.id.to_s, :hidden => true, :onclick => "displayQuestion()" %>
-				<% end %>
+			<div id="flashcard_dropdowns">
+				<div class="date_dropdown flashcard_dropdown" >
+					<button id="the_date_button" name="dates" onclick="dropDownDates()">Dates</button>
+					<div id="the_date_dropdown" hidden="hidden">
+						<ul id="the_date_dropdown_ul" hidden="hidden">
+								<a class="date_anchors" id="date_all" href="/">All</a>
+							<% @dates.each do |d| %>
+								<a class="date_anchors" id="date_<%= d.to_s %>" href="/?date=<%= d.to_s %>" ><%= d.to_s %></a>
+							<% end %>
+						</ul>
+					</div>
+				</div>
+				<div id="subjects" class="flashcard_dropdown">
+					<%= collection_select(:subject, :id, @subjects, :id, :subject, options = {:prompt => "Subject"}, html_options = {:class => "subject_dropdown", :onchange=>"selectedSubject('show')"}) %>
+				</div>
+				<div id="categories" class="flashcard_dropdown">
+					<select class="category_dropdown update_category_dropdown"><option>Category (Select Subject first)</option></select>
+					<% @subjects.each do |s| %>
+						<% c = @categories[s.id] %>
+						<%= collection_select(:category, s.id, c, :id, :category, options = {:prompt => "Category"}, html_options = {:class => "category_dropdown", :onchange=>"selectedCategory('show')", :hidden => true}) %>
+					<% end %>
+				</div>
 			</div>
 			<div id="flashcards">
 				<% @flashcards.each do |category_id, flashcards| %>
 				<div class="category_flashcards" id="category_flashcards_<%= category_id %>" hidden="hidden">
-					<div class="question_numbers">Question <span class="current_question_number" id="current_question_number_<%= category_id %>">0</span> of <span class="category_total_questions" id="total_questions_for_<%= category_id %>"><%= flashcards.length %></span>.</div>
+					<span class="question_numbers">
+						Question
+						<span class="current_question_number" id="current_question_number_<%= category_id %>">0</span>
+						of
+						<span class="category_total_questions" id="total_questions_for_<%= category_id %>"><%= flashcards.length %></span>.</span>
 					<% flashcards.each do |flashcard| %>
 						<div class="unseen flashcard" id="flashcard_<%= flashcard.id %>">
-							<div class="flashcard_question" id="flashcard_question_shown_<%= flashcard.id %>"><span class="question_prefix">ANSWER ME THIS, HEATHEN:</span><span class="question"><span class="question"><%= flashcard.question %></span></div>
-							<div class="flashcard_answer", id="flashcard_answer_shown_<%= flashcard.id %>", hidden="hidden"><span class="answer_prefix">THE ANSWER PROCEEDS THUSLY:</span><span class="answer"><%= flashcard.answer %></span></div>
-							<div class="flashcard_source", id="flashcard_source_shown_<%= flashcard.id %>", hidden="hidden">
-						
+							<div class="flashcard_question" id="flashcard_question_shown_<%= flashcard.id %>">
+								<div class="question_prefix">ANSWER ME THIS, HEATHEN:</div>
+								<div class="question">
+									<div class="question" id="flashcard_question_text_<%= flashcard.id %>"><%= flashcard.question %></div>
+								</div>
+							</div>
+							<div class="flashcard_answer"  id="flashcard_answer_shown_<%= flashcard.id %>" hidden="hidden">
+								<div class="answer_prefix">THE ANSWER PROCEEDS THUSLY:</div>
+								<div class="answer" id="flashcard_answer_text_<%= flashcard.id %>"><%= flashcard.answer %></div>
+							</div>
+							<div class="flashcard_source" id="flashcard_source_shown_<%= flashcard.id %>" hidden="hidden">
 								<% unless flashcard.source.nil? || flashcard.source.empty? %>
-									<span class="source_prefix">IF YOU DOUBT IT, CONSULT:</span><span class="source"><%= flashcard.source %></span>
+									<div class="source_prefix">IF YOU DOUBT IT, CONSULT:</div>
+									<div class="source" id="flashcard_source_text_<%= flashcard.id %>"><%= flashcard.source %></div>
 								<% else %>
-									<span class="source_prefix">THERE IS NARY A SOURCE YET FOR THIS.</span>
+									<div class="source_prefix">THERE IS NARY A SOURCE YET FOR THIS.</div>
 								<% end %>
 							</div>
-							<%= button_tag "Fuck it. Show me the answer.", :id => "show_answer_" + flashcard.id.to_s, :onclick => "toggleAnswer('" + flashcard.id.to_s + "')" %>
-							<%= button_tag "That's not even close to right. Let me edit it.", :id => "update_flashcard_" + flashcard.id.to_s, :hidden => true, :onclick => "editFlashcard(" + flashcard.id.to_s + ")" %>
+							<%= button_tag "Hit me with another.", :id => "next_question_button", :onclick => "displayQuestion()", :class => "button" %>
+							<%= button_tag "Fuck it. Show me the answer.", :id => "show_answer_" + flashcard.id.to_s, :onclick => "toggleAnswer('" + flashcard.id.to_s + "')", :class => "button" %>
+							<%= button_tag "That's not even close to right. Let me edit it.", :id => "update_flashcard_" + flashcard.id.to_s, :hidden => true, :onclick => "editFlashcard(" + flashcard.id.to_s + ")", :class => "button" %>
 						</div>
 					<% end %>
 				</div>
@@ -57,24 +83,27 @@
 			</div>
 		</div>
 		<div class="tab" id="update_tab" hidden="hidden">
-			<div id="subjects_update">
-				<%= collection_select(:subject_update, :id, @subjects, :id, :subject, options = {:prompt => "Subject"}, html_options={:class => "subject_dropdown", :onchange=>"selectedSubject('update')"}) %>
-			</div>
-			<div id="categories_update">
-				<% @subjects.each do |s| %>
-					<% c = @categories[s.id] %>
-					<%= collection_select(:category_update, s.id, c, :id, :category, options = {:prompt => "Category"}, html_options={:class => "category_dropdown", :hidden => true, :onchange => "selectedCategory('update')"}) %>
-				<% end %>
-			</div>
 			<div id="update_form">
 				<%= form_for @new_flashcard, :url => {:action => "create"}, :method => "post" do |f| %>
 					<%= f.text_field :id, options = {:hidden => true} %>
-					<div class="update_subject_field"><div class="update_field_label">Subject: <%= f.text_field :subject %></div></div>
-					<div class="update_category_field"><div class="update_field_label">Category: <%= f.text_field :category %></div></div>
-					<div class="update_question_field"><div class="update_field_label">Question: <%= f.text_area :question, :size => "100x4" %></div></div>
-					<div class="update_answer_field"><div class="update_field_label">Answer: <%= f.text_area :answer, :size => "100x4"%></div></div>
-					<div class="update_source_field"><div class="update_field_label">Source: <%= f.text_field :source %></div></div>
-					<div class="update_submit"><%= f.submit "Create", :onclick => "send_create_request_ajax()"  %></div>
+					<div class="update_field update_subject">
+						<span class="update_field_label">Subject:</span>
+							<%= collection_select(:subject_update, :id, @subjects, :id, :subject, options = {:prompt => "Subject"}, html_options={:class => "subject_dropdown update_subject_dropdown", :onchange=>"selectedSubject('update')"}) %>
+						<%= f.text_field :subject, :class => "text_box" %>
+					</div>
+					<div class="update_field update_category">
+					  <span class="update_field_label">Category:</span>
+						<select class="category_dropdown update_category_dropdown"><option>Category (Select Subject first)</option></select>
+						<% @subjects.each do |s| %>
+							<% c = @categories[s.id] %>
+							<%= collection_select(:category_update, s.id, c, :id, :category, options = {:prompt => "Category"}, html_options={:class => "category_dropdown update_category_dropdown", :hidden => true, :onchange => "selectedCategory('update')"}) %>
+						<% end %>
+						<%= f.text_field :category, :class => "text_box" %>
+					</div>
+					<div class="update_field update_question_field"><div class="update_field_label">Question:</div><%= f.text_area :question, :class => "text_area" %></div>
+					<div class="update_field update_answer_field"><div class="update_field_label">Answer:</div><%= f.text_area :answer, :class => "text_area" %></div>
+					<div class="update_field update_source_field"><div class="update_field_label">Source:</div><%= f.text_field :source, :class => "text_box" %></div>
+					<div class="update_field update_submit"><%= f.submit "Create", :onclick => "send_create_request_ajax()", :class => "button", :id => "create_button"%></div>
 				<% end %>
 			</div>
 		</div>

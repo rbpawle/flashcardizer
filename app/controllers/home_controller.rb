@@ -1,23 +1,64 @@
 class HomeController < ApplicationController
   def home
-  	@csv = FlashcardCSV.new
-  	@subjects = Subject.all.sort! {|a,b| a.subject.downcase <=> b.subject.downcase }
-  	@categories = {}
-  	@flashcards = {}
-  	@subjects.each do |s|
-  		@categories[s.id] = Category.where(:subject => s.subject).sort! {|a,b| a.category.downcase <=> b.category.downcase }
-  	end
-  	@categories.each do |subject_id, categories|
-  		categories.each do |category|
-  			flashcards = Flashcard.where(:category_id => category.id)
-  			@flashcards[category.id] = flashcards
+  	if params[:date]
+  		@flashcards = Flashcard.where(:date => params[:date])
+  		subject_ids = []
+  		@flashcards.each do |f|
+  			if subject_ids[f.subject_id].nil?
+  				subject_ids << f.subject_id
+  			end
   		end
-  	end
-  	@new_flashcard = Flashcard.where(:subject => "", :category => "", :question => "", :answer => "", :subject_id => 0, :category_id => 0)
-  	if @new_flashcard.empty?
-	  	Flashcard.new(:subject => "", :category => "", :question => "", :answer => "", :subject_id => 0, :category_id => 0).save
-  	end
-  	@new_flashcard = Flashcard.where(:subject => "", :category => "", :question => "", :answer => "", :subject_id => 0, :category_id => 0).first
+  		@subjects = Subject.find_all_by_id(subject_ids)
+			@categories = {}
+			@flashcards_temp = {}
+			@flashcards.each do |f|
+				if @flashcards_temp[f.category_id].nil?
+					@flashcards_temp[f.category_id] = []
+				end
+				if @categories[f.subject_id].nil?
+					@categories[f.subject_id] = []
+				end
+				category = Category.first(:conditions => {:id => f.category_id})
+				unless category.nil?
+					if @categories[f.subject_id].index(category).nil?
+						@categories[f.subject_id] << category
+					end
+				end
+				@flashcards_temp[f.category_id] << f
+			end
+			@flashcards = @flashcards_temp
+			flashcards_not_used = Flashcard.all
+			@dates = {}
+			flashcards_not_used.each {|f| @dates[f.date] = 0 if @dates[f.date].nil?}
+			@flashcards.each do |category_id, flashcards|
+				flashcards_not_used.each {|f| @dates[f.date] = 0 if @dates[f.date].nil?}
+			end
+  	else
+			@subjects = Subject.all.sort! {|a,b| a.subject.downcase <=> b.subject.downcase }
+			@categories = {}
+			@flashcards = {}
+			@subjects.each do |s|
+				@categories[s.id] = Category.where(:subject => s.subject).sort! {|a,b| a.category.downcase <=> b.category.downcase }
+			end
+			@categories.each do |subject_id, categories|
+				categories.each do |category|
+					flashcards = Flashcard.where(:category_id => category.id)
+					@flashcards[category.id] = flashcards
+				end
+			end
+			@dates = {}
+			@flashcards.each do |category_id, flashcards|
+				flashcards.each {|f| @dates[f.date] = 0 if @dates[f.date].nil? && !f.date.nil?}
+			end
+		end
+		File.open("dlog.txt", "w") {|f| f << @dates.to_s}
+		@dates.delete(nil)
+		@dates = @dates.keys.sort!
+		@new_flashcard = Flashcard.where(:subject => "", :category => "", :question => "", :answer => "", :subject_id => 0, :category_id => 0)
+		if @new_flashcard.empty?
+			Flashcard.new(:subject => "", :category => "", :question => "", :answer => "", :subject_id => 0, :category_id => 0).save
+		end
+		@new_flashcard = Flashcard.where(:subject => "", :category => "", :question => "", :answer => "", :subject_id => 0, :category_id => 0).first
   end
   
   def upload
