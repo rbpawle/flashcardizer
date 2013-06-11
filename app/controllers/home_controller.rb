@@ -12,7 +12,7 @@ class HomeController < ApplicationController
 			topic.topic_chain.each_index do |i|
 				if @topic_levels[i].nil?
 					@topic_levels[i] = [topic.topic_chain[i]]
-				else
+				elsif @topic_levels[i].index(topic.topic_chain[i]).nil?
 					@topic_levels[i] << topic.topic_chain[i]
 				end
 			end
@@ -23,7 +23,8 @@ class HomeController < ApplicationController
 				@dates[f.date] = 0
 			end
 		end
-		@dates = @dates.keys
+		@dates.delete(nil)
+		@dates = @dates.keys.sort.reverse
   end
   
   def upload

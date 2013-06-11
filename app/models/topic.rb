@@ -33,4 +33,19 @@ class Topic < ActiveRecord::Base
 		end
   	return chain
   end
+  
+  def topic_id_chain
+  	chain = self.topic_chain
+  	id_chain = []
+  	chain.each {|t| id_chain << t.id }
+  	return id_chain
+  end
+  
+  def is_child_of? topic
+  	if self.topic_chain.index(topic) && topic.id != self.id
+  		return true
+  	else
+  		return false
+  	end
+  end
 end

@@ -85,38 +85,22 @@ select, .button{
 }
 
 /***flashcard tab***/
-#flashcard_dropdowns{
+
+.topics, #dates {
 	float:left;
-	display:table;
+	overflow:auto;
+	height:12em;
+	min-width:7em;
 }
 
-.flashcard_dropdown {
-	display:table-cell;
+.topic, .date {
 }
 
-.subject_dropdown, category_dropdown {
-	float:left;
-	width:20em;
-}
-
-#the_date_dropdown {
-	position:absolute;
-}
-
-.the_date_dropdown_ul {
-	display:table;
-}
-
-.date_anchors{
-	display:table-row;
+#question_number {
+	display:inline;
 }
 
 /***content of flashcards***/
-
-.category_flashcards{
-	float:left;
-	display:table none;
-}
 
 .flashcard {
 	font-size:large;

@@ -1,0 +1,23 @@
+<% @flashcards.each do |f| %>
+<div id="flashcard_<%= f.id %>" class="flashcard" style="display:none">
+	<div id="flashcard_topics_<%= f.id %>" style="display:none"><%= Topic.find(f.topic_id).topic_id_chain.join(",") %></div>
+	<div class="question_area">
+		<div class="question_prefix">ANSWER ME THIS, HEATHEN:</div>
+		<div class="question"><%= f.question %></div>
+	</div>
+	<div id="answer_shown_<%= f.id %>" class="answer_area">
+		<div class="answer_prefix">THE ANSWER PROCEEDS THUSLY:</div>
+		<div class="answer"><%= f.answer %></div>
+	</div>
+	<div id="source_shown_<%= f.id %>" class="source_area">
+		<div class="source_prefix">
+			<% if f.source.nil? || f.source.empty? %>
+				<%="THERE IS NARY A SOURCE YET FOR THIS" %>
+			<% else %>
+				<%= "IF YOU DOUBT IT, CONSULT:" %>
+			<% end %>
+		</div>
+		<div class="source"><%= f.source %></div>
+	</div>
+</div>
+<% end %>
