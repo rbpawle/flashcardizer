@@ -51,7 +51,6 @@ class HomeController < ApplicationController
 				flashcards.each {|f| @dates[f.date] = 0 if @dates[f.date].nil? && !f.date.nil?}
 			end
 		end
-		File.open("dlog.txt", "w") {|f| f << @dates.to_s}
 		@dates.delete(nil)
 		@dates = @dates.keys.sort!
 		@new_flashcard = Flashcard.where(:subject => "", :category => "", :question => "", :answer => "", :subject_id => 0, :category_id => 0)
