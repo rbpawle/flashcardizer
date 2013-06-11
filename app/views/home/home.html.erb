@@ -5,7 +5,6 @@
     <% flash.delete(key) %>
   </div>
   <% end %>
-  
 	<div class="upload">
 		<%= form_tag '/upload', :multipart => true do %>
 		  <%= label_tag :csv, "CSV" %>
@@ -13,7 +12,6 @@
 		  <%= submit_tag "Submit brah", :name => "upload_button", :class => "uploadButton" %>
 		<% end %>
 	</div>
-	
 	<div id="nav_bar">
 		<ul>
 			<li><a href="#" onclick="showTab('#flashcards_tab')">Flashcards</a></li>
@@ -35,13 +33,12 @@
 					</div>
 				</div>
 				<div id="subjects" class="flashcard_dropdown">
-					<%= collection_select(:subject, :id, @subjects, :id, :subject, options = {:prompt => "Subject"}, html_options = {:class => "subject_dropdown", :onchange=>"selectedSubject('show')"}) %>
-				</div>
-				<div id="categories" class="flashcard_dropdown">
-					<select class="category_dropdown update_category_dropdown"><option>Category (Select Subject first)</option></select>
-					<% @subjects.each do |s| %>
-						<% c = @categories[s.id] %>
-						<%= collection_select(:category, s.id, c, :id, :category, options = {:prompt => "Category"}, html_options = {:class => "category_dropdown", :onchange=>"selectedCategory('show')", :hidden => true}) %>
+					<% @topic_levels.each do |level_array| %>
+						<ul>
+							<% level_array.each do |topic| %>
+								<li><%= topic.topic %></li>
+							<% end %>
+						</ul>
 					<% end %>
 				</div>
 			</div>

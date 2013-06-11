@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130605175230) do
+ActiveRecord::Schema.define(:version => 20130611155022) do
 
   create_table "categories", :force => true do |t|
     t.string   "subject"
@@ -39,10 +39,18 @@ ActiveRecord::Schema.define(:version => 20130605175230) do
     t.boolean  "from_csv"
     t.string   "subject"
     t.string   "category"
+    t.integer  "topic_id"
   end
 
   create_table "subjects", :force => true do |t|
     t.string   "subject"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "topics", :force => true do |t|
+    t.string   "topic"
+    t.integer  "parent_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
