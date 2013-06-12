@@ -55,7 +55,7 @@ class HomeController < ApplicationController
 			f[0].delete unless f.empty?
 			i = 0
 			flashcard_topic = nil
-			while p["topic_level_" + i.to_s] #in this loop, we add new topics to the database if they exist
+			while p["topic_level_" + i.to_s] && !p["topic_level_" + i.to_s].empty? #in this loop, we add new topics to the database if they exist
 				topic_name = p["topic_level_" + i.to_s]
 				existing_topic = Topic.where(:topic => topic_name)
 				if existing_topic.empty?
@@ -66,11 +66,13 @@ class HomeController < ApplicationController
 						flashcard_topic = Topic.new(:topic => topic_name, :parent_id => t.id)
 					end
 					flashcard_topic.save
+				else
+					flashcard_topic = existing_topic[0]
 				end
 				i += 1
 			end#while
 			Flashcard.new(:topic_id => flashcard_topic.id, :question => p[:question], :answer => p[:answer], :source => p[:source],
-				:date => Date.today, :from_csv => false, :importance => p[:importance], :comprehension => p[:comprehension])
+				:date => Date.today, :from_csv => false, :importance => p[:importance], :comprehension => p[:comprehension]).save
 		end
 		redirect_to "/"
   end

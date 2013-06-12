@@ -5,8 +5,8 @@ function topicDropdownChanged(dropdown_id) {
 }
 
 function updateTopicTextBoxChanged(level_n) {
-	field_identifier = "#topic_update_field_" + level_n;
-	next_field = "#topic_update_field_" + (parseInt(level_n) + 1);
+	field_identifier = "#update_topic_field_" + level_n;
+	next_field = "#update_topic_field_" + (parseInt(level_n) + 1);
 	console.log(level_n);
 	if($(next_field).length == 0) {
 		createNextTopicBox(parseInt(level_n) + 1);
@@ -18,7 +18,7 @@ function populateTopicField(dropdown_id) {
 	identifier_split = dropdown_id.split("_");
 	level_n = identifier_split[identifier_split.length - 1];
 	topic = $("#" + dropdown_id).children("option").filter(":selected").html();
-	$("#topic_update_field_" + level_n).val(topic);
+	$("#update_topic_field_" + level_n).val(topic);
 }
 
 function showNextLevel(dropdown_id) {
@@ -27,7 +27,7 @@ function showNextLevel(dropdown_id) {
 }
 
 function createNextTopicBox(next_i) {
-	$("#update_topics").append('Topic ' + next_i + ': <input id="topic_update_field_' + next_i + '" type="text" name="flashcard[topic_level_' + next_i + ']" oninput="updateTopicTextBoxChanged(' + next_i + ')" size="50"><br/>');
+	$("#update_topics").append('Topic Level ' + next_i + ': <input id="update_topic_field_' + next_i + '" type="text" name="flashcard[topic_level_' + next_i + ']" oninput="updateTopicTextBoxChanged(' + next_i + ')" size="50"><br/>');
 }
 
 /**third tier**/

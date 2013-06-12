@@ -22,10 +22,21 @@ function showAnswerAndSource() {
 }
 
 function editFlashcard() {
-	topics = $(".currently_shown").children(".topics_description").split(" &gt; ");
+	identifier = $(".currently_shown").attr('id');
+	idsplit = identifier.split("_");
+	flashcard_id = idsplit[1];
+	topics = $(".currently_shown").children(".topics_description").html().split(" &gt; ");
 	question = $(".currently_shown").children(".question_area").children(".question").html();
 	answer = $(".currently_shown").children(".answer_area").children(".answer").html();
 	source_ = $(".currently_shown").children(".source_area").children(".source").html();
+	$("#update_id_field").val(flashcard_id);
+	for(var i = 0; i < topics.length; i++) {
+		$("#update_topic_field_" + i).val(topics[i]);
+	}
+	$("#update_question_field").val(question);
+	$("#update_answer_field").val(answer);
+	$("#update_source_field").val(source_);
+	showTab("#update_tab");
 }
 
 /**second tier**/

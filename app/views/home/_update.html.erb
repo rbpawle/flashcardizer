@@ -8,15 +8,15 @@
 <% end %>
 </div>
 <form id="update_flashcard_form" method="post" action="create">
-	<input type="text" name="flashcard[id]" hidden="hidden">
+	<input id="update_id_field" type="text" name="flashcard[id]" hidden="hidden">
 	<div id="update_topics">
 		<% @topic_levels.each_index do |i| %>
-		Topic <%= i %>: <input id="topic_update_field_<%= i %>" type="text" name="flashcard[topic_level_<%= i %>]" oninput="updateTopicTextBoxChanged(<%= i %>)" size="50"><br/>
+		Topic Level <%= i %>: <input id="update_topic_field_<%= i %>" type="text" name="flashcard[topic_level_<%= i %>]" oninput="updateTopicTextBoxChanged(<%= i %>)" size="50"><br/>
 		<% end %>
 	</div>
-	Question: <input type="text" name="flashcard[question]" size="80"><br/>
-	Answer: <input type="text" name="flashcard[answer]" size="80"><br/>
-	Source: <input type="text" name="flashcard[source]" size="80"><br/>
+	Question: <input id="update_question_field" type="text" name="flashcard[question]" size="80"><br/>
+	Answer: <input id="update_answer_field" type="text" name="flashcard[answer]" size="80"><br/>
+	Source: <input id="update_source_field" type="text" name="flashcard[source]" size="80"><br/>
 	Importance: 1<input type="radio" name="flashcard[importance]" value="1">2<input type="radio" name="flashcard[importance]" value="2">3<input type="radio" name="flashcard[importance]" value="3" checked="true">4<input type="radio" name="flashcard[importance]" value="4">5<input type="radio" name="flashcard[importance]" value="5"><br/>
 	Comprehension: 1<input type="radio" name="flashcard[comprehension]" value="1">2<input type="radio" name="flashcard[comprehension]" value="2">3<input type="radio" name="flashcard[comprehension]" value="3" checked="true">4<input type="radio" name="flashcard[comprehension]" value="4">5<input type="radio" name="flashcard[comprehension]" value="5">
 	<input type="submit" value="Submit">

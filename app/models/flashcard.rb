@@ -1,5 +1,5 @@
 class Flashcard < ActiveRecord::Base
-  attr_accessible :answer, :date, :question, :source, :subject_id, :category_id, :from_csv, :subject, :category
+  attr_accessible :answer, :date, :question, :source, :subject_id, :category_id, :from_csv, :subject, :category, :topic_id, :importance, :comprehension
   
   def self.assign_topic_id_for_all
   	fcs = Flashcard.all
