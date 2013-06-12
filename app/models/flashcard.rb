@@ -4,8 +4,8 @@ class Flashcard < ActiveRecord::Base
   def self.assign_topic_id_for_all
   	fcs = Flashcard.all
   	fcs.each do |f|
-  		subject = Topic.first(:conditions => {:topic => f.subject, :parent => 0})
-  		category = Topic.first(:conditions => {:topic => f.category, :parent => subject.id})
+  		subject = Topic.first(:conditions => {:topic => f.subject, :parent_id => 0})
+  		category = Topic.first(:conditions => {:topic => f.category, :parent_id => subject.id})
   		f.topic_id = category.id
   		f.save
   	end
