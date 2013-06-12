@@ -5,3 +5,8 @@
 <div id="flashcards">
 	<%= render "flashcards_actual" %>
 </div>
+<div id="flashcard_buttons">
+	<button id="next_flashcard" onclick="showNextFlashcard()">Hit me with another.</button>
+	<button id="show_answer" onclick="showAnswerAndSource()">Fuck it, show me the answer</button>
+	<button id="edit_flashcard" onclick="editFlashcard()" hidden="hidden">That's not even close to right, let me fix it.</button>
+</div>

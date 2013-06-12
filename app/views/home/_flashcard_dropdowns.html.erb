@@ -1,14 +1,14 @@
 <div id="dates">
+	<div class="dates"><a href="/">All</a></div>
 	<% @dates.each do |date| %>
 		<div class="dates"><a href="/?date=<%= date %>"><%= date %></a></div>
 	<% end %>
 </div>
-
 <% @topic_levels.each_index do |i| %>
-	<div id="topic_level_<%= i %>" class="topics">
-		<% @topic_levels[i].each do |topic| %>
-			<% hidden = i == 0 ? false : true %>
-			<div class="topic" id="topic_<%= topic.id %>_<%= topic.parent_id %>" onclick="showSubtopicsAndSelectFlashcards(<%= topic.id %>, <%= i %>)" <%= 'style=display:none' if hidden %>><%= topic.topic %></div>
-		<% end %>
-	</div>
+<div id="topic_level_<%= i %>" class="topics">
+	<% @topic_levels[i].each do |topic| %>
+		<% hidden = i == 0 ? false : true %>
+		<div class="topic" id="topic_<%= topic.id %>_<%= topic.parent_id %>" onclick="showSubtopicsAndFlashcardForTopic(topic_<%= topic.id %>_<%= topic.parent_id %>, <%= topic.id %>, <%= i %>)" <%= 'style=display:none' if hidden %>><%= topic.topic %></div>
+	<% end %>
+</div>
 <% end %>

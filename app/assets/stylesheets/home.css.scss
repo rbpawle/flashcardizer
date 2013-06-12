@@ -26,29 +26,29 @@ body{
 	text-align: left;
 }
 
-//***nav bar***//
+//nav bar************************************************************************
 #nav_bar {
+	height:3em;
+	width:100%;
 }
 
-ul {
+#nav_bar ul {
 	list-style-type:none;
 	margin:0;
 	padding:0;
-	display:table;
+	//display:table;
+	text-align:center;
 }
 
-li {
+#nav_bar li {
 	display: inline;
-	display:table-cell;
 	margin: 0 0.5em 0 0;
 }
 #nav_bar a {
-	display:block;
 	border-radius:0.5em;
 	margin:1em;
 }
-
-a:link, a:visited {
+#nav_bar a:link, a:visited {
 	font-weight: bold;
 	font-family: sans-serif;
 	color: #000099;
@@ -59,16 +59,17 @@ a:link, a:visited {
 	padding: 1em;
 }
 
-a:hover, a:active {
+#nav_bar a:hover, a:active {
 	background-color: #0066FF;
 }
 
-/***tabs content***/
+//tabs content************************************************************************
 #tabs {
-	float: left;
+	float:left;
 	border-bottom-width: 0;
 	margin: 0 0.5em 0 0;
 	padding-left:1em;
+	width:100%;
 }
 
 .tab {
@@ -84,29 +85,35 @@ select, .button{
 	border:none;
 }
 
-/***flashcard tab***/
+//flashcard tab**************************************
+$topic_window_height:12em;
 
 .topics, #dates {
 	float:left;
 	overflow:auto;
-	height:12em;
-	min-width:7em;
+	height:$topic_window_height;
+}
+
+.topics {
+	width:25%;
+}
+
+.dates {
+	width:7em;
+	overflow:auto;
 }
 
 .topic, .date {
 }
 
-#question_number {
-	display:inline;
+#flashcard_dropdowns {
+	height:$topic_window_height;
 }
 
-/***content of flashcards***/
+//content of flashcards************************************************************************
 
 .flashcard {
 	font-size:large;
-	width:50em;
-	display:table;
-	display:table-row;
 }
 
 .question, .answer, .source{
@@ -120,7 +127,8 @@ select, .button{
 	color:red;
 }
 
-/***update tab***/
+/*
+//update tab************************************************************************
 #update_form {
 	width:42em;
 }
@@ -157,4 +165,4 @@ select, .button{
 #create_button{
 	float:right;
 }
-
+*/

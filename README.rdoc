@@ -32,3 +32,10 @@ The category dropdown seems to be updating when page is refreshed, but the categ
 -feature for testing over all flashcards. Each flashcard will have an urgency value attached to it. This value will be a function of importance, level of comprehension, and time since it was last answered. Highest score wins. A zero would be a flashcard that was answered today with high comprehension and low importance. A hundred would be a flashcard that hasn't been seen in over two weeks, with high importance and low comprehension.
 -the above feature is cooler than it is useful.
 -log each question as its answered. Only when comprehension/importance is attached to it.
+
+-sub-topics
+-importance/comprehension
+-login
+-formatting
+-n-question quiz?
+-search

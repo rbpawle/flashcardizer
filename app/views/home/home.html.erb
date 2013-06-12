@@ -5,22 +5,28 @@
     <% flash.delete(key) %>
   </div>
   <% end %>
-	<div class="upload">
-		<%= form_tag '/upload', :multipart => true do %>
-		  <%= label_tag :csv, "CSV" %>
-		  <%= file_field_tag :csv, :name => "upload_file" %>
-		  <%= submit_tag "Submit brah", :name => "upload_button", :class => "uploadButton" %>
-		<% end %>
-	</div>
 	<div id="nav_bar">
 		<ul>
 			<li><a href="#" onclick="showTab('#flashcards_tab')">Flashcards</a></li>
 			<li><a href="#" onclick="showTab('#update_tab')">Make Flashcards</a></li>
+			<li><a href="#" onclick="showTab('#upload_tab')">CSV to Flashcards</a></li>
 		</ul>
 	</div>
 	<div id="tabs">
 		<div class="tab" id="flashcards_tab">
 			<%= render "flashcards" %>
+		</div>
+		<div class="tab" id="update_tab" style="display:none">
+			<%= render "update" %>
+		</div>
+		<div class="tab" id="upload_tab" style="display:none">
+			<div class="upload">
+				<%= form_tag '/upload', :multipart => true do %>
+					<%= label_tag :csv, "CSV" %>
+					<%= file_field_tag :csv, :name => "upload_file" %>
+					<%= submit_tag "Submit brah", :name => "upload_button", :class => "uploadButton" %>
+				<% end %>
+			</div>
 		</div>
 	</div>
 </div>
