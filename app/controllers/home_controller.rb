@@ -7,15 +7,25 @@ class HomeController < ApplicationController
 		end
 		#@topics will be an array of arrays of topics. the highest-level topics are in index 0, next-highest are in index 1, and so on.
 		@topic_levels = []
+		@flashcards_metadata = {}
 		@flashcards.each do |f|
-			topic = Topic.find(f.topic_id)
-			topic.topic_chain.each_index do |i|
+			chain = Topic.find(f.topic_id).topic_chain
+			chain.each_index do |i|
 				if @topic_levels[i].nil?
-					@topic_levels[i] = [topic.topic_chain[i]]
-				elsif @topic_levels[i].index(topic.topic_chain[i]).nil?
-					@topic_levels[i] << topic.topic_chain[i]
+					@topic_levels[i] = [chain[i]]
+				elsif @topic_levels[i].index(chain[i]).nil?
+					@topic_levels[i] << chain[i]
 				end
 			end
+			@flashcards_metadata[f.id] = {}
+			topic_class = "topic_"
+			topics_description = ""
+			chain.each do |t|
+				topic_class += t.id.to_s + " topic_"
+				topics_description += t.topic + " > "
+			end
+			@flashcards_metadata[f.id][:topic_classes] = topic_class[0..(topic_class.length - 7)]
+			@flashcards_metadata[f.id][:topics_description] = topics_description[0..(topics_description.length - 3)]
 		end
 		@dates = {}
 		Flashcard.all.each do |f|
@@ -27,6 +37,7 @@ class HomeController < ApplicationController
 		@dates = @dates.keys.sort.reverse
 		@flashcard_to_show_id = @flashcards[rand(0..(@flashcards.length - 1))].id		#pick random flashcard to show at beginning
 		@topic_levels.each {|ts| ts.sort_by! {|t| t.topic } }
+		@new_flashcard = Flashcard.new
   end
   
   def upload
@@ -36,30 +47,31 @@ class HomeController < ApplicationController
   
   def create
   	p = params[:flashcard]
-  	if p[:subject].empty? || p[:category].empty? ||
-  		p[:question].empty? || p[:answer].empty?
+  	if p[:topic_level_0].empty? || p[:question].empty? || p[:answer].empty?
   		flash[:notice] = "Something's missing..."
   	else
 			#delete at provided id
 			f = Flashcard.where(:id => p[:id])
 			f[0].delete unless f.empty?
-			subject = Subject.where(:subject => p[:subject]).first
-			if subject.nil?
-				subject = Subject.new(:subject => p[:subject])
-				subject.save
-			end
-			category = Category.where(:subject => p[:subject], :category => p[:category]).first
-			if category.nil?
-				category = Category.new(:subject => p[:subject], :category => p[:category])
-				category.save
-			end
-			flashcard = Flashcard.where(:subject => p[:subject], :category => p[:category],
-				:question => p[:question], :answer => p[:answer], :source => p[:source])
-			if flashcard.empty?
-				Flashcard.new(:subject => p[:subject], :category => p[:category],
-					:question => p[:question], :answer => p[:answer], :category_id => category.id,
-					:subject_id => subject.id, :source => p[:source], :date => Date.today).save
-			end
+			i = 0
+			flashcard_topic = nil
+			while p["topic_level_" + i.to_s] #in this loop, we add new topics to the database if they exist
+				topic_name = p["topic_level_" + i.to_s]
+				existing_topic = Topic.where(:topic => topic_name)
+				if existing_topic.empty?
+					if i == 0
+						flashcard_topic = Topic.new(:topic => topic_name, :parent_id => 0)
+					else
+						t = Topic.where(:topic => p["topic_level_" + (i-1).to_s])[0]
+						flashcard_topic = Topic.new(:topic => topic_name, :parent_id => t.id)
+					end
+					flashcard_topic.save
+				end
+				i += 1
+			end#while
+			Flashcard.new(:topic_id => flashcard_topic.id, :question => p[:question], :answer => p[:answer], :source => p[:source],
+				:date => Date.today, :from_csv => false, :importance => p[:importance], :comprehension => p[:comprehension])
 		end
+		redirect_to "/"
   end
 end

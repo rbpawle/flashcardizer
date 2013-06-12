@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130611155022) do
+ActiveRecord::Schema.define(:version => 20130612162313) do
 
   create_table "categories", :force => true do |t|
     t.string   "subject"
@@ -32,14 +32,16 @@ ActiveRecord::Schema.define(:version => 20130611155022) do
     t.text     "question"
     t.text     "answer"
     t.text     "source"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "subject_id"
     t.integer  "category_id"
     t.boolean  "from_csv"
     t.string   "subject"
     t.string   "category"
     t.integer  "topic_id"
+    t.integer  "importance"
+    t.integer  "comprehension"
   end
 
   create_table "subjects", :force => true do |t|

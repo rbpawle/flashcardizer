@@ -10,6 +10,7 @@ function showSubtopicsAndFlashcardForTopic(topic_attr_id, topic_id, topic_level_
 function showNextFlashcard() {
 	showFlashcardAmongSelected();
 	updateQuestionSequenceNumber();
+	$("#edit_flashcard").hide();
 }
 
 function showAnswerAndSource() {
@@ -21,21 +22,23 @@ function showAnswerAndSource() {
 }
 
 function editFlashcard() {
+	topics = $(".currently_shown").children(".topics_description").split(" &gt; ");
+	question = $(".currently_shown").children(".question_area").children(".question").html();
+	answer = $(".currently_shown").children(".answer_area").children(".answer").html();
+	source_ = $(".currently_shown").children(".source_area").children(".source").html();
 }
 
 /**second tier**/
 function highlightTopic(topic_attr_id, topic_level_n) {
 	var topic_level = "#topic_level_" + topic_level_n.toString();
-	console.log(topic_level);
-	console.log(topic_attr_id);
 	$(topic_level).children().css("background-color","#0b5fa5");
 	$(topic_attr_id).css("background-color","#3aa6d0");
 }
 	
 function showSubtopics(parent_id, parent_level_n) {
 	var subtopic_level = "#topic_level_" + (parent_level_n + 1).toString();
-	$(subtopic_level).children().hide();
 	all_subtopics = $(subtopic_level).children();
+	all_subtopics.hide();
 	for(var i = 0; i < all_subtopics.length; i++) {
 		subtopic = all_subtopics.eq(i);
 		id_split = subtopic.attr('id').split("_");
@@ -102,13 +105,17 @@ function pickRandomUnseenFlashcardAmongSelected() {
 	total_selected = $(".under_selected_topic").length;
 	if(total_selected == 1) {
 		flashcard_to_show = $(".under_selected_topic").eq(0);
-	} else {
-		//if none are unseen, make all unseen
-		if($(".under_selected_topic").children(".unseen").length == 0) {
+	} else { //if none are unseen, make all unseen
+		all_have_been_seen = true;
+		for(i=0;i<total_selected;i++){
+			if($(".under_selected_topic").eq(i).hasClass("unseen")) {
+				all_have_been_seen = false;
+			}
+		}
+		if(all_have_been_seen) {
 			$(".under_selected_topic").addClass("unseen");
 		}
-		//keep picking random flashcards for this topic until we find one that hasn't been seen or that isn't currently shown
-		do {
+		do { //keep picking random flashcards for this topic until we find one that hasn't been seen or that isn't currently shown
 			flashcard_to_show = $(".under_selected_topic").eq(Math.floor(Math.random() * total_selected));
 		} while(flashcardSeenOrCurrentlyShown(flashcard_to_show));
 	}
@@ -118,8 +125,6 @@ function pickRandomUnseenFlashcardAmongSelected() {
 function hideAnswerAndSource(flashcard_id) {
 	$("#answer_shown_"	+ flashcard_id).hide();
 	$("#source_shown_"	+ flashcard_id).hide();
-	//$("#update_flashcard_"				+ flashcard_id).hide();
-	//$("#show_answer_"							+ flashcard_id).show();
 }
 
 /**fifth tier**/

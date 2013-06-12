@@ -1,13 +1,8 @@
 <% @flashcards.each do |f| %>
-<% topic_classes = "topic_" + Topic.find(f.topic_id).topic_id_chain.join(" topic_") %>
-<% topic_chain = Topic.find(f.topic_id).topic_id_chain %>
-<% topics_description = "" %>
-<% topic_chain.each {|t| topics_description += Topic.find(t).topic + " > " } %>
-<% topics_description = topics_description[0..topics_description.length - 3] %>
 <% style = @flashcard_to_show_id == f.id ? "" : 'style=display:none' %>
 <% currently_shown = @flashcard_to_show_id == f.id ? "currently_shown" : "" %>
-<div id="flashcard_<%= f.id %>" class="flashcard unseen under_selected_topic topic_0 <%= topic_classes %> <%= currently_shown %>" <%= style %>>
-	<div class="topics_description"><%= topics_description %></div>
+<div id="flashcard_<%= f.id %>" class="flashcard unseen under_selected_topic topic_0 <%= @flashcards_metadata[f.id][:topic_classes] %> <%= currently_shown %>" <%= style %>>
+	<div class="topics_description"><%= @flashcards_metadata[f.id][:topics_description] %></div>
 	<div class="question_area">
 		<div class="question_prefix">ANSWER ME THIS, HEATHEN:</div>
 		<div class="question"><%= f.question %></div>
