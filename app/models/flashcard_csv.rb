@@ -33,7 +33,7 @@ class FlashcardCSV < ActiveRecord::Base
 				end
 				topic = t2
   		end
-			Flashcard.new(:date => row["date"].strip, :topic_id => topic.id, :question => row["question"].strip, :answer => row["answer"].strip, :source => row["source"].strip, :from_csv => true).save
+			Flashcard.new(:date => row["date"].to_s.strip, :topic_id => topic.id, :question => row["question"].to_s.strip, :answer => row["answer"].to_s.strip, :source => row["source"].to_s.strip, :from_csv => true).save
   	end
   end
   
