@@ -39,7 +39,7 @@ class FlashcardCSV < ActiveRecord::Base
   	csv = ""
   	Flashcard.all.each do |f|
   		topic_chain = Topic.find(f.topic_id).topic_chain
-  		csv << f.date + "," + topic_chain[0].to_s + "," + topic_chain[1].to_s + "," + topic_chain[2].to_s + "," + f.question + "," + f.answer + "," + f.source + "\n"
+  		csv << f.date.to_s + "," + topic_chain[0].to_s + "," + topic_chain[1].to_s + "," + topic_chain[2].to_s + "," + f.question + "," + f.answer + "," + f.source + "\n"
   	end
   	puts csv
   end
