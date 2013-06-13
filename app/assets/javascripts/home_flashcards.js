@@ -10,6 +10,7 @@ function showSubtopicsAndFlashcardForTopic(topic_attr_id, topic_id, topic_level_
 function showNextFlashcard() {
 	showFlashcardAmongSelected();
 	updateQuestionSequenceNumber();
+	$("#show_answer").show();
 	$("#edit_flashcard").hide();
 }
 
