@@ -66,7 +66,8 @@ class HomeController < ApplicationController
 					flashcard_topic.save
 				else
 					flashcard_topic = existing_topic[0]
-					if flashcard_topic.level != i
+					level = flashcard_topic.topic_chain.length - 1
+					if level != i
 						save_new_flashcard = false
 						flash[:notice] = "Flashcard not saved! Topic " + flashcard_topic.topic.to_s + " not in the proper hierarchy! Check its hierarchy and try again."
 					end
