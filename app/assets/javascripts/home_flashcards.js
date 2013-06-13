@@ -49,9 +49,11 @@ function highlightTopic(topic_attr_id, topic_level_n) {
 }
 	
 function showSubtopics(parent_id, parent_level_n) {
+	for(i = parent_level_n + 1; i < $("#flashcard_dropdowns").children().length; i++) { //hide all subtopics
+		$("#topic_level_" + i).children().hide();
+	}
 	var subtopic_level = "#topic_level_" + (parent_level_n + 1).toString();
 	all_subtopics = $(subtopic_level).children();
-	all_subtopics.hide();
 	for(var i = 0; i < all_subtopics.length; i++) {
 		subtopic = all_subtopics.eq(i);
 		id_split = subtopic.attr('id').split("_");
