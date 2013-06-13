@@ -63,7 +63,7 @@ class HomeController < ApplicationController
 					if i == 0
 						flashcard_topic = Topic.new(:topic => topic_name, :parent_id => 0, :level => 0)
 					else
-						t = Topic.where(:topic => p["topic_level_" + (i-1).to_s])[0]
+						t = Topic.where(:topic => p["topic_level_" + (i-1).to_s].strip)[0]
 						flashcard_topic = Topic.new(:topic => topic_name, :parent_id => t.id, :level => i)
 					end
 					flashcard_topic.save
