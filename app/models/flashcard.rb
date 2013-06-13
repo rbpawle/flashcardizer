@@ -29,6 +29,7 @@ class Flashcard < ActiveRecord::Base
 			topic_class = "topic_"
 			topics_description = ""
 			chain.each do |t|
+				puts t.to_s
 				topic_class += t.id.to_s + " topic_"
 				topics_description += t.topic + " > "
 			end
