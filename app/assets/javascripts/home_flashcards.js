@@ -16,6 +16,7 @@ function showNextFlashcard() {
 function showAnswerAndSource() {
 	curid_split = $(".currently_shown").attr('id').split("_");
 	flashcard_id = curid_split[1];
+	$("#show_answer").hide();
 	$("#answer_shown_"	+ flashcard_id).show();
 	$("#source_shown_"	+ flashcard_id).show();
 	$("#edit_flashcard").show();
