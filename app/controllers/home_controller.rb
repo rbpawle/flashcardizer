@@ -35,7 +35,7 @@ class HomeController < ApplicationController
 		end
 		@dates.delete(nil)
 		@dates = @dates.keys.sort.reverse
-		@flashcard_to_show_id = @flashcards[rand(0..(@flashcards.length - 1))].id		#pick random flashcard to show at beginning
+		@flashcard_to_show_id = @flashcards[rand * (@flashcards.length - 1)].id		#pick random flashcard to show at beginning
 		@topic_levels.each {|ts| ts.sort_by! {|t| t.topic } }
 		@new_flashcard = Flashcard.new
   end
