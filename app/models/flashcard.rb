@@ -36,6 +36,17 @@ class Flashcard < ActiveRecord::Base
 			@flashcards_metadata[f.id][:topic_classes] = topic_class[0..(topic_class.length - 7)]
 			@flashcards_metadata[f.id][:topics_description] = topics_description[0..(topics_description.length - 3)]
 		end
+		@dates = {}
+		Flashcard.all.each do |f|
+			unless @dates.has_key? f.date
+				@dates[f.date] = 0
+			end
+		end
+		@dates.delete(nil)
+		@dates = @dates.keys.sort.reverse
+		@flashcard_to_show_id = @flashcards[rand(0..(@flashcards.length - 1))].id		#pick random flashcard to show at beginning
+		@topic_levels.each {|ts| ts.sort_by! {|t| t.topic } }
+		@new_flashcard = Flashcard.new
   end
   
 end
