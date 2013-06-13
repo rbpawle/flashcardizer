@@ -1,41 +1,19 @@
 TODO:
 
-====Nuts & Bolts====
-Make 'create' ajax call more dynamic. i.e. update the list of flashcards, as well as subject/category dropdowns.
+====Nuts & Bolts
 
-====Aesthetics====
-Adjust margins
+====Aesthetics
+fucking everything
 
-====Interface====
-Show date of question
-Change 'category' to 'topic'
+====Interface
 Confirm added question
-Predictive typing when typing subject/category
-Number of total questions
 Character counter when typing?
 
-====Features====
-Download CSV
+====Features
+instead of 'hit me with another', buttons for 'I get it' or 'I don't get it'. Send ajax with each button recording the button hits. calculate question urgency that way.
 Images to associate with flashcards
-Be able to assign big idea, detail to question
 Search box
 Login
 Graph of questions/day, etc
 Tabs between question and add question
 
-====Bugs====
-The category dropdown seems to be updating when page is refreshed, but the category for add isn't. (not sure if this problem persists.)
-
-
--rate questions by importance and by how well it is understood
--feature for testing. Choose to test n questions. Allow for testing by subject and/or category. Allow to test from today, yesterday, and the last week including today or not.
--feature for testing over all flashcards. Each flashcard will have an urgency value attached to it. This value will be a function of importance, level of comprehension, and time since it was last answered. Highest score wins. A zero would be a flashcard that was answered today with high comprehension and low importance. A hundred would be a flashcard that hasn't been seen in over two weeks, with high importance and low comprehension.
--the above feature is cooler than it is useful.
--log each question as its answered. Only when comprehension/importance is attached to it.
-
--sub-topics
--importance/comprehension
--login
--formatting
--n-question quiz?
--search
