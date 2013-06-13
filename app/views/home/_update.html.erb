@@ -9,6 +9,7 @@
 </div>
 <form id="update_flashcard_form" method="post" action="create">
 	<input id="update_id_field" type="text" name="flashcard[id]" hidden="hidden">
+	Date: <input id="update_date_field" type="text" name="flashcard[date]"></br>
 	<div id="update_topics">
 		<% @topic_levels.each_index do |i| %>
 		Topic Level <%= i %>: <input id="update_topic_field_<%= i %>" type="text" name="flashcard[topic_level_<%= i %>]" oninput="updateTopicTextBoxChanged(<%= i %>)" size="50"><br/>

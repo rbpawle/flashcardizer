@@ -47,16 +47,17 @@ class HomeController < ApplicationController
   
   def create
   	p = params[:flashcard]
-  	if p[:topic_level_0].empty? || p[:question].empty? || p[:answer].empty?
-  		flash[:notice] = "Something's missing..."
+  	if p[:topic_level_0].empty? || p[:question].empty? || p[:answer].empty? || p[:date].empty?
+  		flash[:notice] = "Flashcard not saved! Something's missing..."
   	else
+  		save_new_flashcard = true
 			#delete at provided id
 			f = Flashcard.where(:id => p[:id])
 			f[0].delete unless f.empty?
 			i = 0
 			flashcard_topic = nil
 			while p["topic_level_" + i.to_s] && !p["topic_level_" + i.to_s].empty? #in this loop, we add new topics to the database if they exist
-				topic_name = p["topic_level_" + i.to_s]
+				topic_name = p["topic_level_" + i.to_s].strip
 				existing_topic = Topic.where(:topic => topic_name)
 				if existing_topic.empty?
 					if i == 0
@@ -68,11 +69,25 @@ class HomeController < ApplicationController
 					flashcard_topic.save
 				else
 					flashcard_topic = existing_topic[0]
+					if flashcard_topic.level != i
+						save_new_flashcard = false
+						flash[:notice] = "Flashcard not saved! Topic " + flashcard_topic.topic.to_s + " not in the proper hierarchy! Check its hierarchy and try again."
+					end
 				end
 				i += 1
 			end#while
-			Flashcard.new(:topic_id => flashcard_topic.id, :question => p[:question], :answer => p[:answer], :source => p[:source],
-				:date => Date.today, :from_csv => false, :importance => p[:importance], :comprehension => p[:comprehension]).save
+			date = Date.parse(p[:date])
+			date = Date.today if date > Date.today
+			f = Flashcard.new
+			f.topic_id = flashcard_topic.id
+			f.question = p[:question]
+			f.answer = p[:answer]
+			f.source = p[:source]
+			f.date = date
+			f.from_csv = false
+			f.importance = p[:importance]
+			f.comprehension = p[:comprehension]
+			f.save if save_new_flashcard
 		end
 		redirect_to "/"
   end

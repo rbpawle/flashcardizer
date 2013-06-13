@@ -48,4 +48,11 @@ class Topic < ActiveRecord::Base
   		return false
   	end
   end
+  
+  def self.populate_levels
+  	Topic.all.each do |t|
+  		t.level = t.topic_chain.length - 1
+  		t.save
+  	end
+  end
 end

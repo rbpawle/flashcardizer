@@ -25,6 +25,7 @@ function editFlashcard() {
 	identifier = $(".currently_shown").attr('id');
 	idsplit = identifier.split("_");
 	flashcard_id = idsplit[1];
+	date = $(".currently_shown").children(".flashcard_date").html();
 	topics = $(".currently_shown").children(".topics_description").html().split(" &gt; ");
 	question = $(".currently_shown").children(".question_area").children(".question").html();
 	answer = $(".currently_shown").children(".answer_area").children(".answer").html();
@@ -33,6 +34,7 @@ function editFlashcard() {
 	for(var i = 0; i < topics.length; i++) {
 		$("#update_topic_field_" + i).val(topics[i]);
 	}
+	$("#update_date_field").val(date);
 	$("#update_question_field").val(question);
 	$("#update_answer_field").val(answer);
 	$("#update_source_field").val(source_);

@@ -3,6 +3,7 @@
 <% currently_shown = @flashcard_to_show_id == f.id ? "currently_shown" : "" %>
 <div id="flashcard_<%= f.id %>" class="flashcard unseen under_selected_topic topic_0 <%= @flashcards_metadata[f.id][:topic_classes] %> <%= currently_shown %>" <%= style %>>
 	<div class="topics_description"><%= @flashcards_metadata[f.id][:topics_description] %></div>
+	<div class="flashcard_date"><%= f.date.to_s %></div>
 	<div class="question_area">
 		<div class="question_prefix">ANSWER ME THIS, HEATHEN:</div>
 		<div class="question"><%= f.question %></div>
