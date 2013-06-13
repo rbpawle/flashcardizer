@@ -4,6 +4,7 @@ require 'fileutils'
 class FlashcardCSV < ActiveRecord::Base
   attr_accessible :csv, :name
   def self.csv_to_flashcards(csv)
+  	Flashcard.all.each {|f| f.delete }
   	CSV.foreach(csv, :headers => ["date", "0", "1", "2", "question", "answer", "source"]) do |row|
   		f = Flashcard.where(:question => row["question"], :answer => row["answer"])
   		if !f.empty?
