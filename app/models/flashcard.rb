@@ -12,41 +12,28 @@ class Flashcard < ActiveRecord::Base
   end
   
   def self.simulate_controller
-	  @flashcards = Flashcard.all
-		#@topics will be an array of arrays of topics. the highest-level topics are in index 0, next-highest are in index 1, and so on.
-		@topic_levels = []
-		@flashcards_metadata = {}
-		@flashcards.each do |f|
-			chain = Topic.find(f.topic_id).topic_chain
-			chain.each_index do |i|
-				if @topic_levels[i].nil?
-					@topic_levels[i] = [chain[i]]
-				elsif @topic_levels[i].index(chain[i]).nil?
-					@topic_levels[i] << chain[i]
-				end
+		topic_name = "Machine Learning"
+	  existing_topic = Topic.where(:topic => topic_name)
+		if existing_topic.empty?
+			if i == 0
+				flashcard_topic = Topic.new(:topic => topic_name, :parent_id => 0)
+			else
+				t = Topic.where(:topic => parent_name)[0]
+				flashcard_topic = Topic.new(:topic => topic_name, :parent_id => t.id)
 			end
-			@flashcards_metadata[f.id] = {}
-			topic_class = "topic_"
-			topics_description = ""
-			chain.each do |t|
-				puts t.id.to_s if t.topic.nil?
-				topic_class += t.id.to_s + " topic_"
-				topics_description += t.topic.to_s + " > "
-			end
-			@flashcards_metadata[f.id][:topic_classes] = topic_class[0..(topic_class.length - 7)]
-			@flashcards_metadata[f.id][:topics_description] = topics_description[0..(topics_description.length - 3)]
-		end
-		@dates = {}
-		Flashcard.all.each do |f|
-			unless @dates.has_key? f.date
-				@dates[f.date] = 0
+			flashcard_topic.save
+		else
+			flashcard_topic = existing_topic[0]
+			if flashcard_topic.level != 0
+				save_new_flashcard = false
+				flash = "Flashcard not saved! Topic " + flashcard_topic.topic.to_s + " not in the proper hierarchy! Check its hierarchy and try again."
 			end
 		end
-		@dates.delete(nil)
-		@dates = @dates.keys.sort.reverse
-		@flashcard_to_show_id = @flashcards[rand * (@flashcards.length - 1)].id		#pick random flashcard to show at beginning
-		@topic_levels.each {|ts| ts.sort_by! {|t| t.topic.to_s } }
-		@new_flashcard = Flashcard.new
+		if flash
+			puts flash
+		else
+			puts "ok"
+		end
   end
   
 end
