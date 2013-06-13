@@ -1,5 +1,5 @@
 class Topic < ActiveRecord::Base
-  attr_accessible :parent_id, :topic
+  attr_accessible :parent_id, :topic, :level
   #parent is the id of the parent topic of this topic
   #parent of 0 value means this is a root topic (aka subject)
   
