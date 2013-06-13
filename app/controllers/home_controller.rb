@@ -56,7 +56,7 @@ class HomeController < ApplicationController
 			f[0].delete unless f.empty?
 			i = 0
 			flashcard_topic = nil
-			while p["topic_level_" + i.to_s] && p["topic_level_" + i.to_s][/^\s*$/].empty? && #in this loop, we add new topics to the database if they exist
+			while p["topic_level_" + i.to_s] && p["topic_level_" + i.to_s][/^\s*$/].nil? && #in this loop, we add new topics to the database if they exist
 				topic_name = p["topic_level_" + i.to_s].strip
 				existing_topic = Topic.where(:topic => topic_name)
 				if existing_topic.empty?
