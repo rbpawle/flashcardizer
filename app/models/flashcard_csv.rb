@@ -4,22 +4,44 @@ require 'fileutils'
 class FlashcardCSV < ActiveRecord::Base
   attr_accessible :csv, :name
   def self.csv_to_flashcards(csv)
-  	Flashcard.where(:from_csv => true).each {|f| f.delete}
-  	CSV.foreach(csv, :headers => ["date", "subject", "category", "question", "answer", "source"]) do |row|
-  		subject = Subject.where(:subject => row["subject"]).first
-  		if subject.nil?
-  			subject = Subject.new(:subject => row["subject"])
-  			subject.save
+  	CSV.foreach(csv, :headers => ["date", "0", "1", "2", "question", "answer", "source"]) do |row|
+  		f = Flashcard.where(:question => row["question"], :answer => row["answer"])
+  		if !f.empty?
+  			f.each {|fl| fl.delete}
   		end
-  		category = Category.where(:subject => row["subject"], :category => row["category"]).first
-  		if category.nil?
-  			category = Category.new(:subject => row["subject"], :category => row["category"])
-  			category.save
+  		t0 = Topic.first(:conditions => {:topic => row["0"].strip})
+  		if t0.nil?
+  			t0 = Topic.new(:topic => row["0"].strip, :parent_id => 0)
+  			t0.save
   		end
-			Flashcard.new(:date => row["date"], :subject_id => subject.id, :category_id => category.id,
-				:question => row["question"], :answer => row["answer"], :source => row["source"], :from_csv => true,
-				:subject => subject.subject, :category => category.category).save
+  		topic = t0
+  		if row["1"] && !row["1"].empty?
+				t1 = Topic.first(:conditions => {:topic => row["1"].strip})
+				if t1.nil?
+					t1 = Topic.new(:topic => row["1"].strip, :parent_id => t0.id)
+					t1.save
+				end
+				topic = t1
+			end
+  		if row["2"] && !row["2"].empty?
+				t2 = Topic.first(:conditions => {:topic => row["2"].strip})
+				if t2.nil?
+					t2 = Topic.new(:topic => row["2"].strip, :parent_id => t1.id)
+					t2.save
+				end
+				topic = t2
+  		end
+			Flashcard.new(:date => row["date"], :topic_id => topic.id, :question => row["question"], :answer => row["answer"], :source => row["source"], :from_csv => true).save
   	end
+  end
+  
+  def self.flashcards_to_csv
+  	csv = ""
+  	Flashcard.all.each do |f|
+  		topic_chain = Topic.find(f.topic_id).topic_chain
+  		csv << f.date + "," + topic_chain[0].to_s + "," + topic_chain[1].to_s + "," + topic_chain[2].to_s + "," + f.question + "," + f.answer + "," + f.source + "\n"
+  	end
+  	puts csv
   end
   
   def self.fix_csv_dates
