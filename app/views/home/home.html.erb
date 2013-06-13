@@ -9,7 +9,8 @@
 		<ul>
 			<li><a href="#" onclick="showTab('#flashcards_tab')">Flashcards</a></li>
 			<li><a href="#" onclick="showTab('#update_tab')">Make Flashcards</a></li>
-			<li><a href="#" onclick="showTab('#upload_tab')">CSV to Flashcards</a></li>
+			<li><a href="#" onclick="showTab('#upload_tab')">CSV</a></li>
+			<li><a href="#" onclick="showTab('#search_tab')">Search</a></li>
 		</ul>
 	</div>
 	<div id="tabs">
@@ -27,6 +28,12 @@
 					<%= submit_tag "Submit brah", :name => "upload_button", :class => "uploadButton" %>
 				<% end %>
 			</div>
+		</div>
+		<div class="tab" id="search_tab" style="display:none">
+			<div id="search_warning">Search for words occuring in questions or answers. 4 character minimum.<br/>If you search for a common word like "what", it'll take forever.</div>
+			<input id="search_bar" type="text" onkeyup="searchBarKeyUp()">
+			<button id="search_button" onclick="searchButtonClicked()">Search</button>
+			<div id="search_results"></div>
 		</div>
 	</div>
 </div>
