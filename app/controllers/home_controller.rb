@@ -76,9 +76,6 @@ class HomeController < ApplicationController
 			end#while
 			date = Date.parse(p[:date])
 			date = Date.today if date > Date.today
-			#delete at provided id
-			old_f = Flashcard.where(:id => p[:id])
-			old_f[0].delete unless old_f.empty?
 			f = Flashcard.new
 			f.topic_id = flashcard_topic.id
 			f.question = p[:question]
@@ -88,7 +85,12 @@ class HomeController < ApplicationController
 			f.from_csv = false
 			f.importance = p[:importance]
 			f.comprehension = p[:comprehension]
-			f.save if save_new_flashcard
+			if save_new_flashcard
+				#delete at provided id
+				old_f = Flashcard.where(:id => p[:id])
+				old_f[0].delete unless old_f.empty?
+				f.save
+			end
 		end
 		redirect_to "/"
   end
