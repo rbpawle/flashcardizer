@@ -13,14 +13,14 @@ class FlashcardCSV < ActiveRecord::Base
   		end
   		t0 = Topic.first(:conditions => {:topic => row["0"].strip})
   		if t0.nil?
-  			t0 = Topic.new(:topic => row["0"].strip, :parent_id => 0)
+  			t0 = Topic.new(:topic => row["0"].strip, :parent_id => 0, :level => 0)
   			t0.save
   		end
   		topic = t0
   		if row["1"] && !row["1"].empty?
 				t1 = Topic.first(:conditions => {:topic => row["1"].strip})
 				if t1.nil?
-					t1 = Topic.new(:topic => row["1"].strip, :parent_id => t0.id)
+					t1 = Topic.new(:topic => row["1"].strip, :parent_id => t0.id, :level => 1)
 					t1.save
 				end
 				topic = t1
@@ -28,12 +28,12 @@ class FlashcardCSV < ActiveRecord::Base
   		if row["2"] && !row["2"].empty?
 				t2 = Topic.first(:conditions => {:topic => row["2"].strip})
 				if t2.nil?
-					t2 = Topic.new(:topic => row["2"].strip, :parent_id => t1.id)
+					t2 = Topic.new(:topic => row["2"].strip, :parent_id => t1.id, :level => 2)
 					t2.save
 				end
 				topic = t2
   		end
-			Flashcard.new(:date => row["date"], :topic_id => topic.id, :question => row["question"], :answer => row["answer"], :source => row["source"], :from_csv => true).save
+			Flashcard.new(:date => row["date"].strip, :topic_id => topic.id, :question => row["question"].strip, :answer => row["answer"].strip, :source => row["source"].strip, :from_csv => true).save
   	end
   end
   

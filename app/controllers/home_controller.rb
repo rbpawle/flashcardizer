@@ -51,9 +51,6 @@ class HomeController < ApplicationController
   		flash[:notice] = "Flashcard not saved! Something's missing..."
   	else
   		save_new_flashcard = true
-			#delete at provided id
-			f = Flashcard.where(:id => p[:id])
-			f[0].delete unless f.empty?
 			i = 0
 			flashcard_topic = nil
 			while p["topic_level_" + i.to_s] && p["topic_level_" + i.to_s][/^\s*$/].nil? && #in this loop, we add new topics to the database if they exist
@@ -78,6 +75,9 @@ class HomeController < ApplicationController
 			end#while
 			date = Date.parse(p[:date])
 			date = Date.today if date > Date.today
+			#delete at provided id
+			old_f = Flashcard.where(:id => p[:id])
+			old_f[0].delete unless old_f.empty?
 			f = Flashcard.new
 			f.topic_id = flashcard_topic.id
 			f.question = p[:question]

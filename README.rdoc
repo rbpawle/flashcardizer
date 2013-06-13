@@ -12,7 +12,6 @@ Character counter when typing?
 ====Features
 instead of 'hit me with another', buttons for 'I get it' or 'I don't get it'. Send ajax with each button recording the button hits. calculate question urgency that way.
 Images to associate with flashcards
-Search box
 Login
 Graph of questions/day, etc
 Tabs between question and add question
