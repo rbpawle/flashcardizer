@@ -29,9 +29,9 @@ class Flashcard < ActiveRecord::Base
 			topic_class = "topic_"
 			topics_description = ""
 			chain.each do |t|
-				puts t.id.to_s
+				puts t.id.to_s if t.topic.nil?
 				topic_class += t.id.to_s + " topic_"
-				topics_description += t.topic + " > "
+				topics_description += t.topic.to_s + " > "
 			end
 			@flashcards_metadata[f.id][:topic_classes] = topic_class[0..(topic_class.length - 7)]
 			@flashcards_metadata[f.id][:topics_description] = topics_description[0..(topics_description.length - 3)]
