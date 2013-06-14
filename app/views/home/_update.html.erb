@@ -1,6 +1,7 @@
 <div id="update_dropdowns">
 <% @topic_levels.each_index do |i| %>
 	<select id="topic_update_dropdown_<%= i %>" <%= "style=display:none" if i > 0 %> onchange="topicDropdownChanged('topic_update_dropdown_<%= i %>')" >
+  	<option value="default_select_<%= i %>" selected="true">Select Topic <%= i %></option>
 		<% @topic_levels[i].each do |topic| %>
 			<option value="<%= topic.parent_id.to_s + "_" + topic.id.to_s %>"><%= topic.topic %></option>
 		<% end %>
@@ -9,16 +10,16 @@
 </div>
 <%= form_for :@new_flashcard, :url => "/create" do |f|%>
 	<input id="update_id_field" type="text" name="flashcard[id]" hidden="hidden">
-	Date: <input id="update_date_field" type="text" name="flashcard[date]"></br>
+	<span class="update_label">Date:</span><input id="update_date_field" type="text" name="flashcard[date]" ></br>
 	<div id="update_topics">
 		<% @topic_levels.each_index do |i| %>
-		Topic Level <%= i %>: <input id="update_topic_field_<%= i %>" type="text" name="flashcard[topic_level_<%= i %>]" oninput="updateTopicTextBoxChanged(<%= i %>)" size="50"><br/>
+		<span class="update_label">Topic Level <%= i %>:</span><input id="update_topic_field_<%= i %>" type="text" name="flashcard[topic_level_<%= i %>]" oninput="updateTopicTextBoxChanged(<%= i %>)" size="50"><br/>
 		<% end %>
 	</div>
-	Question: <input id="update_question_field" type="text" name="flashcard[question]" size="80"><br/>
-	Answer: <input id="update_answer_field" type="text" name="flashcard[answer]" size="80"><br/>
-	Source: <input id="update_source_field" type="text" name="flashcard[source]" size="80"><br/>
-	Importance:
+	<span class="update_label">Question:</span><input id="update_question_field" type="text" name="flashcard[question]" size="80"><br/>
+	<span class="update_label">Answer:</span><input id="update_answer_field" type="text" name="flashcard[answer]" size="80"><br/>
+	<span class="update_label">Source:</span><input id="update_source_field" type="text" name="flashcard[source]" size="80"><br/>
+	<span class="update_label">Importance:</span>
 	<div id="update_importance_buttons">
 		<% 5.times do |j| %>
 			<% i = j + 1 %>
@@ -28,7 +29,7 @@
 			<%= s.html_safe %>
 		<% end %>
 	</div>
-	Comprehension:
+	<span class="update_label">Comprehension:</span>
 	<div id="update_comprehension_buttons">
 		<% 5.times do |j| %>
 			<% i = j + 1 %>

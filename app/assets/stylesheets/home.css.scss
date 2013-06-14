@@ -141,7 +141,7 @@ $topic_window_height:16em;
 	height:3em;
 }
 
-//content of flashcards************************************************************************
+//content of flashcards********************************
 
 .flashcard {
 	font-size:large;
@@ -177,4 +177,14 @@ $topic_window_height:16em;
 .flashcard_meta {
 	text-align:center;
 	margin-top:1em;
+}
+
+//update tab*********************************************************************************
+.update_label {
+	display:inline-block;
+	width:7em;
+}
+
+#update_dropdowns{
+	padding:1em;
 }

@@ -32,7 +32,9 @@ function createNextTopicBox(next_i) {
 
 function resetUpdateFields() {
 	$("#update_id_field").val("");
-	$("#update_date_field").val("");
+	var d=new Date();
+	month = d.getMonth() + 1;
+	$("#update_date_field").val(d.getFullYear() + "-" + month + "-" + d.getDate());
 	for(i = 0; i < $("#update_topics").children().length; i++) {
 		$("#update_topic_field_" + i).val("");
 	}
