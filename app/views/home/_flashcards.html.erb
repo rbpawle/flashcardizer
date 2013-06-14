@@ -1,12 +1,14 @@
-<div id="flashcard_dropdowns">
-	<%= render "flashcard_dropdowns" %>
-</div>
-<div id="question_number">Question <span id="current_question_n">1</span> out of <span id="total_questions_n"><%= @flashcards.length %></span></div>
 <div id="flashcards">
 	<%= render "flashcards_actual" %>
 </div>
+<div id="question_number_holder">
+	<span id="question_number"><span id="current_question_n">1</span> out of <span id="total_questions_n"><%= @flashcards.length %></span></span>
+</div>
 <div id="flashcard_buttons">
-	<button id="next_flashcard" onclick="showNextFlashcard()">Hit me with another.</button>
-	<button id="show_answer" onclick="showAnswerAndSource()">Fuck it, show me the answer</button>
-	<button id="edit_flashcard" onclick="editFlashcard()" hidden="hidden">That's not even close to right, let me fix it.</button>
+	<button class="flashcard_button" id="next_flashcard" onclick="showNextFlashcard()">Hit me with another.</button>
+	<button class="flashcard_button" id="show_answer" onclick="showAnswerAndSource()">Fuck it, show me the answer</button>
+	<button class="flashcard_button" id="edit_flashcard" onclick="editFlashcard()" hidden="hidden">That's not even close to right, let me fix it.</button>
+</div>
+<div id="flashcard_dropdowns">
+	<%= render "flashcard_dropdowns" %>
 </div>

@@ -2,11 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$lightest_blue:#60b0d0;
-$light_blue:#3aa6d0;
-$mid_blue:#0b5fa5;
+$blue_0:#60b0d0;
+$blue_1:#3399FF;
+$blue_2:#3aa6d0;
+$blue_3:#0b5fa5;
+$blue_4:#0066FF;
+$blue_5:#000099;
+$blue_6:#000055;
+
+$green_0:#D6FFAD;
+$green_1:#89C16C;
 body{
-	background-color: $lightest_blue;
+	background-color: $blue_0;
 	font-family:sans-serif;
 	text-align: center;
 	margin: 0;
@@ -14,8 +21,8 @@ body{
 }
 
 #container {
-	background-color:$mid_blue;
-	padding-top:3em;
+	background-color:$blue_3;
+	padding-top:2em;
 	padding-left:3em;
 	padding-right:3em;
 	max-width:50em;
@@ -28,15 +35,16 @@ body{
 
 //nav bar************************************************************************
 #nav_bar {
-	height:3em;
+	border-radius:.5em;
+	background-color:$blue_6;
+	height:6em;
 	width:100%;
+	position:relative;
 }
 
 #nav_bar ul {
 	list-style-type:none;
-	margin:0;
-	padding:0;
-	//display:table;
+	position:absolute; top:25%;
 	text-align:center;
 }
 
@@ -51,8 +59,8 @@ body{
 #nav_bar a:link, a:visited {
 	font-weight: bold;
 	font-family: sans-serif;
-	color: #000099;
-	background-color: #3399FF;
+	color: $blue_6;
+	background-color: $blue_1;
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -60,7 +68,7 @@ body{
 }
 
 #nav_bar a:hover, a:active {
-	background-color: #0066FF;
+	background-color: $blue_4;
 }
 
 //tabs content************************************************************************
@@ -68,7 +76,6 @@ body{
 	float:left;
 	border-bottom-width: 0;
 	margin: 0 0.5em 0 0;
-	padding-left:1em;
 	width:100%;
 }
 
@@ -76,22 +83,25 @@ body{
 	clear: both;
 }
 
-select, .button{
+button{
 	height:3em;
 	padding-left:2em;
 	padding-right:2em;
 	border-radius:2em;
 	margin:0.5em;
-	border:none;
 }
 
 //flashcard tab**************************************
 $topic_window_height:16em;
 
+#flashcards {
+}
+
 .topics, #dates {
 	float:left;
 	overflow:auto;
 	height:$topic_window_height;
+	margin-top:1em;
 }
 
 .topics {
@@ -100,7 +110,6 @@ $topic_window_height:16em;
 
 .dates {
 	width:7em;
-	overflow:auto;
 }
 
 .topic, .date {
@@ -110,59 +119,62 @@ $topic_window_height:16em;
 	height:$topic_window_height;
 }
 
+#question_number_holder{
+	width:100%;
+	margin-bottom:1em;
+	text-align:center;
+}
+
+#question_number {
+	background-color:$blue_1;
+	border-radius:0.25em;
+	font-size:small;
+	padding:.5em;
+}
+
+#flashcard_buttons{
+	text-align:center;
+}
+
+.flashcard_button{
+	width:20em;
+	height:3em;
+}
+
 //content of flashcards************************************************************************
 
 .flashcard {
 	font-size:large;
+	background-color:$blue_2;
+	border-radius:0.25em;
+	padding:1em;
+	margin:1em;
+}
+
+.topics_description, .flashcard_date {
+	margin-left:3em;
+	margin-right:3em;
 }
 
 .question, .answer, .source{
-	color:#89C16C;
+	color:$blue_6;
+	padding:1em;
+	background-color:$green_0;
+	border-radius:0.5em;
 }
 
-.question_prefix .answer_prefix .source_prefix{
+.question_prefix, .answer_prefix, .source_prefix{
+	margin-left:2em;
+	margin-bottom:0.5em;
+	margin-top:0.5em;
 }
 
 .notice {
 	color:red;
+	background-color:$blue_1;
 }
 
-/*
-//update tab************************************************************************
-#update_form {
-	width:42em;
-}
-
-.update_field_label {
-	width:4em;
-	padding:1em;
-	float:left;
-	display:inline;
-}
-
-.update_subject, .update_category {
-	height:5em;
-}
-
-.update_field{
-	height:5em;
-}
-
-.text_box{
+.flashcard_meta {
+	text-align:center;
 	margin-top:1em;
-	height:2em;
-	width:20em;
-	float:right;
-	border:none;
 }
-
-.text_area{
-	height:5em;
-	width:42em;
-	border:none;
-}
-
-#create_button{
-	float:right;
-}
-*/
