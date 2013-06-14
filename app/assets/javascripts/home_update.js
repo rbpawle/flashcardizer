@@ -30,6 +30,26 @@ function createNextTopicBox(next_i) {
 	$("#update_topics").append('Topic Level ' + next_i + ': <input id="update_topic_field_' + next_i + '" type="text" name="flashcard[topic_level_' + next_i + ']" oninput="updateTopicTextBoxChanged(' + next_i + ')" size="50"><br/>');
 }
 
+function resetUpdateFields() {
+	$("#update_id_field").val("");
+	$("#update_date_field").val("");
+	for(i = 0; i < $("#update_topics").children().length; i++) {
+		$("#update_topic_field_" + i).val("");
+	}
+	$("#update_question_field").val("");
+	$("#update_answer_field").val("");
+	$("#update_source_field").val("");
+	for(i = 0; i < $("#update_importance_buttons").children().length; i++) {
+		if(i == 2) {
+			$("#radio_importance_" + i).checked = true;
+			$("#radio_comprehension_" + i).checked = true;
+		} else {
+			$("#radio_importance_" + i).checked = false;
+			$("#radio_comprehension_" + i).checked = false;
+		}
+	}
+}
+
 /**third tier**/
 function showNextLevelSelect(dropdown_id) {
 	next_level_identifier = nextLevelIdentifier(dropdown_id);

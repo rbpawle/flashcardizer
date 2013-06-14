@@ -7,7 +7,7 @@
 	</select></br>
 <% end %>
 </div>
-<form id="update_flashcard_form" method="post" action="create">
+<%= form_for :@new_flashcard, :url => "/create" do |f|%>
 	<input id="update_id_field" type="text" name="flashcard[id]" hidden="hidden">
 	Date: <input id="update_date_field" type="text" name="flashcard[date]"></br>
 	<div id="update_topics">
@@ -18,7 +18,25 @@
 	Question: <input id="update_question_field" type="text" name="flashcard[question]" size="80"><br/>
 	Answer: <input id="update_answer_field" type="text" name="flashcard[answer]" size="80"><br/>
 	Source: <input id="update_source_field" type="text" name="flashcard[source]" size="80"><br/>
-	Importance: 1<input type="radio" name="flashcard[importance]" value="1">2<input type="radio" name="flashcard[importance]" value="2">3<input type="radio" name="flashcard[importance]" value="3" checked="true">4<input type="radio" name="flashcard[importance]" value="4">5<input type="radio" name="flashcard[importance]" value="5"><br/>
-	Comprehension: 1<input type="radio" name="flashcard[comprehension]" value="1">2<input type="radio" name="flashcard[comprehension]" value="2">3<input type="radio" name="flashcard[comprehension]" value="3" checked="true">4<input type="radio" name="flashcard[comprehension]" value="4">5<input type="radio" name="flashcard[comprehension]" value="5">
-	<input type="submit" value="Submit">
-</form>
+	Importance:
+	<div id="update_importance_buttons">
+		<% 5.times do |j| %>
+			<% i = j + 1 %>
+			<% checked = "" %>
+			<% checked = 'checked="checked"' if i == 3 %>
+			<% s = i.to_s + "<input type=\"radio\" id=\"radio_importance_" + i.to_s + "\" name=\"flashcard[importance]\" value=\"" + i.to_s + "\"" + checked + ">" %>
+			<%= s.html_safe %>
+		<% end %>
+	</div>
+	Comprehension:
+	<div id="update_comprehension_buttons">
+		<% 5.times do |j| %>
+			<% i = j + 1 %>
+			<% checked = "" %>
+			<% checked = 'checked="checked"' if i == 3 %>
+			<% s = i.to_s + "<input type=\"radio\" id=\"radio_comprehension_" + i.to_s + "\" name=\"flashcard[comprehension]\" value=\"" + i.to_s + "\"" + checked + ">" %>
+			<%= s.html_safe %>
+		<% end %>
+	</div>
+	<%= f.submit %>
+<% end %>

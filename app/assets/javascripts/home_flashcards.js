@@ -23,6 +23,15 @@ function showAnswerAndSource() {
 	$("#edit_flashcard").show();
 }
 
+function hideAnswerAndSource() {
+	curid_split = $(".currently_shown").attr('id').split("_");
+	flashcard_id = curid_split[1];
+	$("#show_answer").show();
+	$("#answer_shown_"	+ flashcard_id).hide();
+	$("#source_shown_"	+ flashcard_id).hide();
+	$("#edit_flashcard").hide();
+}
+
 function editFlashcard() {
 	identifier = $(".currently_shown").attr('id');
 	idsplit = identifier.split("_");

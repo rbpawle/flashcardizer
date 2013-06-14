@@ -1,9 +1,15 @@
 class HomeController < ApplicationController
   def home
-  	if params[:date]
-  		@flashcards = Flashcard.where(:date => params[:date])
-  	else
-  		@flashcards = Flashcard.all
+		if params[:date]
+			date = Date.parse(params[:date])
+			date = Date.today if date > Date.today
+			@flashcards = Flashcard.where(:date => date)
+			while @flashcards.empty?
+				date -= 1
+				@flashcards = Flashcard.where(:date => date)
+			end
+		else
+			@flashcards = Flashcard.all
 		end
 		#@topics will be an array of arrays of topics. the highest-level topics are in index 0, next-highest are in index 1, and so on.
 		@topic_levels = []
