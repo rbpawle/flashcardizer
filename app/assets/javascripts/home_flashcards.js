@@ -36,8 +36,8 @@ function editFlashcard() {
 	identifier = $(".currently_shown").attr('id');
 	idsplit = identifier.split("_");
 	flashcard_id = idsplit[1];
-	date = $(".currently_shown").children(".flashcard_date").html();
-	topics = $(".currently_shown").children(".topics_description").html().split(" &gt; ");
+	date = $(".currently_shown").children(".flashcard_meta").children(".flashcard_date").html();
+	topics = $(".currently_shown").children(".flashcard_meta").children(".topics_description").html().split(" &gt; ");
 	question = $(".currently_shown").children(".question_area").children(".question").html();
 	answer = $(".currently_shown").children(".answer_area").children(".answer").html();
 	source_ = $(".currently_shown").children(".source_area").children(".source").html();
