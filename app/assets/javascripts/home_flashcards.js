@@ -148,11 +148,6 @@ function pickRandomUnseenFlashcardAmongSelected() {
 	return flashcard_to_show;
 }
 
-function hideAnswerAndSource(flashcard_id) {
-	$("#answer_shown_"	+ flashcard_id).hide();
-	$("#source_shown_"	+ flashcard_id).hide();
-}
-
 /**fifth tier**/
 function flashcardSeenOrCurrentlyShown(flashcard) {
 	if((!flashcard.hasClass("unseen")) || flashcard.hasClass("currently_shown")) {
