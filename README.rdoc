@@ -1,18 +1,21 @@
 TODO:
 
-====Nuts & Bolts
+Search for 3 characters
+AJAX to make flashcard, include notification
+User sign-in
+Answer box in flashcard
+'show this question more often', 'don't show this question anymore' (notification after clicking this)
+--record this over time, adjust priority of question accordingly
+Manipulate flashcard after searching for it
+Create unanswered question
+See all unanswered questions
+CSV - on that page, show all questions/answers
+Page encoded as JSON, not DOM objects
+Pictures linked to flashcards
+Demo version/gif showing process
+iPhone app
+multiple choice question by substituting in antonyms/answers for other questions in same section
+Run tests of specific flashcard length
+fix search with question mark (?)
 
-====Aesthetics
-fucking everything
-
-====Interface
-Confirm added question
-Character counter when typing?
-
-====Features
-instead of 'hit me with another', buttons for 'I get it' or 'I don't get it'. Send ajax with each button recording the button hits. calculate question urgency that way.
-Images to associate with flashcards
-Login
-Graph of questions/day, etc
-Tabs between question and add question
-
+Questions:

@@ -3,8 +3,10 @@
 <% currently_shown = @flashcard_to_show_id == f.id ? "currently_shown" : "" %>
 <div id="flashcard_<%= f.id %>" class="flashcard unseen under_selected_topic topic_0 <%= @flashcards_metadata[f.id][:topic_classes] %> <%= currently_shown %>" <%= style %>>
 	<div class="question_area">
-		<div class="question_prefix">ANSWER ME THIS, HEATHEN:</div>
+		<div class="question_prefix">ANSWER ME THIS, IGNORANT FOOL:</div>
 		<div id="question_<%= f.id %>" class="question"><%= f.question %></div>
+		<div class="question_prefix">PROVIDE YOUR WORTHLESS ANSWER:</div>
+		<textarea rows=4 cols=88></textarea>
 	</div>
 	<div id="answer_shown_<%= f.id %>" class="answer_area" style="display:none">
 		<div class="answer_prefix">THE ANSWER PROCEEDS THUSLY:</div>
