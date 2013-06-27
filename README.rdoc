@@ -17,5 +17,15 @@ iPhone app
 multiple choice question by substituting in antonyms/answers for other questions in same section
 Run tests of specific flashcard length
 fix search with question mark (?)
+make 'make flashcards' look just like the flashcards themselves
 
 Questions:
+ANSWER ME THIS, IGNORANT FOOL:
+PONDER THE FOLLOWING:
+PROVE YOUR INTELLIGENCE AND ANSWER THIS:
+ENGAGE THIS QUERY:
+
+Answers:
+THE ANSWER PROCEEDS THUSLY:
+BEHOLD THE SOLUTION:
+STRUGGLE NO LONGER:

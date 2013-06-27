@@ -1,3 +1,21 @@
+function send_create_request_ajax() {
+	$('form').unbind('submit').submit(function() {
+		var valuesToSubmit = $(this).serialize();
+		$.ajax({
+		    url: $(this).attr('action'), //sumbits it to the given url of the form
+		    data: valuesToSubmit,
+		    dataType: "JSON", // you want a difference between normal and ajax-calls, and json is standard
+		    type: $(this).attr('method')
+		});
+		$("#update_question_field").val("");
+		$("#update_answer_field").val("");
+		return false; // prevents normal behaviour
+	});
+}
+
+//$("#update_question_field").val("");
+//$("#update_answer_field").val("");
+
 /**first tier**/
 function topicDropdownChanged(dropdown_id) {
 	populateTopicField(dropdown_id);
@@ -7,7 +25,6 @@ function topicDropdownChanged(dropdown_id) {
 function updateTopicTextBoxChanged(level_n) {
 	field_identifier = "#update_topic_field_" + level_n;
 	next_field = "#update_topic_field_" + (parseInt(level_n) + 1);
-	console.log(level_n);
 	if($(next_field).length == 0) {
 		createNextTopicBox(parseInt(level_n) + 1);
 	}
@@ -65,8 +82,6 @@ function showNextLevelOptions(dropdown_id) {
 	for(var i = 0; i < $(next_level_identifier).children().length; i++) {
 		next_parentid_topicid = $(next_level_identifier).children().eq(i).val().split("_");
 		next_parentid = next_parentid_topicid[0];
-		console.log(this_topicid);
-		console.log(next_parentid);
 		if(this_topicid == next_parentid) {
 			$(next_level_identifier).children().eq(i).show();
 		} else {

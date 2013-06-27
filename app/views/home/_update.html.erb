@@ -8,7 +8,7 @@
 	</select></br>
 <% end %>
 </div>
-<%= form_for :@new_flashcard, :url => "/create" do |f|%>
+<%= form_for :@new_flashcard, :id => "update_form", :url => "/create", :method => "post" do |f|%>
 	<input id="update_id_field" type="text" name="flashcard[id]" hidden="hidden">
 	<span class="update_label">Date:</span><input id="update_date_field" type="text" name="flashcard[date]" ></br>
 	<div id="update_topics">
@@ -39,5 +39,5 @@
 			<%= s.html_safe %>
 		<% end %>
 	</div>
-	<%= f.submit %>
+	<%= f.submit :onclick => "send_create_request_ajax()" %>
 <% end %>
