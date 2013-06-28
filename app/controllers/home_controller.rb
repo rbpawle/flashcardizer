@@ -1,19 +1,10 @@
 class HomeController < ApplicationController
   def home
 		@flashcards = Flashcard.all
-		#@topics will be an array of arrays of topics. the highest-level topics are in index 0, next-highest are in index 1, and so on.
-		@topic_levels = []
 		@json_a = []
 		@flashcards.each do |f|
 			topic_chain = Topic.find(f.topic_id).topic_chain
 			topic_id_chain = Topic.find(f.topic_id).topic_id_chain
-			topic_chain.each_index do |i|
-				if @topic_levels[i].nil?
-					@topic_levels[i] = [topic_chain[i]]
-				elsif @topic_levels[i].index(topic_chain[i]).nil?
-					@topic_levels[i] << topic_chain[i]
-				end
-			end
 			topics_description = ""
 			topic_chain.each {|t| topics_description += t.topic.to_s + " > " }
 			@this_json = f.id.to_s + ": {\n"
