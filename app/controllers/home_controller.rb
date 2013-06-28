@@ -5,29 +5,27 @@ class HomeController < ApplicationController
 		@topic_levels = []
 		@json_a = []
 		@flashcards.each do |f|
-			chain = Topic.find(f.topic_id).topic_chain
-			chain.each_index do |i|
+			topic_chain = Topic.find(f.topic_id).topic_chain
+			topic_id_chain = Topic.find(f.topic_id).topic_id_chain
+			topic_chain.each_index do |i|
 				if @topic_levels[i].nil?
-					@topic_levels[i] = [chain[i]]
-				elsif @topic_levels[i].index(chain[i]).nil?
-					@topic_levels[i] << chain[i]
+					@topic_levels[i] = [topic_chain[i]]
+				elsif @topic_levels[i].index(topic_chain[i]).nil?
+					@topic_levels[i] << topic_chain[i]
 				end
 			end
-			topic_class = "topic_"
 			topics_description = ""
-			chain.each do |t|
-				topic_class += t.id.to_s + " topic_"
-				topics_description += t.topic.to_s + " > "
-			end
+			topic_chain.each {|t| topics_description += t.topic.to_s + " > " }
 			@this_json = f.id.to_s + ": {\n"
 			@this_json << "question: \"" + f.question.gsub('"', "\"") + "\",\n"
 			@this_json << "answer: \"" + f.answer.gsub('"', "\"") + "\",\n"
 			@this_json << "source: \"" + f.source.gsub('"', "\"") + "\",\n"
 			@this_json << "date: \"" + f.date.to_s.gsub('"', "\"") + "\",\n"
-			@this_json << "topic_classes: \"" + topic_class[0..(topic_class.length - 7)].gsub('"', "\"") + "\",\n"
+			@this_json << "topic_id_chain: " + topic_id_chain.to_s + ",\n"
 			@this_json << "topics_description: \"" + topics_description[0..(topics_description.length - 3)].gsub('"', "\"") + "\",\n"
 			@this_json << "unseen: true\n,"
-			
+			@this_json << "currently_shown: false,\n"
+			@this_json << "last_seen: false\n"
 			@this_json << "}"
 			@json_a << @this_json
 		end
