@@ -26,4 +26,25 @@ class Tag < ActiveRecord::Base
   		f.tags = tags
   	end
   end
+  
+  #returns array of tags that have flashcards in common with this tag
+  def associated_tags
+		associated_tags = []
+  	self.flashcards.each do |f|
+  		f.tags.each do |t|
+  			if associated_tags.index(t).nil? && t != self
+	  			associated_tags << t
+	  		end
+  		end
+  	end
+  	return associated_tags
+  end
+  
+  def associated_tag_names
+  	names = []
+  	self.associated_tags.each do |t|
+  		names << t.name
+  	end
+  	return names
+  end
 end

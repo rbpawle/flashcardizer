@@ -29,7 +29,9 @@ class HomeController < ApplicationController
 			tag_flashcards.each {|f| flashcard_ids << f.id }
 			t_array = '"' + t.name.gsub('"', "\"") + "\": {\n" 
 			t_array << "flashcard_ids: [" + flashcard_ids.join(", ") + "],\n"
-			t_array << "selected: false\n}"
+			t_array << "selected: false,\n"
+			t_array << "associated_tags: [\"" + t.associated_tag_names.join("\",\"") + "\"]\n"
+			t_array << "}"
 			tags_json_a << t_array
 		end
 		@json << ("var _tags = {\n" + tags_json_a.join(",\n") + "\n};\n").html_safe

@@ -52,8 +52,16 @@ function showTab(tab) {
 			if(hash['selected']) {
 				tags.push(key);
 			}
-		}
+		});
 		return tags;
+	}
+	
+	//returns an array of all tag strings
+	function getAllTagsSortedByPopularity() {
+	}
+	
+	//returns array of tag strings that share the same questions, sorted by the tags that have the most flashcards
+	function getAssociatedTagsSortedByPopularity(tags) {
 	}
 	
 	function getQuestion(id){
@@ -64,6 +72,9 @@ function showTab(tab) {
 	}
 	function getSource(id){
 		return _flashcards[id]['source'];
+	}
+	function getTags(id) {
+		return _flashcards[id]['tags'];
 	}
 	function setQuestion(question){
 		_flashcards[id]['question'] = question;
@@ -77,6 +88,9 @@ function showTab(tab) {
 	function isShown(id) {
 		return _flashcards[id]['currently_shown'];
 	}
+	function getTotalQuestions() {
+		return _flashcard_ids.length;
+	}
 	
 	window.getRandomFlashcardId = getRandomFlashcardId;
 	window.getAnswer = getAnswer;
@@ -87,4 +101,7 @@ function showTab(tab) {
 	window.getQuestion = getQuestion;
 	window.getQuestion = getQuestion;
 	window.getSelectedTags = getSelectedTags;
+	window.isShown = isShown;
+	window.getTotalQuestions = getTotalQuestions;
+	window.getTags = getTags;
 })(window);
