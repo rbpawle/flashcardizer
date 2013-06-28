@@ -1,10 +1,15 @@
 /**first tier**/
 $(document).ready(function() {
+	/**for first flashcard**/
 	id = getRandomFlashcardId(null);
 	showFlashcard(id);
 	$("#current_question_n").html("1");
 	$("#total_questions_n").html(getTotalQuestions());
-	$("#flashcard_tags").html("<span class=\"tag flashcard_tag\">" + getTags(id).join("</span><span class=\"tag flashcard_tag\">") + "</span>");
+	var span = "<span class=\"tag flashcard_tag\">"
+	$("#flashcard_tags").html(span + getFlashcardTags(id).join("</span>" + span) + "</span>");
+	/**for tags area**/
+	var span = "<span class=\"tag available_tags\">"
+	$("#tags").html(span + getAllTags().join("</span>" + span) + "</span>");
 });
 
 function showNextFlashcard() {

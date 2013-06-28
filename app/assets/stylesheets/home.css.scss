@@ -93,31 +93,24 @@ button{
 }
 
 //flashcard tab**************************************
-$topic_window_height:16em;
+$tag_window_height:16em;
 
 #flashcards {
 }
 
-.topics, #dates {
+.tag {
+	background-color:$green_0;
+	border-radius:.5em;
+	margin:.5em;
+	padding:.5em;
+}
+
+.available_tags {
 	float:left;
-	overflow:auto;
-	height:$topic_window_height;
-	margin-top:1em;
-}
-
-.topics {
-	width:25%;
-}
-
-.dates {
-	width:7em;
-}
-
-.topic, .date {
 }
 
 #flashcard_dropdowns {
-	height:$topic_window_height;
+	height:$tag_window_height;
 }
 
 #question_number_holder{
