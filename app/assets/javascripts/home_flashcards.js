@@ -4,19 +4,18 @@ $(document).ready(function() {
 	showFlashcard(id);
 });
 
+function showNextFlashcard() {
+	selected_tags = getSelectedTags();
+	id = getRandomFlashcardId(selected_tags);
+	showFlashcard(id);
+}
+
 function showSubtopicsAndFlashcardForTopic(topic_attr_id, topic_id, topic_level_n) {
 	highlightTopic(topic_attr_id, topic_level_n);
 	showSubtopics(topic_id, topic_level_n);
 	showFirstFlashcard(topic_id);
 	updateTotalQuestionsNumber();
 	updateQuestionSequenceNumber();
-}
-
-function showNextFlashcard() {
-	showFlashcardAmongSelected();
-	updateQuestionSequenceNumber();
-	$("#show_answer").show();
-	$("#edit_flashcard").hide();
 }
 
 function showAnswerAndSource() {

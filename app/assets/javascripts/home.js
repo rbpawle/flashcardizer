@@ -17,11 +17,15 @@ function showTab(tab) {
 		} else {
 			tags_actual = new Array;
 			for(var i = 0; i < tags.length; i++) {
-				tags_actual.push(_tags[tag[i]]);
+				tags_actual.push(_tags[tags[i]]['flashcard_ids']);
 			}
-			var flashcard_ids = getFlashcardIdsUnderTags(tags);
+			var flashcard_ids = getFlashcardIdsUnderTags(tags_actual);
 		}
-		return flashcard_ids[Math.floor(Math.random()*flashcard_ids.length)];
+		if(flashcard_ids.length == 0) {
+			return null;
+		} else {
+			return flashcard_ids[Math.floor(Math.random()*flashcard_ids.length)];
+		}
 	}
 	
 	//tags should be an associative array of arrays keyed by tag; the sub-arrays are the flashcard id's under a given tag
@@ -40,6 +44,16 @@ function showTab(tab) {
 			}
 			return union;
 		}
+	}
+	
+	function getSelectedTags() {
+		tags = [];
+		$.each(_tags, function(key, hash) {
+			if(hash['selected']) {
+				tags.push(key);
+			}
+		}
+		return tags;
 	}
 	
 	function getQuestion(id){
@@ -72,4 +86,5 @@ function showTab(tab) {
 	window.setSource = setSource;
 	window.getQuestion = getQuestion;
 	window.getQuestion = getQuestion;
+	window.getSelectedTags = getSelectedTags;
 })(window);
