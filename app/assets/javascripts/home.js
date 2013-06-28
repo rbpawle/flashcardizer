@@ -10,6 +10,18 @@ function showTab(tab) {
 }
 
 (function(window){
+	//tags should be an array of strings of tag names; returns array of flashcard ids
+	function getFlashcardIdsByTags(tags) {
+		flashcard_ids = [];
+		$.each(tags, function(i) {
+			$.each(_tags[tags[i]]['flashcard_ids'], function(j) {
+				flashcard_ids.push(_tags[tags[i]]['flashcard_ids'][j]);
+			});
+		});
+		flashcard_ids = flashcard_ids.filter(function (v, i, a) { return a.indexOf (v) == i }); // dedupe array
+		return flashcard_ids;
+	}
+	
 	//tags is an array of string(s) or null
 	function getRandomFlashcardId(tags) {
 		if(tags == null) {
@@ -46,6 +58,32 @@ function showTab(tab) {
 		}
 	}
 	
+	//returns the intersection of arrays a and b
+	function _intersection(a, b) {
+		inx = [];
+		for(var i = 0; i < a.length; i++) {
+			for(var j = 0; j < b.length; j++) {
+				if(a[i] == b[j]) {
+					inx.push[a[i]];
+					break;
+				}
+			}
+		}
+		inx = inx.filter(function (v, i, a) { return a.indexOf (v) == i }); // dedupe array
+		return inx;
+	}
+	
+	//returns the union of arrays a and b
+	function _union(a, b) {
+		un = a.slice(0);
+		for(var i = 1; i < b.length; i++) {
+			if(jQuery.inArray(b[i], un) == -1) {
+				un.push(b[i]);
+			}
+		}
+		return un;
+	}
+	
 	function getSelectedTags() {
 		tags = [];
 		$.each(_tags, function(key, hash) {
@@ -58,16 +96,19 @@ function showTab(tab) {
 	
 	//returns an array of all tag strings, sorted by popularity
 	function getAllTagsSortedByPopularity() {
+		var all_tags = getAllTags();
+		return _sortTagsByPopularity(all_tags);
 	}
 	
 	//returns array of tag strings that share the same questions, sorted by the tags that have the most flashcards
 	function getAssociatedTagsSortedByPopularity(tags) {
-		
+		var associated_tags = _getAssociatedTags(tags);
+		return _sortTagsByPopularity(associated_tags);
 	}
 	
-	//takes a list of strings that are tags, finds the _tag object for them, and returns a string sorted by number of flashcards, highest first
+	//takes a list of strings that are tags, returns a string sorted by number of flashcards for that tag, highest first
 	function _sortTagsByPopularity(tags) {	
-		sortable = [];
+		var sortable = [];
 		for(var i = 0; i < tags.length; i++) {
 			tag = _tags[tags[i]];
 			sortable.push({'tag': tags[i], 'n': tag['flashcard_ids'].length});
@@ -80,20 +121,24 @@ function showTab(tab) {
 		return return_tags;
 	}
 	
+	//takes a list of strings that are tags, returns all tags that have the same flashcards
 	function _getAssociatedTags(tags) {
 		var associated_tags = [];
-		$.each(tags, function(tag) {
-			associated_tags.concat(_tags[tag]['associated_tags']);
+		$.each(tags, function(i) {
+			for(var j = 0; j < _tags[tags[i]]['associated_tags'].length; j++) {
+				associated_tags.push(_tags[tags[i]]['associated_tags'][j]);
+			}
 		});
-		$.each(tags, function(tag) {
-			this_associated_tags = _tags[tag]['associated_tags'];
+		$.each(tags, function(i) {
+			var this_associated_tags = _tags[tags[i]]['associated_tags'];
 			for(var i = 0; i < associated_tags.length; i++) {
-				if(jQuery.inArray(associated_tags[i], this_associated_tags) == -1){ //if associated_tags[i] is not in associated_tags
+				if(jQuery.inArray(associated_tags[i], this_associated_tags) == -1){ //if associated_tags[i] is not in this_associated_tags
 					associated_tags.splice(i, 1);
 					i--;
 				}
 			}
 		});
+		associated_tags = associated_tags.filter(function (v, i, a) { return a.indexOf (v) == i }); // dedupe array
 		return associated_tags;
 	}
 	
@@ -132,6 +177,7 @@ function showTab(tab) {
 		return _flashcard_ids.length;
 	}
 	
+	window.getFlashcardIdsByTags = getFlashcardIdsByTags;
 	window.getRandomFlashcardId = getRandomFlashcardId;
 	window.getSelectedTags = getSelectedTags;
 	window.getAllTagsSortedByPopularity = getAllTagsSortedByPopularity;
@@ -148,5 +194,4 @@ function showTab(tab) {
 	window.getSelectedTags = getSelectedTags;
 	window.isShown = isShown;
 	window.getTotalQuestions = getTotalQuestions;
-	window._sortTagsByPopularity = _sortTagsByPopularity; //TEST, REMOVE!!
 })(window);

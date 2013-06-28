@@ -9,13 +9,17 @@ $(document).ready(function() {
 	$("#flashcard_tags").html(span + getFlashcardTags(id).join("</span>" + span) + "</span>");
 	/**for tags area**/
 	var span = "<span class=\"tag available_tags\">"
-	$("#tags").html(span + getAllTags().join("</span>" + span) + "</span>");
+	$("#tags").html(span + getAllTagsSortedByPopularity().join("</span>" + span) + "</span>");
 });
 
 function showNextFlashcard() {
 	selected_tags = getSelectedTags();
 	id = getRandomFlashcardId(selected_tags);
 	showFlashcard(id);
+}
+
+function tagClicked() {
+	
 }
 
 /**second tier**/
