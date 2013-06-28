@@ -1,4 +1,9 @@
 /**first tier**/
+$(document).ready(function() {
+	id = getRandomFlashcardId(null);
+	showFlashcard(id);
+});
+
 function showSubtopicsAndFlashcardForTopic(topic_attr_id, topic_id, topic_level_n) {
 	highlightTopic(topic_attr_id, topic_level_n);
 	showSubtopics(topic_id, topic_level_n);
@@ -53,6 +58,12 @@ function editFlashcard() {
 }
 
 /**second tier**/
+function showFlashcard(id) {
+	$("#question").html(getQuestion(id));
+	$("#answer").html(getAnswer(id));
+	$("#source").html(getSource(id));
+}
+
 function highlightTopic(topic_attr_id, topic_level_n) {
 	var topic_level = "#topic_level_" + topic_level_n.toString();
 	$(topic_level).children().css("background-color","#0b5fa5");

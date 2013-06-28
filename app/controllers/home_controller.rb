@@ -2,22 +2,25 @@ class HomeController < ApplicationController
   def home
 		flashcards = Flashcard.all
 		flashcards_json_a = []
+		flashcard_ids = []
 		flashcards.each do |f|
-			this_json = f.id.to_s + ": {\n"
-			this_json << "question: \"" + f.question.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
-			this_json << "answer: \"" + f.answer.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
-			this_json << "source: \"" + f.source.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
-			this_json << "date: \"" + f.date.to_s.gsub('"', "\"") + "\",\n"
+			f_array = f.id.to_s + ": {\n"
+			f_array << "question: \"" + f.question.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+			f_array << "answer: \"" + f.answer.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+			f_array << "source: \"" + f.source.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+			f_array << "date: \"" + f.date.to_s.gsub('"', "\"") + "\",\n"
 			tag_names = []
 			f.tags.each {|tag| tag_names << tag.name }
-			this_json << "tags: [\"" + tag_names.join("\", \"") + "\"],\n"
-			this_json << "unseen: true\n,"
-			this_json << "currently_shown: false,\n"
-			this_json << "last_seen: false\n"
-			this_json << "}"
-			flashcards_json_a << this_json
+			f_array << "tags: [\"" + tag_names.join("\", \"") + "\"],\n"
+			f_array << "unseen: true\n,"
+			f_array << "currently_shown: false,\n"
+			f_array << "last_seen: false\n"
+			f_array << "}"
+			flashcards_json_a << f_array
+			flashcard_ids << f.id
 		end
-		@json = ("var flashcards = {\n" + flashcards_json_a.join(",\n") + "\n};\n").html_safe
+		@json = ("var _flashcards = {\n" + flashcards_json_a.join(",\n") + "\n};\n").html_safe
+		@json << ("var _flashcard_ids = [" + flashcard_ids.join(",") + "];\n").html_safe
 		tags = Tag.all
 		tags_json_a = []
 		tags.each do |t|
@@ -26,7 +29,7 @@ class HomeController < ApplicationController
 			tag_flashcards.each {|f| flashcard_ids << f.id }
 			tags_json_a << '"' + t.name.gsub('"', "\"") + "\": [" + flashcard_ids.join(", ") + "]"
 		end
-		@json << ("var tags = {\n" + tags_json_a.join(",\n") + "\n};\n").html_safe
+		@json << ("var _tags = {\n" + tags_json_a.join(",\n") + "\n};\n").html_safe
 		@new_flashcard = Flashcard.new
   end
   
