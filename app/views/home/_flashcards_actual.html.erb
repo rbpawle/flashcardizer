@@ -1,32 +1,23 @@
-<% @flashcards.each do |f| %>
-<% style = @flashcard_to_show_id == f.id ? "" : 'style=display:none' %>
-<% currently_shown = @flashcard_to_show_id == f.id ? "currently_shown" : "" %>
-<div id="flashcard_<%= f.id %>" class="flashcard unseen under_selected_topic topic_0 <%= @flashcards_metadata[f.id][:topic_classes] %> <%= currently_shown %>" <%= style %>>
+<div class="flashcard unseen under_selected_topic topic_0 <%= @flashcards_metadata[@first_card.id][:topic_classes] %> currently_shown" 'style=display:none'>
 	<div class="question_area">
 		<div class="question_prefix">ANSWER ME THIS, IGNORANT FOOL:</div>
-		<div id="question_<%= f.id %>" class="question"><%= f.question %></div>
+		<div id="question_<%= @first_card.id %>" class="question"><%= @first_card.question %></div>
 		<div class="question_prefix">RECORD YOUR ANSWER AND PROVE YOUR MASTERY:</div>
 		<textarea rows=4 cols=88></textarea>
 	</div>
-	<div id="answer_shown_<%= f.id %>" class="answer_area" style="display:none">
+	<div id="answer_shown_<%= @first_card.id %>" class="answer_area" style="display:none">
 		<div class="answer_prefix">THE ANSWER PROCEEDS THUSLY:</div>
-		<div id="answer_<%= f.id %>" class="answer"><%= f.answer %></div>
+		<div id="answer_<%= @first_card.id %>" class="answer"><%= @first_card.answer %></div>
 	</div>
-	<div id="source_shown_<%= f.id %>" class="source_area" style="display:none">
+	<div id="source_shown_<%= @first_card.id %>" class="source_area" style="display:none">
 		<div class="source_prefix">
-			<% if f.source.nil? || f.source.empty? %>
-				<%="THERE IS NARY A SOURCE YET FOR THIS" %>
-			<% else %>
-				<%= "IF YOU DOUBT IT, CONSULT:" %>
-			<% end %>
 		</div>
-		<% unless f.source.nil? || f.source.empty? %>
-			<div class="source"><%= f.source %></div>
+		<% unless @first_card.source.nil? || @first_card.source.empty? %>
+			<div class="source"><%= @first_card.source %></div>
 		<% end %>
 	</div>
 	<div class="flashcard_meta">
-		<span class="flashcard_date"><%= f.date.to_s %></span>
-		<span class="topics_description"><%= @flashcards_metadata[f.id][:topics_description] %></span>
+		<span class="flashcard_date"><%= @first_card.date.to_s %></span>
+		<span class="topics_description"><%= @flashcards_metadata[@first_card.id][:topics_description] %></span>
 	</div>
 </div>
-<% end %>

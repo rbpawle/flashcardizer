@@ -1,19 +1,9 @@
 class HomeController < ApplicationController
   def home
-		if params[:date]
-			date = Date.parse(params[:date])
-			date = Date.today if date > Date.today
-			@flashcards = Flashcard.where(:date => date)
-			while @flashcards.empty?
-				date -= 1
-				@flashcards = Flashcard.where(:date => date)
-			end
-		else
-			@flashcards = Flashcard.all
-		end
+		@flashcards = Flashcard.all
 		#@topics will be an array of arrays of topics. the highest-level topics are in index 0, next-highest are in index 1, and so on.
 		@topic_levels = []
-		@flashcards_metadata = {}
+		@json_a = []
 		@flashcards.each do |f|
 			chain = Topic.find(f.topic_id).topic_chain
 			chain.each_index do |i|
@@ -23,27 +13,27 @@ class HomeController < ApplicationController
 					@topic_levels[i] << chain[i]
 				end
 			end
-			@flashcards_metadata[f.id] = {}
 			topic_class = "topic_"
 			topics_description = ""
 			chain.each do |t|
 				topic_class += t.id.to_s + " topic_"
 				topics_description += t.topic.to_s + " > "
 			end
-			@flashcards_metadata[f.id][:topic_classes] = topic_class[0..(topic_class.length - 7)]
-			@flashcards_metadata[f.id][:topics_description] = topics_description[0..(topics_description.length - 3)]
+			@this_json = f.id.to_s + ": {\n"
+			@this_json << "question: \"" + f.question.gsub('"', "\"") + "\",\n"
+			@this_json << "answer: \"" + f.answer.gsub('"', "\"") + "\",\n"
+			@this_json << "source: \"" + f.source.gsub('"', "\"") + "\",\n"
+			@this_json << "date: \"" + f.date.to_s.gsub('"', "\"") + "\",\n"
+			@this_json << "topic_classes: \"" + topic_class[0..(topic_class.length - 7)].gsub('"', "\"") + "\",\n"
+			@this_json << "topics_description: \"" + topics_description[0..(topics_description.length - 3)].gsub('"', "\"") + "\",\n"
+			@this_json << "unseen: true\n,"
+			
+			@this_json << "}"
+			@json_a << @this_json
 		end
-		@dates = {}
-		Flashcard.all.each do |f|
-			unless @dates.has_key? f.date
-				@dates[f.date] = 0
-			end
-		end
-		@dates.delete(nil)
-		@dates = @dates.keys.sort.reverse
-		@flashcard_to_show_id = @flashcards[rand * (@flashcards.length - 1)].id		#pick random flashcard to show at beginning
-		@topic_levels.each {|ts| ts.sort_by! {|t| t.topic.to_s } }
+		@json = ("var flashcards = {\n" + @json_a.join(",\n") + "\n};\n").html_safe
 		@new_flashcard = Flashcard.new
+		@topic_levels.each {|ts| ts.sort_by! {|t| t.topic.to_s } }
   end
   
   def upload

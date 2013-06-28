@@ -12,7 +12,7 @@ function searchButtonClicked() {
 	$("#search_results").html("");
 	query_string = $("#search_bar").val().toLowerCase();
 	nothing_found = true;
-	if(query_string.length > 3) {
+	if(query_string.length >= 3) {
 		for(i = 0; i < $("#flashcards").children().length; i++) {
 			found_in_question = $("#flashcards").children().eq(i).children(".question_area").children(".question").text().toLowerCase().match(query_string);
 			found_in_answer = $("#flashcards").children().eq(i).children(".answer_area").children(".answer").text().toLowerCase().match(query_string);
@@ -25,7 +25,7 @@ function searchButtonClicked() {
 			$("#search_results").append("No matches among questions or answers.");
 		}
 	} else {
-		$("#search_results").append("Search string needs to be 4 characters or more.");
+		$("#search_results").append("Search string needs to be 3 characters or more.");
 	}
 	var endtime = microtime(true);
 }

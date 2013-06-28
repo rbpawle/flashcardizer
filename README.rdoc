@@ -1,23 +1,44 @@
-TODO:
+Features of paid version:
+unlimited flashcards
+unlimited lecture notes
+iphone app
+search all flashcards
+no ads?
 
-Search for 3 characters
-AJAX to make flashcard, include notification
+Features of free version:
+50 flashcards to start, 5 extra per week
+ads?
+
+Required For Beta:
+User sign-in (is signing in with facebook easy or hard? is it a good idea?)
+Multiple parent topics
+CSV page for all questions/answers
+edit flashcards that you search for
+scratchpad on side of page?
+JSON page elements, not DOM
+'make flashcard' tab same appearance as flashcard tab
+see all unanswered questions
+
+Now:
+Page encoded as JSON, not DOM objects
 User sign-in
-Answer box in flashcard
-'show this question more often', 'don't show this question anymore' (notification after clicking this)
---record this over time, adjust priority of question accordingly
+make 'make flashcards' look just like the flashcards themselves
+
+Later:
 Manipulate flashcard after searching for it
-Create unanswered question
 See all unanswered questions
 CSV - on that page, show all questions/answers
-Page encoded as JSON, not DOM objects
 Pictures linked to flashcards
-Demo version/gif showing process
-iPhone app
 multiple choice question by substituting in antonyms/answers for other questions in same section
 Run tests of specific flashcard length
 fix search with question mark (?)
-make 'make flashcards' look just like the flashcards themselves
+associate images with flashcards
+'show this question more often', 'don't show this question anymore' (notification after clicking this)
+--record this over time, adjust priority of question accordingly
+'show this question more often', 'don't show this question anymore' (with notification)
+
+Future:
+iPhone app
 
 Questions:
 ANSWER ME THIS, IGNORANT FOOL:
