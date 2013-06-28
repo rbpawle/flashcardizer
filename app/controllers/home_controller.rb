@@ -1,28 +1,33 @@
 class HomeController < ApplicationController
   def home
-		@flashcards = Flashcard.all
-		@json_a = []
-		@flashcards.each do |f|
-			topic_chain = Topic.find(f.topic_id).topic_chain
-			topic_id_chain = Topic.find(f.topic_id).topic_id_chain
-			topics_description = ""
-			topic_chain.each {|t| topics_description += t.topic.to_s + " > " }
-			@this_json = f.id.to_s + ": {\n"
-			@this_json << "question: \"" + f.question.gsub('"', "\"") + "\",\n"
-			@this_json << "answer: \"" + f.answer.gsub('"', "\"") + "\",\n"
-			@this_json << "source: \"" + f.source.gsub('"', "\"") + "\",\n"
-			@this_json << "date: \"" + f.date.to_s.gsub('"', "\"") + "\",\n"
-			@this_json << "topic_id_chain: " + topic_id_chain.to_s + ",\n"
-			@this_json << "topics_description: \"" + topics_description[0..(topics_description.length - 3)].gsub('"', "\"") + "\",\n"
-			@this_json << "unseen: true\n,"
-			@this_json << "currently_shown: false,\n"
-			@this_json << "last_seen: false\n"
-			@this_json << "}"
-			@json_a << @this_json
+		flashcards = Flashcard.all
+		flashcards_json_a = []
+		flashcards.each do |f|
+			this_json = f.id.to_s + ": {\n"
+			this_json << "question: \"" + f.question.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+			this_json << "answer: \"" + f.answer.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+			this_json << "source: \"" + f.source.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+			this_json << "date: \"" + f.date.to_s.gsub('"', "\"") + "\",\n"
+			tag_names = []
+			f.tags.each {|tag| tag_names << tag.name }
+			this_json << "tags: [\"" + tag_names.join("\", \"") + "\"],\n"
+			this_json << "unseen: true\n,"
+			this_json << "currently_shown: false,\n"
+			this_json << "last_seen: false\n"
+			this_json << "}"
+			flashcards_json_a << this_json
 		end
-		@json = ("var flashcards = {\n" + @json_a.join(",\n") + "\n};\n").html_safe
+		@json = ("var flashcards = {\n" + flashcards_json_a.join(",\n") + "\n};\n").html_safe
+		tags = Tag.all
+		tags_json_a = []
+		tags.each do |t|
+			tag_flashcards = t.flashcards
+			flashcard_ids = []
+			tag_flashcards.each {|f| flashcard_ids << f.id }
+			tags_json_a << '"' + t.name.gsub('"', "\"") + "\": [" + flashcard_ids.join(", ") + "]"
+		end
+		@json << ("var tags = {\n" + tags_json_a.join(",\n") + "\n};\n").html_safe
 		@new_flashcard = Flashcard.new
-		@topic_levels.each {|ts| ts.sort_by! {|t| t.topic.to_s } }
   end
   
   def upload
