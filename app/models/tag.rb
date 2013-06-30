@@ -6,6 +6,7 @@ class Tag < ActiveRecord::Base
   	self.make_root_tag
   	self.topics_to_tags
   	self.tag_flashcards
+  	self.assign_parent_tags
   end
   
   def self.make_root_tag
@@ -40,6 +41,20 @@ class Tag < ActiveRecord::Base
   		f.tags = tags #no save needed
   	end
   end
+
+	#finds all parent topics for old topics, assigns parent tags
+	def self.assign_parent_tag_ids
+		Topic.all.each do |topic|
+			if topic.parent_id == 0
+				parent_tag = Tag.root_tag
+			else
+				parent_tag = Tag.first(:conditions => {:name => Topic.find(topic.parent_id).topic})
+			end
+			tag = Tag.first(:conditions => {:name => Topic.find(topic.id).topic})
+			tag.parent_tag_ids = parent_tag.id.to_s
+			tag.save
+		end
+	end
   
   #returns array of tags that have flashcards in common with this tag
   def associated_tags
@@ -62,6 +77,12 @@ class Tag < ActiveRecord::Base
   	return names
   end
 
-	def self.find_top_level_tags
+	def parent_tags
+		p_tag_ids = self.parent_tag_ids.split(",")
+		p_tags = []
+		p_tag_ids.each do |id|
+			p_tags << Tag.find(id.to_i)
+		end
+		return p_tags
 	end
 end
