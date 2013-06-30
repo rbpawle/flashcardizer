@@ -1,0 +1,21 @@
+class ParentTag < ActiveRecord::Base
+  attr_accessible :tag_id, :child_tag_id
+	
+	def self.init
+		ParentTag.all.each {|p| p.delete}
+		#go through all topics, find their corresponding tags, and then create parent tags for the topic parent ids
+		Topic.all.each do |topic|
+			child_tag = Tag.first(:conditions => {:name => topic.topic})
+			if topic.parent_id == 0
+				parent_tag = Tag.root_tag
+			else
+				parent_tag = Tag.first(:conditions => {:name => Topic.find(topic.parent_id).topic})
+			end
+			conditions = {:tag_id => child_tag.id, :child_tag_id => parent_tag.id}
+			pt = ParentTag.first(:conditions => conditions)
+			if pt.nil?
+				ParentTag.new(conditions).save
+			end
+		end
+	end
+end

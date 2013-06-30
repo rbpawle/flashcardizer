@@ -41,3 +41,5 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 gem 'bootstrap-sass'
+
+gem 'rb-readline', '~> 0.4.2'

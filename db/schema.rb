@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130628150445) do
+ActiveRecord::Schema.define(:version => 20130630205654) do
 
   create_table "categories", :force => true do |t|
     t.string   "subject"
@@ -51,6 +51,13 @@ ActiveRecord::Schema.define(:version => 20130628150445) do
 
   add_index "flashcards_tags", ["flashcard_id", "tag_id"], :name => "index_flashcards_tags_on_flashcard_id_and_tag_id"
   add_index "flashcards_tags", ["tag_id"], :name => "index_flashcards_tags_on_tag_id"
+
+  create_table "parent_tags", :force => true do |t|
+    t.integer  "parent_tag_id"
+    t.integer  "child_tag_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "subjects", :force => true do |t|
     t.string   "subject"
