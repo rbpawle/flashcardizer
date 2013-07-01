@@ -1,12 +1,13 @@
 class Tag < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :parent_tag_id
   has_and_belongs_to_many :flashcards
   
   def self.init
   	self.make_root_tag
   	self.topics_to_tags
-  	self.tag_flashcards
-  	self.assign_parent_tags
+  	Flashcard.assign_tags_from_topics
+  	self.assign_parent_tag_id
+  	self.assign_child_tag_ids
   end
   
   def self.make_root_tag
@@ -16,7 +17,7 @@ class Tag < ActiveRecord::Base
   def self.root_tag
   	root = Tag.first(:conditions => {:name => "root"})
   	if root.nil?
-  		root = Tag.new(:name => 'root', :parent_tag_ids => "0")
+  		root = Tag.new(:name => 'root', :parent_tag_id => 0)
   		root.save
   	end
   	return root
@@ -30,20 +31,9 @@ class Tag < ActiveRecord::Base
   		end
   	end
   end
-  
-  def self.tag_flashcards
-  	Flashcard.all.each do |f|
-  		topics = Topic.find(f.topic_id).topic_chain
-  		tags = []
-  		topics.each do |t|
-  			tags << Tag.first(:conditions => {:name => t.topic})
-  		end
-  		f.tags = tags #no save needed
-  	end
-  end
 
 	#finds all parent topics for old topics, assigns parent tags
-	def self.assign_parent_tag_ids
+	def self.assign_parent_tag_id
 		Topic.all.each do |topic|
 			if topic.parent_id == 0
 				parent_tag = Tag.root_tag
@@ -51,19 +41,22 @@ class Tag < ActiveRecord::Base
 				parent_tag = Tag.first(:conditions => {:name => Topic.find(topic.parent_id).topic})
 			end
 			tag = Tag.first(:conditions => {:name => Topic.find(topic.id).topic})
-			tag.parent_tag_ids = parent_tag.id.to_s
+			tag.parent_tag_id = parent_tag.id
 			tag.save
 		end
 	end
 	
 	def self.assign_child_tag_ids
 		Tag.all.each do |t|
-			t.parent_tags.each do |p|
-				if p.child_tags.empty?
-					p.child_tag_ids = t.id.to_s
-				elsif p.child_tags.index(t).nil?
-					p.child_tag_ids = p.child_tag_ids + "," + t.id.to_s
-				end
+			p = t.parent_tag
+			puts t.attributes
+			puts p.to_s
+			if p && p.child_tags.empty?
+				puts "yup"
+				p.child_tag_ids = t.id.to_s
+				p.save
+			elsif p && p.child_tags.index(t).nil?
+				p.child_tag_ids = p.child_tag_ids + "," + t.id.to_s
 				p.save
 			end
 		end
@@ -90,20 +83,21 @@ class Tag < ActiveRecord::Base
   	return names
   end
 
-	def parent_tags
-		p_tags = []
-		unless self.parent_tag_ids == "0"
-			p_tag_ids = self.parent_tag_ids.split(",")
-			p_tag_ids.each { |id| p_tags << Tag.first(:conditions => {:id => id.to_i}) }
+	def parent_tag
+		p_tag = nil
+		unless self.parent_tag_id == 0
+			p_tag = Tag.find(self.parent_tag_id)
 		end
-		return p_tags
+		return p_tag
 	end
 	
 	def child_tags
 		c_tags = []
-		c_tag_ids = self.child_tag_ids.split(",")
-		c_tag_ids.each do |c_tag_id|
-			c_tags << Tag.find(c_tag_id)
+		unless self.child_tag_ids.nil?
+			c_tag_ids = self.child_tag_ids.split(",")
+			c_tag_ids.each do |c_tag_id|
+				c_tags << Tag.find(c_tag_id)
+			end
 		end
 		return c_tags
 	end
@@ -119,9 +113,7 @@ class Tag < ActiveRecord::Base
 		associated_tag_ids = []
 		self.associated_tags.each {|a| associated_tag_ids << a.id}
 		json << "a: [" + associated_tag_ids.join(",") + "],\n"
-		parent_tag_ids = []
-		self.parent_tags.each {|p| parent_tag_ids << p.id.to_s}
-		json << "p: [" + parent_tag_ids.join(",") + "],\n"
+		json << "p: " + self.parent_tag_id.to_s + ",\n"
 		child_tag_ids = []
 		self.child_tags.each {|c| child_tag_ids << c.id.to_s}
 		json << "c: [" + child_tag_ids.join(",") + "]\n"

@@ -12,6 +12,14 @@ class Flashcard < ActiveRecord::Base
   	end
   end
   
+  def self.assign_tags_from_topics
+  	Flashcard.all.each do |f|
+  		f.tags.delete
+  		name = Topic.find(f.topic_id).topic
+  		f.tags = Tag.where(:name => name) #no save needed
+  	end
+  end
+  
   def to_json
 		json = self.id.to_s + ": {\n"
 		json << "q: \"" + self.question.gsub('"', "\"").gsub("\n", '\n') + "\",\n"

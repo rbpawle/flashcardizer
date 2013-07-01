@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701010047) do
+ActiveRecord::Schema.define(:version => 20130701200641) do
 
   create_table "categories", :force => true do |t|
     t.string   "subject"
@@ -67,9 +67,9 @@ ActiveRecord::Schema.define(:version => 20130701010047) do
 
   create_table "tags", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.text     "parent_tag_ids"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "parent_tag_id"
     t.text     "child_tag_ids"
   end
 

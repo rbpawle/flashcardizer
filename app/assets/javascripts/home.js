@@ -104,7 +104,7 @@ function showTab(tab) {
 	function getSelectedTags() {
 		tags = [];
 		$.each(_tags, function(key, hash) {
-			if(hash['selected']) {
+			if(hash['s']) {
 				tags.push(key);
 			}
 		});
@@ -122,13 +122,13 @@ function showTab(tab) {
 	}
 	
 	function getQuestion(id){
-		return _flashcards[id]['question'];
+		return _flashcards[id]['q'];
 	}
 	function getAnswer(id){
-		return _flashcards[id]['answer'];
+		return _flashcards[id]['a'];
 	}
 	function getSource(id){
-		return _flashcards[id]['source'];
+		return _flashcards[id]['s'];
 	}
 	function getAllTags() {
 		var all_tags = [];
@@ -138,19 +138,19 @@ function showTab(tab) {
 		return all_tags;
 	}
 	function getFlashcardTags(id) {
-		return _flashcards[id]['tags'];
+		return _flashcards[id]['t'];
 	}
 	function setQuestion(question){
-		_flashcards[id]['question'] = question;
+		_flashcards[id]['q'] = question;
 	}
 	function setAnswer(answer){
-		_flashcards[id]['answer'] = answer;
+		_flashcards[id]['a'] = answer;
 	}
 	function setSource(src){
-		_flashcards[id]['source'] = src;
+		_flashcards[id]['s'] = src;
 	}
 	function isShown(id) {
-		return _flashcards[id]['currently_shown'];
+		return _flashcards[id]['c'];
 	}
 	function getTotalQuestions() {
 		return _flashcard_ids.length;
