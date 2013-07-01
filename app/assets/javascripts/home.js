@@ -101,6 +101,12 @@ function showTab(tab) {
 		return un;
 	}
 	
+	function _getTagByName(tag_name) {
+		var tag_id = _tag_id_name_lookup[tag_name];
+		var tag = _tags[tag_id];
+		return tag;
+	}
+	
 	function getSelectedTags() {
 		tags = [];
 		$.each(_tags, function(key, hash) {
@@ -113,10 +119,9 @@ function showTab(tab) {
 	
 	function getChildTagNames(tag_name) {
 		var child_tag_names = [];
-		var tag_id = _tag_id_name_lookup[tag_name];
-		var tag = _tags[id];
+		tag = _getTagByName(tag_name);
 		for(var i = 0; i < tag['c'].length; i++) {
-			child_tag_names.push(_tag_id_name_lookup[tag['c']][i]);
+			child_tag_names.push(_tag_id_name_lookup[tag['c'][i]]);
 		}
 		return child_tag_names;
 	}
@@ -137,8 +142,18 @@ function showTab(tab) {
 		});
 		return all_tags;
 	}
-	function getFlashcardTags(id) {
-		return _flashcards[id]['t'];
+	function getFlashcardTagName(flashcard_id) {
+		var tag_ids = _flashcards[flashcard_id]['t'];
+		var names = [];
+		for(i = 0; i < tag_ids.length; i++) {
+			var id = tag_ids[i];
+			names.push(_tag_lookup[id]);
+		}
+		return names;
+	}
+	
+	function getFlashcardImplicitTagNames(flashcard_id) {
+		var tag_ids = _flashcards[flashcard_id]['t'];
 	}
 	function setQuestion(question){
 		_flashcards[id]['q'] = question;
@@ -163,7 +178,8 @@ function showTab(tab) {
 	window.getAnswer = getAnswer;
 	window.getSource = getSource;
 	window.getAllTags = getAllTags;
-	window.getFlashcardTags = getFlashcardTags;
+	window.getFlashcardTagName = getFlashcardTagName;
+	window.getFlashcardImplicitTagNames = getFlashcardImplicitTagNames;
 	window.setQuestion = setQuestion;
 	window.setAnswer = setAnswer;
 	window.setSource = setSource;

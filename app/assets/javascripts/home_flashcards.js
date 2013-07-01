@@ -22,7 +22,7 @@ function showFirstFlashcard() {
 	$("#current_question_n").html("1");
 	$("#total_questions_n").html(getTotalQuestions());
 	var span = "<span class=\"tag flashcard_tag\">"
-	$("#flashcard_tags").html(span + getFlashcardTags(id).join("</span>" + span) + "</span>");
+	$("#flashcard_tags").html(span + getFlashcardTagNames(id).join("</span>" + span) + "</span>");
 }
 
 function showTopLevelTags() {

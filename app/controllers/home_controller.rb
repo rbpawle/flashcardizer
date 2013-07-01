@@ -16,7 +16,7 @@ class HomeController < ApplicationController
 		@json = ("var _flashcards = {\n" + flashcards_json_a.join(",\n") + "\n};\n").html_safe
 		@json << ("var _flashcard_ids = [" + flashcard_ids.join(",") + "];\n").html_safe
 		@json << ("var _tags = {\n" + tags_json_a.join(",\n") + "\n};\n").html_safe
-		@json << ("var _tag_id_name_lookup = {\n" + name_to_tag_id_a.join(",\n") + "}\n").html_safe
+		@json << ("var _tag_lookup = {\n" + name_to_tag_id_a.join(",\n") + "}\n").html_safe
 		@new_flashcard = Flashcard.new
   end
   
