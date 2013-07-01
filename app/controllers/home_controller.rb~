@@ -2,9 +2,12 @@ class HomeController < ApplicationController
   def home
 		flashcards_json_a = []
 		flashcard_ids = []
+		i = 0
 		Flashcard.all.each do |f|
 			flashcards_json_a << f.to_json
 			flashcard_ids << f.id
+			i += 1
+			break if i > 20
 		end
 		tags_json_a = []
 		name_to_tag_id_a = []
@@ -12,6 +15,8 @@ class HomeController < ApplicationController
 			tags_json_a << t.to_json
 			name_to_tag_id_a << '"' + t.name + "\": " + t.id.to_s
 			name_to_tag_id_a << '"' + t.id.to_s + "\": '" + t.name.gsub("'",'"') + "'"
+			i += 1
+			break if i > 40
 		end
 		@json = ("var _flashcards = {\n" + flashcards_json_a.join(",\n") + "\n};\n").html_safe
 		@json << ("var _flashcard_ids = [" + flashcard_ids.join(",") + "];\n").html_safe

@@ -1,0 +1,74 @@
+class Topic < ActiveRecord::Base
+  attr_accessible :parent_id, :topic, :level
+  #parent is the id of the parent topic of this topic
+  #parent of 0 value means this is a root topic (aka subject)
+  
+  def self.flashcard_subjects_and_categories_to_topics
+  	Topic.all.each {|t| t.delete}
+  	fc = Flashcard.all
+  	fc.each do |f|
+  		subject = Topic.first(:conditions => {:topic => f.subject})
+  		if subject.nil?
+  			subject = Topic.new(:topic => f.subject, :parent_id => 0)
+  			subject.save
+  		end
+  		category = Topic.first(:conditions => {:topic => f.category, :parent_id => subject.id})
+  		if category.nil?
+  			category = Topic.new(:topic => f.category, :parent_id => subject.id)
+  			category.save
+  		end
+  	end
+  end
+  
+  #topic_chain returns an array that starts with the highest non-zero parent-level topic_id and ends with the topic's id
+  def topic_chain
+  	chain = [self]
+  	if self.parent_id != 0
+			parent = Topic.find(self.parent_id)
+			chain = [parent] + chain
+			while parent.parent_id != 0
+				parent = Topic.find(parent.parent_id)
+				chain = [parent] + chain
+			end
+		end
+  	return chain
+  end
+  
+  def topic_id_chain
+  	chain = self.topic_chain
+  	id_chain = []
+  	chain.each {|t| id_chain << t.id }
+  	return id_chain
+  end
+  
+  def is_child_of? topic
+  	if self.topic_chain.index(topic) && topic.id != self.id
+  		return true
+  	else
+  		return false
+  	end
+  end
+  
+  def self.populate_levels
+  	Topic.all.each do |t|
+  		t.level = t.topic_chain.length - 1
+  		t.save
+  	end
+  end
+  
+  def get_json_representation
+		json = self.id.to_s + ": {\n"
+		json << "question: \"" + self.question.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+		json << "answer: \"" + self.answer.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+		json << "source: \"" + self.source.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+		json << "date: \"" + self.date.to_s.gsub('"', "\"") + "\",\n"
+		tag_names = []
+		self.tags.each {|tag| tag_names << tag.name }
+		json << "tags: [\"" + tag_names.join("\", \"") + "\"],\n"
+		json << "unseen: true\n,"
+		json << "currently_shown: false,\n"
+		json << "last_seen: false\n"
+		json << "}"
+		return json
+  end
+end

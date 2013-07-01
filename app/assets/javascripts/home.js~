@@ -116,7 +116,7 @@ function showTab(tab) {
 		var tag_id = _tag_id_name_lookup[tag_name];
 		var tag = _tags[id];
 		for(var i = 0; i < tag['c'].length; i++) {
-			child_tag_names.push(_tag_id_name_lookup[tag['c']][i]);
+			child_tag_names.push(_tag_id_name_lookup[tag['c'][i]);
 		}
 		return child_tag_names;
 	}

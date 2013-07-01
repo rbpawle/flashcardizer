@@ -16,7 +16,7 @@ class Tag < ActiveRecord::Base
   def self.root_tag
   	root = Tag.first(:conditions => {:name => "root"})
   	if root.nil?
-  		root = Tag.new(:name => 'root')
+  		root = Tag.new(:name => 'root', :parent_tag_ids => "0")
   		root.save
   	end
   	return root
@@ -55,6 +55,19 @@ class Tag < ActiveRecord::Base
 			tag.save
 		end
 	end
+	
+	def self.assign_child_tag_ids
+		Tag.all.each do |t|
+			t.parent_tags.each do |p|
+				if p.child_tags.empty?
+					p.child_tag_ids = t.id.to_s
+				elsif p.child_tags.index(t).nil?
+					p.child_tag_ids = p.child_tag_ids + "," + t.id.to_s
+				end
+				p.save
+			end
+		end
+	end
   
   #returns array of tags that have flashcards in common with this tag
   def associated_tags
@@ -78,11 +91,41 @@ class Tag < ActiveRecord::Base
   end
 
 	def parent_tags
-		p_tag_ids = self.parent_tag_ids.split(",")
 		p_tags = []
-		p_tag_ids.each do |id|
-			p_tags << Tag.find(id.to_i)
+		unless self.parent_tag_ids == "0"
+			p_tag_ids = self.parent_tag_ids.split(",")
+			p_tag_ids.each { |id| p_tags << Tag.first(:conditions => {:id => id.to_i}) }
 		end
 		return p_tags
+	end
+	
+	def child_tags
+		c_tags = []
+		c_tag_ids = self.child_tag_ids.split(",")
+		c_tag_ids.each do |c_tag_id|
+			c_tags << Tag.find(c_tag_id)
+		end
+		return c_tags
+	end
+	
+	def to_json
+		tag_flashcards = self.flashcards
+		flashcard_ids = []
+		tag_flashcards.each {|f| flashcard_ids << f.id }
+		json = '"' + self.id.to_s + "\": {\n" 
+		json << "n: '" + self.name.gsub("'", '"') + "',\n"
+		json << "f: [" + flashcard_ids.join(", ") + "],\n"
+		json << "s: false,\n"
+		associated_tag_ids = []
+		self.associated_tags.each {|a| associated_tag_ids << a.id}
+		json << "a: [" + associated_tag_ids.join(",") + "],\n"
+		parent_tag_ids = []
+		self.parent_tags.each {|p| parent_tag_ids << p.id.to_s}
+		json << "p: [" + parent_tag_ids.join(",") + "],\n"
+		child_tag_ids = []
+		self.child_tags.each {|c| child_tag_ids << c.id.to_s}
+		json << "c: [" + child_tag_ids.join(",") + "]\n"
+		json << "}"
+		return json
 	end
 end

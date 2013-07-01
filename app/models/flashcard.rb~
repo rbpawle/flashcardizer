@@ -14,16 +14,16 @@ class Flashcard < ActiveRecord::Base
   
   def to_json
 		json = self.id.to_s + ": {\n"
-		json << "q: \"" + self.question.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
-		json << "a: \"" + self.answer.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
-		json << "s: \"" + self.source.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
-		json << "d: \"" + self.date.to_s.gsub('"', "\"") + "\",\n"
+		json << "question: \"" + self.question.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+		json << "answer: \"" + self.answer.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+		json << "source: \"" + self.source.gsub('"', "\"").gsub("\n", '\n') + "\",\n"
+		json << "date: \"" + self.date.to_s.gsub('"', "\"") + "\",\n"
 		tag_ids = []
 		self.tags.each {|tag| tag_ids << tag.id }
-		json << "t: [" + tag_ids.join(",") + "],\n"
-		json << "u: true,\n"
-		json << "c: false,\n"
-		json << "l: false\n"
+		json << "tags: [" + tag_ids.join(",") + "],\n"
+		json << "unseen: true,\n"
+		json << "currently_shown: false,\n"
+		json << "last_seen: false\n"
 		json << "}"
 		return json
   end
