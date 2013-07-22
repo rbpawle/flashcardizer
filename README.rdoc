@@ -11,12 +11,12 @@ ads?
 
 Required For Beta:
 User sign-in (is signing in with facebook easy or hard? is it a good idea?)
-Multiple parent topics
 CSV page for all questions/answers
 edit flashcards that you search for
 scratchpad on side of page?
 JSON page elements, not DOM
 'make flashcard' tab same appearance as flashcard tab
+make unanswered questions easy
 see all unanswered questions
 
 Now:

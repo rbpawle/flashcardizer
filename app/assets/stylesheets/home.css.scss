@@ -26,11 +26,11 @@ body{
 	padding-left:3em;
 	padding-right:3em;
 	max-width:50em;
-	min-height:50em;
 	border-radius:1em;
 	margin-top: 3em;
 	margin: 0 auto;
 	text-align: left;
+	overflow:hidden;
 }
 
 //nav bar************************************************************************
@@ -103,10 +103,10 @@ $tag_window_height:16em;
 	border-radius:.5em;
 	margin:.5em;
 	padding:.5em;
+	float:left;
 }
 
 .available_tags {
-	float:left;
 }
 
 #flashcard_dropdowns {

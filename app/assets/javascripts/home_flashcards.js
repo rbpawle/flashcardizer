@@ -1,40 +1,69 @@
 /**first tier**/
 $(document).ready(function() {
-	showFirstFlashcard();
-	showTopLevelTags();
+	showNextFlashcard();
+	showAllTags();
 });
 
-function showNextFlashcard() {
-	var selected_tags = getSelectedTags();
-	var id = getRandomFlashcardId(selected_tags);
-	showFlashcard(id);
-}
-
-function tagClicked() {
-	
+function tagClicked(tag_id) {
+	if(tagIsSelected(tag_id)) {
+		setTagUnselected(tag_id);
+	}
+	else {
+		setTagSelected(tag_id);
+	}
+	var selected_tag_ids = getSelectedTagIds();
+	showSelectedTags(selected_tag_ids);
+	showAssociatedTags();
+	showNextFlashcard();
 }
 
 /**second tier**/
 
-function showFirstFlashcard() {
-	var id = getRandomFlashcardId(null);
-	showFlashcard(id);
-	$("#current_question_n").html("1");
-	$("#total_questions_n").html(getTotalQuestions());
-	var span = "<span class=\"tag flashcard_tag\">"
-	$("#flashcard_tags").html(span + getFlashcardTagNames(id).join("</span>" + span) + "</span>");
+function showNextFlashcard() {
+	var flashcard_id = getNextFlashcardId();
+	showFlashcard(flashcard_id);
 }
 
-function showTopLevelTags() {
-	var top_level_tags = getChildTagNames('root');
-}
-
-function showChildrenTags() {
+function showAllTags() {
+	showAssociatedTags([]);
 }
 
 /**third tier**/
-function showFlashcard(id) {
-	$("#question").html(getQuestion(id));
-	$("#answer").html(getAnswer(id));
-	$("#source").html(getSource(id));
+function showFlashcard(flashcard_id) {
+	setFlashcardAsCurrent(flashcard_id);
+	$("#question").html(getQuestion(flashcard_id));
+	$("#answer").html(getAnswer(flashcard_id));
+	$("#source").html(getSource(flashcard_id));
+	updateQuestionNumbers(flashcard_id);
+	showFlashcardTags(flashcard_id);
+}
+
+function showSelectedTags(selected_tag_ids) {
+	html_to_add = "";
+	$.each(selected_tag_ids, function(index, tag_id) {
+		html_to_add = html_to_add + "<span class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</span>";
+	});
+	$("#selected_tags").html(html_to_add);
+}
+
+function showAssociatedTags(selected_tag_ids) {
+	var associated_tag_ids = getNTagsToShow(20);
+	html_to_add = "";
+	$.each(associated_tag_ids, function(index, tag_id) {
+		if(tagIsSelected(tag_id) == false) { //if this tag id is not selected
+			html_to_add = html_to_add + "<div class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\" style=\"font-size:" + getTagFont(tag_id) + "%\">" + getTagName(tag_id) + "</div>";
+		}
+	});
+	$("#available_tags").html(html_to_add);
+}
+
+/***fourth tier***/
+function updateQuestionNumbers() {
+	$("#current_question_n").html(getNumberOfSeenFlashcardsUnderCurrentTags());
+	$("#total_questions_n").html(getNumberOfFlashcardsUnderCurrentTags());
+}
+
+function showFlashcardTags(flashcard_id) {
+	var span = "<span class=\"tag flashcard_tag\">"
+	$("#flashcard_tags").html(span + getFlashcardTagNames(flashcard_id).join("</span>" + span) + "</span>");
 }

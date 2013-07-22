@@ -2,21 +2,15 @@ class Flashcard < ActiveRecord::Base
   attr_accessible :answer, :date, :question, :source, :subject_id, :category_id, :from_csv, :subject, :category, :topic_id, :importance, :comprehension
   has_and_belongs_to_many :tags
   
-  def self.assign_topic_id_for_all
-  	fcs = Flashcard.all
-  	fcs.each do |f|
-  		subject = Topic.first(:conditions => {:topic => f.subject, :parent_id => 0})
-  		category = Topic.first(:conditions => {:topic => f.category, :parent_id => subject.id})
-  		f.topic_id = category.id
-  		f.save
-  	end
-  end
-  
   def self.assign_tags_from_topics
   	Flashcard.all.each do |f|
   		f.tags.delete
-  		name = Topic.find(f.topic_id).topic
-  		f.tags = Tag.where(:name => name) #no save needed
+  		topics = Topic.find(f.topic_id).topic_chain
+  		tags = []
+  		topics.each do |topic|
+  			tags << Tag.where(:name => topic.topic).first
+  		end
+  		f.tags = tags #no save needed
   	end
   end
   
@@ -34,5 +28,9 @@ class Flashcard < ActiveRecord::Base
 		json << "l: false\n"
 		json << "}"
 		return json
+  end
+  
+  def self.random
+  	return self.all[rand(self.all.length)]
   end
 end
