@@ -14,6 +14,20 @@ class Flashcard < ActiveRecord::Base
   	end
   end
   
+  def self.flashcard_topics_to_tag_hierarchies
+  	self.all.each {|th| th.delete}
+  	Flashcard.all.each do |f|
+  		tag_hierarchy = []
+  		topic_chain = Topic.find(f.topic_id).topic_chain
+  		topic_chain.each {|t| tag_hierarchy << Tag.where(:name => Topic.find(t).topic).first.id }
+  		th = self.where(:tag_ids => tag_hierarchy.join(",")).first
+  		if th.nil?
+  			th = self.new(:tag_ids => tag_hierarchy.join(","))
+  		end
+  		f.tag_hierarchies = th
+  	end
+  end
+  
   def to_json
 		json = self.id.to_s + ": {\n"
 		json << "q: \"" + self.question.gsub('"', "\"").gsub("\n", '\n') + "\",\n"

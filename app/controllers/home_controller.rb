@@ -13,10 +13,15 @@ class HomeController < ApplicationController
 			name_to_tag_id_a << '"' + t.name + "\": " + t.id.to_s
 			name_to_tag_id_a << '"' + t.id.to_s + "\": '" + t.name.gsub("'",'"') + "'"
 		end
+		tag_hierarchy_json_a = []
+		TagHierarchy.all.each do |th|
+			tag_hierarchy_json_a << th.to_json
+		end
 		@json = ("var _flashcards = {\n" + flashcards_json_a.join(",\n") + "\n};\n").html_safe
 		@json << ("var _flashcard_ids = [" + flashcard_ids.join(",") + "];\n").html_safe
 		@json << ("var _tags = {\n" + tags_json_a.join(",\n") + "\n};\n").html_safe
 		@json << ("var _tag_lookup = {\n" + name_to_tag_id_a.join(",\n") + "}\n").html_safe
+		@json << ("var _tag_hierarchies = {\n" + tag_hierarchy_json_a.join(",\n") + "}\n").html_safe
 		@new_flashcard = Flashcard.new
   end
   

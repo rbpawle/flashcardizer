@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130711172726) do
+ActiveRecord::Schema.define(:version => 20130808194955) do
 
   create_table "categories", :force => true do |t|
     t.string   "subject"
@@ -61,6 +61,12 @@ ActiveRecord::Schema.define(:version => 20130711172726) do
 
   create_table "subjects", :force => true do |t|
     t.string   "subject"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "tag_hierarchies", :force => true do |t|
+    t.string   "tag_ids"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

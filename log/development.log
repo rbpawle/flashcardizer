@@ -1,0 +1,45 @@
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to CreateFlashcards (20130604175420)
+Migrating to CreateFlashcardCsvs (20130604181139)
+Migrating to Subject (20130604192714)
+Migrating to Category (20130604192726)
+Migrating to RemoveSubjectandCategoryFromFlashcard (20130604193114)
+Migrating to AddIdsToFlashcard (20130604193152)
+Migrating to CreateSubjects (20130604193512)
+Migrating to CreateCategories (20130604193523)
+Migrating to AddFromCsvToFlashcard (20130605121918)
+Migrating to AddSubjectAndCategoryToFlashcard (20130605175230)
+Migrating to CreateTopics (20130611141127)
+Migrating to AddTopicsToFlashcard (20130611142251)
+Migrating to RenameTopicParent (20130611155022)
+Migrating to AddImportanceAndComprehensionToFlashcard (20130612162313)
+Migrating to AddLevelToTopic (20130613135152)
+Migrating to CreateTags (20130628150335)
+Migrating to CreateFlashcardsTagsTable (20130628150445)
+Migrating to AddParentTagIdsToTag (20130630213156)
+Migrating to AddChildTagIdsToTag (20130701010047)
+Migrating to ChangeParentIdsToParentIdInTags (20130701200641)
+Migrating to RemoveParentChildFromTag (20130711172726)
+Migrating to CreateTagHierarchies (20130808194955)
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "tag_hierarchies" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "tag_ids" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130808194955')[0m
+  [1m[35m (132.6ms)[0m  commit transaction
+  [1m[36m (0.5ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  SELECT "schema_migrations"."version" FROM "schema_migrations" 
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("categories")[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_list("flashcard_csvs")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("flashcards")[0m
+  [1m[35m (0.1ms)[0m  PRAGMA index_list("flashcards_tags")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_info('index_flashcards_tags_on_tag_id')[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_info('index_flashcards_tags_on_flashcard_id_and_tag_id')
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("parent_tags")[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_list("subjects")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("tag_hierarchies")[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_list("tags")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("topics")[0m
+Connecting to database specified by database.yml
