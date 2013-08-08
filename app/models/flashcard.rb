@@ -1,6 +1,7 @@
 class Flashcard < ActiveRecord::Base
   attr_accessible :answer, :date, :question, :source, :subject_id, :category_id, :from_csv, :subject, :category, :topic_id, :importance, :comprehension
   has_and_belongs_to_many :tags
+  has_and_belongs_to_many :tag_hierarchies
   
   def self.assign_tags_from_topics
   	Flashcard.all.each do |f|
@@ -15,14 +16,13 @@ class Flashcard < ActiveRecord::Base
   end
   
   def self.flashcard_topics_to_tag_hierarchies
-  	self.all.each {|th| th.delete}
   	Flashcard.all.each do |f|
   		tag_hierarchy = []
   		topic_chain = Topic.find(f.topic_id).topic_chain
   		topic_chain.each {|t| tag_hierarchy << Tag.where(:name => Topic.find(t).topic).first.id }
-  		th = self.where(:tag_ids => tag_hierarchy.join(",")).first
+  		th = [TagHierarchy.where(:tag_ids => tag_hierarchy.join(",")).first]
   		if th.nil?
-  			th = self.new(:tag_ids => tag_hierarchy.join(","))
+  			th = [TagHierarchy.new(:tag_ids => tag_hierarchy.join(","))]
   		end
   		f.tag_hierarchies = th
   	end
@@ -37,6 +37,9 @@ class Flashcard < ActiveRecord::Base
 		tag_ids = []
 		self.tags.each {|tag| tag_ids << tag.id }
 		json << "t: [" + tag_ids.join(",") + "],\n"
+		tag_hierarchies = []
+		self.tag_hierarchies.each {|th| tag_hierarchies << th.id}
+		json << "h: [" + tag_hierarchies.join(",") + "],\n"
 		json << "u: true,\n"
 		json << "c: false,\n"
 		json << "l: false\n"

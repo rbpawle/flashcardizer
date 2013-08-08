@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808194955) do
+ActiveRecord::Schema.define(:version => 20130808205031) do
 
   create_table "categories", :force => true do |t|
     t.string   "subject"
@@ -43,6 +43,14 @@ ActiveRecord::Schema.define(:version => 20130808194955) do
     t.integer  "importance"
     t.integer  "comprehension"
   end
+
+  create_table "flashcards_tag_hierarchies", :id => false, :force => true do |t|
+    t.integer "flashcard_id"
+    t.integer "tag_hierarchy_id"
+  end
+
+  add_index "flashcards_tag_hierarchies", ["flashcard_id", "tag_hierarchy_id"], :name => "flashcard_tag_hierarchy_index"
+  add_index "flashcards_tag_hierarchies", ["tag_hierarchy_id"], :name => "index_flashcards_tag_hierarchies_on_tag_hierarchy_id"
 
   create_table "flashcards_tags", :id => false, :force => true do |t|
     t.integer "flashcard_id"

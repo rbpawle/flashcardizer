@@ -43,3 +43,118 @@ Migrating to CreateTagHierarchies (20130808194955)
   [1m[35m (0.0ms)[0m  PRAGMA index_list("tags")
   [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("topics")[0m
 Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to CreateFlashcards (20130604175420)
+Migrating to CreateFlashcardCsvs (20130604181139)
+Migrating to Subject (20130604192714)
+Migrating to Category (20130604192726)
+Migrating to RemoveSubjectandCategoryFromFlashcard (20130604193114)
+Migrating to AddIdsToFlashcard (20130604193152)
+Migrating to CreateSubjects (20130604193512)
+Migrating to CreateCategories (20130604193523)
+Migrating to AddFromCsvToFlashcard (20130605121918)
+Migrating to AddSubjectAndCategoryToFlashcard (20130605175230)
+Migrating to CreateTopics (20130611141127)
+Migrating to AddTopicsToFlashcard (20130611142251)
+Migrating to RenameTopicParent (20130611155022)
+Migrating to AddImportanceAndComprehensionToFlashcard (20130612162313)
+Migrating to AddLevelToTopic (20130613135152)
+Migrating to CreateTags (20130628150335)
+Migrating to CreateFlashcardsTagsTable (20130628150445)
+Migrating to AddParentTagIdsToTag (20130630213156)
+Migrating to AddChildTagIdsToTag (20130701010047)
+Migrating to ChangeParentIdsToParentIdInTags (20130701200641)
+Migrating to RemoveParentChildFromTag (20130711172726)
+Migrating to CreateTagHierarchies (20130808194955)
+Migrating to CreateFlashcardsTagHierarchiesTable (20130808205031)
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "flashcards_tag_hierarchies" ("flashcard_id" integer, "tag_hierarchies_id" integer) 
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to CreateFlashcards (20130604175420)
+Migrating to CreateFlashcardCsvs (20130604181139)
+Migrating to Subject (20130604192714)
+Migrating to Category (20130604192726)
+Migrating to RemoveSubjectandCategoryFromFlashcard (20130604193114)
+Migrating to AddIdsToFlashcard (20130604193152)
+Migrating to CreateSubjects (20130604193512)
+Migrating to CreateCategories (20130604193523)
+Migrating to AddFromCsvToFlashcard (20130605121918)
+Migrating to AddSubjectAndCategoryToFlashcard (20130605175230)
+Migrating to CreateTopics (20130611141127)
+Migrating to AddTopicsToFlashcard (20130611142251)
+Migrating to RenameTopicParent (20130611155022)
+Migrating to AddImportanceAndComprehensionToFlashcard (20130612162313)
+Migrating to AddLevelToTopic (20130613135152)
+Migrating to CreateTags (20130628150335)
+Migrating to CreateFlashcardsTagsTable (20130628150445)
+Migrating to AddParentTagIdsToTag (20130630213156)
+Migrating to AddChildTagIdsToTag (20130701010047)
+Migrating to ChangeParentIdsToParentIdInTags (20130701200641)
+Migrating to RemoveParentChildFromTag (20130711172726)
+Migrating to CreateTagHierarchies (20130808194955)
+Migrating to CreateFlashcardsTagHierarchiesTable (20130808205031)
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "flashcards_tag_hierarchies" ("flashcard_id" integer, "tag_hierarchies_id" integer) 
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("flashcards_tag_hierarchies")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "flashcard_tag_hierarchy_index" ON "flashcards_tag_hierarchies" ("flashcard_id", "tag_hierarchy_id")
+SQLite3::SQLException: table flashcards_tag_hierarchies has no column named tag_hierarchy_id: CREATE  INDEX "flashcard_tag_hierarchy_index" ON "flashcards_tag_hierarchies" ("flashcard_id", "tag_hierarchy_id")
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+Connecting to database specified by database.yml
+  [1m[36m (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+Migrating to CreateFlashcards (20130604175420)
+Migrating to CreateFlashcardCsvs (20130604181139)
+Migrating to Subject (20130604192714)
+Migrating to Category (20130604192726)
+Migrating to RemoveSubjectandCategoryFromFlashcard (20130604193114)
+Migrating to AddIdsToFlashcard (20130604193152)
+Migrating to CreateSubjects (20130604193512)
+Migrating to CreateCategories (20130604193523)
+Migrating to AddFromCsvToFlashcard (20130605121918)
+Migrating to AddSubjectAndCategoryToFlashcard (20130605175230)
+Migrating to CreateTopics (20130611141127)
+Migrating to AddTopicsToFlashcard (20130611142251)
+Migrating to RenameTopicParent (20130611155022)
+Migrating to AddImportanceAndComprehensionToFlashcard (20130612162313)
+Migrating to AddLevelToTopic (20130613135152)
+Migrating to CreateTags (20130628150335)
+Migrating to CreateFlashcardsTagsTable (20130628150445)
+Migrating to AddParentTagIdsToTag (20130630213156)
+Migrating to AddChildTagIdsToTag (20130701010047)
+Migrating to ChangeParentIdsToParentIdInTags (20130701200641)
+Migrating to RemoveParentChildFromTag (20130711172726)
+Migrating to CreateTagHierarchies (20130808194955)
+Migrating to CreateFlashcardsTagHierarchiesTable (20130808205031)
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "flashcards_tag_hierarchies" ("flashcard_id" integer, "tag_hierarchy_id" integer) 
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("flashcards_tag_hierarchies")[0m
+  [1m[35m (0.1ms)[0m  CREATE INDEX "flashcard_tag_hierarchy_index" ON "flashcards_tag_hierarchies" ("flashcard_id", "tag_hierarchy_id")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("flashcards_tag_hierarchies")[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_info('flashcard_tag_hierarchy_index')
+  [1m[36m (0.1ms)[0m  [1mCREATE INDEX "index_flashcards_tag_hierarchies_on_tag_hierarchy_id" ON "flashcards_tag_hierarchies" ("tag_hierarchy_id")[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130808205031')
+  [1m[36m (155.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  select sqlite_version(*)
+  [1m[36m (0.1ms)[0m  [1mSELECT "schema_migrations"."version" FROM "schema_migrations" [0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_list("categories")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("flashcard_csvs")[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_list("flashcards")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("flashcards_tag_hierarchies")[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_info('index_flashcards_tag_hierarchies_on_tag_hierarchy_id')
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_info('flashcard_tag_hierarchy_index')[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_list("flashcards_tags")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_info('index_flashcards_tags_on_tag_id')[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_info('index_flashcards_tags_on_flashcard_id_and_tag_id')
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("parent_tags")[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_list("subjects")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("tag_hierarchies")[0m
+  [1m[35m (0.0ms)[0m  PRAGMA index_list("tags")
+  [1m[36m (0.0ms)[0m  [1mPRAGMA index_list("topics")[0m
+Connecting to database specified by database.yml
+Connecting to database specified by database.yml
