@@ -7,6 +7,35 @@ function navBarClicked(tab) {
 function showTab(tab) {
 	$("#tabs").children().hide();
 	$(tab).show();
+	switch(tab) {
+	case "#update_tab":
+		showAllTags();
+		break;
+	case "#flashcards_tab":
+		showAllTags();
+		break;
+	}
+}
+
+function tagClicked(tag_id) {
+	switch(getCurrentTabId()) {
+	case "flashcards_tab":
+		tagClickedOnFlashcardsTab(tag_id);
+		break;
+	case "update_tab":
+		tagClickedOnUpdateTab(tag_id);
+		break;
+	}
+}
+
+function getCurrentTabId() {
+	id = '';
+	$.each($("#tabs").children(), function(i,div) {
+		if($(div).is(":visible") && $(div).hasClass('tab')) {
+			id = $(div).attr('id')
+		}
+	});
+	return id;
 }
 
 //json interface for flashcards and tags
@@ -260,7 +289,6 @@ function showTab(tab) {
 			}
 		});
 		this_ratio = parseFloat(flashcard_count) / Math.sqrt(parseFloat(flashcard_ids.length));
-		console.log(this_ratio);
 		return parseInt(80.0 + 20.0 * this_ratio);
 	}
 	

@@ -4,17 +4,13 @@ $(document).ready(function() {
 	showAllTags();
 });
 
-function tagClicked(tag_id) {
-	if(tagIsSelected(tag_id)) {
-		setTagUnselected(tag_id);
+function showAnswerButtonPressed() {
+	if($("#flashcard_answer").is(":visible")) {
+		hideAnswerAndSource();
 	}
 	else {
-		setTagSelected(tag_id);
+		showAnswerAndSource();
 	}
-	var selected_tag_ids = getSelectedTagIds();
-	showSelectedTags(selected_tag_ids);
-	showAssociatedTags();
-	showNextFlashcard();
 }
 
 /**second tier**/
@@ -25,7 +21,31 @@ function showNextFlashcard() {
 }
 
 function showAllTags() {
+	$("#tags").show();
 	showAssociatedTags([]);
+}
+
+function hideAnswerAndSource() {
+	$("#flashcard_answer").hide();
+	$("#flashcard_source").hide();
+}
+
+function showAnswerAndSource() {
+	$("#flashcard_answer").show();
+	$("#flashcard_source").show();
+}
+
+function tagClickedOnFlashcardsTab(tag_id) {
+	if(tagIsSelected(tag_id)) {
+		setTagUnselected(tag_id);
+	}
+	else {
+		setTagSelected(tag_id);
+	}
+	var selected_tag_ids = getSelectedTagIds();
+	showSelectedTags(selected_tag_ids);
+	showAssociatedTags();
+	showNextFlashcard();
 }
 
 /**third tier**/

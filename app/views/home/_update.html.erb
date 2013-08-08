@@ -1,0 +1,20 @@
+<%= form_for :@new_flashcard, :id => "update_form", :url => "/create", :method => "post" do |f| %>
+<div class="flashcard">
+	<div class="question_area">
+		<div class="question_prefix">YOUR QUESTION:</div>
+		<div id="question"><%= f.text_field :question %></div>
+	</div>
+	<div class="answer_area">
+		<div class="answer_prefix">YOUR PURPORTED ANSWER:</div>
+		<div id="answer"><%= f.text_field :answer %></div>
+	</div>
+	<div class="source_area">
+		<div class="source_prefix">WERE ONE YOU QUESTION IT, THEY WOULD CONSULT:</div>
+		<div id="source"><%= f.text_field :source %></div>
+	</div>
+	<div class="flashcard_meta">
+		<span id="flashcard_date"><%= f.text_field :date %></span>
+		<span id="flashcard_tags"><%= f.hidden_field :tags %></span>
+	</div>
+</div>
+<% end %>

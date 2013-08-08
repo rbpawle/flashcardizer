@@ -135,6 +135,10 @@ $tag_window_height:16em;
 	height:3em;
 }
 
+.selected_tags, .available_tags{
+	overflow:hidden;
+}
+
 //content of flashcards********************************
 
 .flashcard {
@@ -143,6 +147,7 @@ $tag_window_height:16em;
 	border-radius:0.25em;
 	padding:1em;
 	margin:1em;
+	overflow:hidden;
 }
 
 .topics_description, .flashcard_date {
@@ -157,7 +162,7 @@ $tag_window_height:16em;
 	border-radius:0.5em;
 }
 
-.question_prefix, .answer_prefix, .source_prefix{
+.question_prefix, .answer_prefix, .source_prefix, .tag_field_header{
 	margin-left:2em;
 	margin-bottom:0.5em;
 	margin-top:0.5em;
