@@ -25,11 +25,19 @@ class TagHierarchy < ActiveRecord::Base
 		return tag_id_array
   end
 	
-	def to_json
-		json = '"' + self.id.to_s + "\": {\n"
-		json << "t:[" + self.tag_id_array.join(",") + "]\n"
-		json << "}"
-		return json
+	def self.to_json
+		hash = {}
+		self.all.each do |th|
+			hierarchy = th.tag_id_array
+			h = hash #do you see what I did here?
+			hierarchy.each_index do |i|
+				if h[hierarchy[i]].nil?
+					h[hierarchy[i]] = {}
+				end
+				h = h[hierarchy[i]] #now check that out. BOOM
+			end
+		end
+		return hash.to_s.gsub("=>",":")
 	end
   
 end

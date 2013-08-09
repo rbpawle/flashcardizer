@@ -92,7 +92,7 @@ function getCurrentTabId() {
 				tags.push(parseInt(tag_id));
 			}
 		});
-		return alphabetizeTagIds(tags);
+		return _alphabetizeTagIds(tags);
 	}
 	function getQuestion(id){
 		if(id) {
@@ -238,7 +238,7 @@ function getCurrentTabId() {
 		}
 		return candidates;
 	}
-	//the below method finds all flashcards among candidates. if no candidates are unseen, it sets all candidates to unseen.
+	//_filterForAvailableFlashcardIds finds all flashcards among candidates. if no candidates are unseen, it sets all candidates to unseen.
 	function _filterForAvailableFlashcardIds(candidates) {
 		available_candidate_ids = [];
 		if (candidates.length != 0) {
@@ -255,51 +255,8 @@ function getCurrentTabId() {
 			flashcard['u'] = true;
 		});
 	}
-	function getAssociatedTagIds() {
-		var selected_tag_ids = getSelectedTagIds();
-		var associated_tag_ids = [];
-		if(selected_tag_ids.length == 0) {
-			$.each(_tags, function(tag_id, tag) {
-				associated_tag_ids.push(parseInt(tag_id));
-			});
-		}
-		else { //we get the intersection of all the selected tags' associated tags
-			var associated = _tags[selected_tag_ids[0]]['a'];
-			$.each(associated, function(tag_id, count){
-				associated_tag_ids.push(parseInt(tag_id));
-			});
-			for(var i = 1; i < selected_tag_ids.length; i++) {
-				$.each(_tags[selected_tag_ids[i]]['a'], function(tag_id, count) {
-					if(associated_tag_ids.indexOf(tag_id) == -1) {
-						associated_tag_ids = $.grep(associated_tag_ids, function(id) {
-							return id != tag_id;
-						});
-					}
-				});
-			}
-		}
-		return alphabetizeTagIds(associated_tag_ids);
-	}
-	function getTagFont(tag_id) {
-		flashcard_ids = _getFlashcardIdsWithTags(getSelectedTagIds());
-		flashcard_count = 0;
-		$.each(flashcard_ids, function(index, flashcard_id) {
-			if(_tags[tag_id]['f'].indexOf(flashcard_id) != -1) {
-				flashcard_count += 1;
-			}
-		});
-		this_ratio = parseFloat(flashcard_count) / Math.sqrt(parseFloat(flashcard_ids.length));
-		return parseInt(80.0 + 20.0 * this_ratio);
-	}
 	
-	function averageFlashcardRatioForSelectedTags() {
-		n_selected_tags = parseFloat(getAssociatedTagIds().length);
-		if(n_selected_tags == 0.0) {
-			n_selected_tags = getAllTagIds().length;
-		}
-		return n_selected_tags / parseFloat(getNumberOfFlashcardsUnderCurrentTags());
-	}
-	function alphabetizeTagIds(tag_ids) {
+	function _alphabetizeTagIds(tag_ids) {
 		var tag_ids_by_name = {};
 		var tag_names = [];
 		$.each(tag_ids, function(index, id) {
@@ -313,76 +270,55 @@ function getCurrentTabId() {
 		}
 		return sorted_tag_ids;
 	}
-	function getNTagsToShow(n_to_show) {
-		var unique_tag_sequences = _getUniqueTagSequencesAmongFlashcardsUnderSelectedTags();
-		var tag_frequencies = {};
-		var singly_occuring_tags = [];
-		selected_tag_ids = getSelectedTagIds();
-		$.each(unique_tag_sequences, function(index, this_tag_sequence){
-			if(this_tag_sequence.length == 1 && selected_tag_ids.indexOf(this_tag_sequence[0]) == -1) {
-				singly_occuring_tags.push(this_tag_sequence[0]);
-			} else {
-				$.each(this_tag_sequence, function(index, tag_id) {
-					if(tag_frequencies.hasOwnProperty(tag_id)) {
-						tag_frequencies[tag_id]++;
-					}
-					else {
-						tag_frequencies[tag_id] = 1;
-					}
-				});
-			}
-		});
-		tag_frequencies = hashKeysSortedByValue(tag_frequencies);
-		tags_to_show = singly_occuring_tags; //we want to include all singly-occuring tags so they don't get lost
-		i = tags_to_show.length;
-		$.each(tag_frequencies, function(index, tag_id) {
-			tag_id = tag_id;
-			if(i < n_to_show && tags_to_show.indexOf(tag_id) == -1 && selected_tag_ids.indexOf(tag_id) == -1) {
-				tags_to_show.push(tag_id);
-				i++;
-			}
-		});
-		tags_to_show = alphabetizeTagIds(tags_to_show);
-		return tags_to_show;
-	}
-	function _getUniqueTagSequencesAmongFlashcardsUnderSelectedTags() {
-		var flashcard_ids = _getFlashcardIdsWithTags(getSelectedTagIds());
-		var unique_tag_hash = {};
-		$.each(flashcard_ids, function(index, flashcard_id) {
-			var tags = _flashcards[flashcard_id]['t'];
-			if(!unique_tag_hash.hasOwnProperty(tags)) {
-				unique_tag_hash[tags] = index;
-			}
-		});
-		unique_tag_sequences = [];
-		$.each(unique_tag_hash, function(tags, index) {
-			ids = tags.split(",");
-			tag_ids = [];
-			$.each(ids, function(index, id) {
-				tag_ids.push(parseInt(id));
-			});
-			unique_tag_sequences.push(tag_ids);
-		});
-		return unique_tag_sequences.sort(_arrayLengthComparatorDesc);
-	}
 	function _arrayLengthComparatorDesc(a,b){
 		if (a.length < b.length) return 1;
 		if (a.length > b.length) return -1;
 		return 0;
 	}
-	function hashKeysSortedByValue(hash) {
-		var tuples = [];
-		for (var key in hash) tuples.push([key, hash[key]]);
-		tuples.sort(function(a, b) {
-			a = a[1];
-			b = b[1];
-			return a > b ? -1 : (a < b ? 1 : 0);
+	function getFlashcardTagHierarchies(flashcard_id) {
+		var tag_hierarchy_ids = _getFlashcardTagHierarchyTagIds(flashcard_id);
+		var tag_hierarchies = [];
+		$.each(tag_hierarchy_ids, function(i, hierarchy) {
+			var hierarchy = [];
+			$.each(hierarchy, function(j, tag_id) {
+				hierarchy.push(_tag_lookup[tag_id]);
+			});
+			tag_hierarchies.push(hierarchy);
 		});
-		values = [];
-		for (var i = 0; i < tuples.length; i++) {
-			values.push(parseInt(tuples[i][0])); //careful of non-int keys
+		return tag_hierarchies;
+	}
+	function getTopLevelTagIds() {
+		var top_tag_ids = Object.keys(_tag_hierarchy);
+		var top_tag_ids = _alphabetizeTagIds(top_tag_ids)
+		return top_tag_ids;
+	}
+	function getTagIdsUnderSelectedTags() {
+		var selected_tag_ids = getSelectedTagIds();
+		if(selected_tag_ids.length == 0) {
+			tag_ids = getTopLevelTagIds();
+		} else {
+			tag_ids = _findLowestTagsChildren(selected_tag_ids);
 		}
-		return values;
+		return tag_ids;
+	}
+	function _findLowestTagsChildren(tag_ids) {
+		h = _tag_hierarchy;
+		while(tag_ids.length > 0) {
+			var parent_tag_id = _findParentTagId(tag_ids, h);
+			var h = h[parent_tag_id];
+			var index = tag_ids.indexOf(parent_tag_id);
+			tag_ids.splice(index, 1);
+		}
+		return Object.keys(h);
+	}
+	function _findParentTagId(selected_tag_ids, sub_hierarchy) { //there should only be one tag_id that is a key to sub_hierarchy
+		var parent_tag_id = null;
+		$.each(selected_tag_ids, function(i, tag_id) {
+			if(sub_hierarchy[tag_id]) {
+				parent_tag_id = tag_id;
+			}
+		});
+		return parent_tag_id;
 	}
 	
 	window.getAnswer = getAnswer;
@@ -400,7 +336,6 @@ function getCurrentTabId() {
 	window.getTotalFlashcards = getTotalFlashcards;
 	window.getNextFlashcardId = getNextFlashcardId;
 	window.getTagName = getTagName;
-	window.getAssociatedTagIds = getAssociatedTagIds;
 	window.tagIsSelected = tagIsSelected;
 	window.setTagSelected = setTagSelected;
 	window.setTagUnselected = setTagUnselected;
@@ -408,12 +343,11 @@ function getCurrentTabId() {
 	window.getFlashcardTagIds = getFlashcardTagIds;
 	window.getNumberOfSeenFlashcardsUnderCurrentTags = getNumberOfSeenFlashcardsUnderCurrentTags;
 	window.getNumberOfFlashcardsUnderCurrentTags = getNumberOfFlashcardsUnderCurrentTags;
-	window.getTagFont = getTagFont;
-	window.alphabetizeTagIds = alphabetizeTagIds;
-	window.getNTagsToShow = getNTagsToShow;
+	window.getFlashcardTagHierarchies = getFlashcardTagHierarchies;
+	window.getTopLevelTagIds = getTopLevelTagIds;
+	window.getTagIdsUnderSelectedTags = getTagIdsUnderSelectedTags;
 	//test
-	window._getUniqueTagSequencesAmongFlashcardsUnderSelectedTags = _getUniqueTagSequencesAmongFlashcardsUnderSelectedTags;
-	window._getFlashcardIdsWithTags = _getFlashcardIdsWithTags;
+	window._findParentTagId = _findParentTagId;
 	//endtest
 	
 })(window);

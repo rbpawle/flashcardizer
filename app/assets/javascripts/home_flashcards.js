@@ -1,7 +1,7 @@
 /**first tier**/
 $(document).ready(function() {
 	showNextFlashcard();
-	showAllTags();
+	showAvailableTags();
 });
 
 function showAnswerButtonPressed() {
@@ -18,11 +18,6 @@ function showAnswerButtonPressed() {
 function showNextFlashcard() {
 	var flashcard_id = getNextFlashcardId();
 	showFlashcard(flashcard_id);
-}
-
-function showAllTags() {
-	$("#tags").show();
-	showAssociatedTags([]);
 }
 
 function hideAnswerAndSource() {
@@ -42,12 +37,10 @@ function tagClickedOnFlashcardsTab(tag_id) {
 	else {
 		setTagSelected(tag_id);
 	}
-	var selected_tag_ids = getSelectedTagIds();
-	showSelectedTags(selected_tag_ids);
-	showAssociatedTags();
+	showSelectedTags();
+	showAvailableTags();
 	showNextFlashcard();
 }
-
 /**third tier**/
 function showFlashcard(flashcard_id) {
 	setFlashcardAsCurrent(flashcard_id);
@@ -58,7 +51,8 @@ function showFlashcard(flashcard_id) {
 	showFlashcardTags(flashcard_id);
 }
 
-function showSelectedTags(selected_tag_ids) {
+function showSelectedTags() {
+	var selected_tag_ids = getSelectedTagIds();
 	html_to_add = "";
 	$.each(selected_tag_ids, function(index, tag_id) {
 		html_to_add = html_to_add + "<span class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</span>";
@@ -66,13 +60,11 @@ function showSelectedTags(selected_tag_ids) {
 	$("#selected_tags").html(html_to_add);
 }
 
-function showAssociatedTags(selected_tag_ids) {
-	var associated_tag_ids = getNTagsToShow(20);
+function showAvailableTags() {
+	var tag_ids = getTagIdsUnderSelectedTags();
 	html_to_add = "";
-	$.each(associated_tag_ids, function(index, tag_id) {
-		if(tagIsSelected(tag_id) == false) { //if this tag id is not selected
-			html_to_add = html_to_add + "<div class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\" style=\"font-size:" + getTagFont(tag_id) + "%\">" + getTagName(tag_id) + "</div>";
-		}
+	$.each(tag_ids, function(index, tag_id) {
+		html_to_add = html_to_add + "<div class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</div>";
 	});
 	$("#available_tags").html(html_to_add);
 }
