@@ -40,4 +40,19 @@ class TagHierarchy < ActiveRecord::Base
 		return hash.to_s.gsub("=>",":")
 	end
   
+  def self.tag_children_to_json
+  	sub_hierarchies = {}
+  	self.all.each do |th|
+  		hierarchy = th.tag_id_array
+  		hierarchy.each_index do |i|
+  			break if i + 1 == hierarchy.length 
+  			if sub_hierarchies[hierarchy[i]].nil?
+  				sub_hierarchies[hierarchy[i]] = []
+  			end
+  			sub_hierarchies[hierarchy[i]] << hierarchy[i + 1]
+  		end
+  	end
+  	return sub_hierarchies.to_s.gsub("=>",":")
+  end
+  
 end

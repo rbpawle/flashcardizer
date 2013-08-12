@@ -92,7 +92,7 @@ function getCurrentTabId() {
 				tags.push(parseInt(tag_id));
 			}
 		});
-		return _alphabetizeTagIds(tags);
+		return tags;
 	}
 	function getQuestion(id){
 		if(id) {
@@ -297,28 +297,26 @@ function getCurrentTabId() {
 		if(selected_tag_ids.length == 0) {
 			tag_ids = getTopLevelTagIds();
 		} else {
+			selected_tag_ids_sorted = 
 			tag_ids = _findLowestTagsChildren(selected_tag_ids);
 		}
 		return tag_ids;
 	}
-	function _findLowestTagsChildren(tag_ids) {
-		h = _tag_hierarchy;
+	function _sortByHierarchy(tag_ids) { //tag ids must be in an existing hierarchy
+		sorted = [];
 		while(tag_ids.length > 0) {
-			var parent_tag_id = _findParentTagId(tag_ids, h);
-			var h = h[parent_tag_id];
-			var index = tag_ids.indexOf(parent_tag_id);
-			tag_ids.splice(index, 1);
+			parent = _getParentTag(tag_ids)
+			sorted.push(parent);
+			tag_ids.splice(indexOf(parent), 1);
 		}
-		return Object.keys(h);
+		return sorted;
 	}
-	function _findParentTagId(selected_tag_ids, sub_hierarchy) { //there should only be one tag_id that is a key to sub_hierarchy
-		var parent_tag_id = null;
-		$.each(selected_tag_ids, function(i, tag_id) {
-			if(sub_hierarchy[tag_id]) {
-				parent_tag_id = tag_id;
-			}
-		});
-		return parent_tag_id;
+	function _findLowestTagsChildren(tag_ids) {
+		return _tag_children[tag_ids[tag_ids.length - 1]];
+	}
+	function _getParentTag(tag_ids) {
+		////////////working on this EOD 8/12/13
+		
 	}
 	
 	window.getAnswer = getAnswer;
@@ -347,7 +345,7 @@ function getCurrentTabId() {
 	window.getTopLevelTagIds = getTopLevelTagIds;
 	window.getTagIdsUnderSelectedTags = getTagIdsUnderSelectedTags;
 	//test
-	window._findParentTagId = _findParentTagId;
-	//endtest
+	window._getSubHierarchy = _getSubHierarchy;
+	//end test
 	
 })(window);
