@@ -2,19 +2,28 @@
 <div class="flashcard">
 	<div class="question_area">
 		<div class="question_prefix">YOUR QUESTION:</div>
-		<div id="question"><%= f.text_field :question %></div>
+		<div id="question_field"><%= f.text_field :question %></div>
 	</div>
 	<div class="answer_area">
 		<div class="answer_prefix">YOUR PURPORTED ANSWER:</div>
-		<div id="answer"><%= f.text_field :answer %></div>
+		<div id="answer_field"><%= f.text_field :answer %></div>
 	</div>
 	<div class="source_area">
-		<div class="source_prefix">WERE ONE YOU QUESTION IT, THEY WOULD CONSULT:</div>
-		<div id="source"><%= f.text_field :source %></div>
+		<div class="source_prefix">WERE ONE TO QUESTION IT, THEY WOULD CONSULT:</div>
+		<div id="source_field"><%= f.text_field :source %></div>
+	</div>
+	<div class="tags_area">
+		<div class="tags_prefix">THEY SHALL BE CATEGORIZED ACCORDING TO THE FOLLOWING HIERARCHIE(S):</div>
+		<div id="tags_field">
+			<%= f.fields_for :tags do |tag_f| %>
+				<%= tag_f.text_field :name %>
+			<% end %>
+		</div>
 	</div>
 	<div class="flashcard_meta">
 		<span id="flashcard_date"><%= f.text_field :date %></span>
 		<span id="flashcard_tags"><%= f.hidden_field :tags %></span>
 	</div>
+	<%= f.submit %>
 </div>
 <% end %>
