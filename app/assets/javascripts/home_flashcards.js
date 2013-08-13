@@ -38,7 +38,6 @@ function tagClickedOnFlashcardsTab(tag_id) {
 	}
 	else {
 		if(atBottomTag()){
-			console.log("at bottom tag");
 			setTagUnselected(getBottomTag());
 		}
 		setTagSelected(tag_id);
@@ -64,15 +63,6 @@ function showSelectedTags() {
 		html_to_add = html_to_add + "<span class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</span>";
 	});
 	$("#selected_tags").html(html_to_add);
-}
-
-function showAvailableTags() {
-	var tag_ids = getTagIdsUnderSelectedTags();
-	html_to_add = "";
-	$.each(tag_ids, function(index, tag_id) {
-		html_to_add = html_to_add + "<div class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</div>";
-	});
-	$("#available_tags").html(html_to_add);
 }
 
 function setTagsBelowTagUnselected(tag_id) {

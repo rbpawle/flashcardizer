@@ -10,9 +10,11 @@ function showTab(tab) {
 	switch(tab) {
 	case "#update_tab":
 		showAvailableTags();
+		$("#tags").show();
 		break;
 	case "#flashcards_tab":
 		showAvailableTags();
+		$("#tags").show();
 		break;
 	}
 }
@@ -27,7 +29,7 @@ function tagClicked(tag_id) {
 		break;
 	}
 }
-
+//second tier
 function getCurrentTabId() {
 	id = '';
 	$.each($("#tabs").children(), function(i,div) {
@@ -36,6 +38,15 @@ function getCurrentTabId() {
 		}
 	});
 	return id;
+}
+
+function showAvailableTags() {
+	var tag_ids = getTagIdsUnderSelectedTags();
+	html_to_add = "";
+	$.each(tag_ids, function(index, tag_id) {
+		html_to_add = html_to_add + "<div class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</div>";
+	});
+	$("#available_tags").html(html_to_add);
 }
 
 //json interface for flashcards and tags
@@ -355,8 +366,5 @@ function getCurrentTabId() {
 	window.getTagIdsUnderSelectedTags = getTagIdsUnderSelectedTags;
 	window.atBottomTag = atBottomTag;
 	window.getBottomTag = getBottomTag;
-	//test
-	window._getFlashcardIdsWithTags = _getFlashcardIdsWithTags;
-	//endtest
 	
 })(window);
