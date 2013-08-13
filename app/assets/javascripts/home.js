@@ -219,6 +219,8 @@ function getCurrentTabId() {
 				_setFlashcardsUnseen(all_candidates);
 				candidates = all_candidates;
 			}
+		} else {
+			candidates = [];
 		}
 		return candidates[Math.floor(Math.random()*candidates.length)]; //returns undefined if candidates is empty
 	}
@@ -305,10 +307,7 @@ function getCurrentTabId() {
 		} else {
 			var tag_ids = _tag_children[selected_tag_ids[selected_tag_ids.length - 1]];
 			if(tag_ids == undefined && selected_tag_ids.length > 1) {
-				_at_bottom_tag = true;
 				tag_ids = _tag_children[selected_tag_ids[selected_tag_ids.length - 2]];
-			} else {
-				_at_bottom_tag = false;
 			}
 		}
 		return tag_ids;
@@ -317,9 +316,15 @@ function getCurrentTabId() {
 		return _tag_children[tag_ids[tag_ids.length - 1]];
 	}
 	function atBottomTag() {
-		return _at_bottom_tag;
+		selected_tag_ids = getSelectedTagIds();
+		if(selected_tag_ids.length > 0 && _tag_children[selected_tag_ids[selected_tag_ids.length - 1]] == undefined) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	function getBottomTag() {
+		selected_tag_ids = getSelectedTagIds();
 		return selected_tag_ids[selected_tag_ids.length - 1];
 	}
 	
