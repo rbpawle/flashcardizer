@@ -19,6 +19,7 @@ class HomeController < ApplicationController
 		@json << ("var _tag_lookup = {\n" + name_to_tag_id_a.join(",\n") + "}\n").html_safe
 		@json << ("var _tag_hierarchy = " + TagHierarchy.to_json + "\n").html_safe
 		@json << ("var _tag_children = " + TagHierarchy.tag_children_to_json + "\n").html_safe
+		@json << ("var _at_bottom_tag = false;\n").html_safe
 		@new_flashcard = Flashcard.new
   end
   

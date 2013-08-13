@@ -35,6 +35,9 @@ function tagClickedOnFlashcardsTab(tag_id) {
 		setTagUnselected(tag_id);
 	}
 	else {
+		if(atBottomTag()){
+			setTagUnselected(getBottomTag());
+		}
 		setTagSelected(tag_id);
 	}
 	showSelectedTags();

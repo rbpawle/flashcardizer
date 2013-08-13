@@ -49,7 +49,7 @@ class TagHierarchy < ActiveRecord::Base
   			if sub_hierarchies[hierarchy[i]].nil?
   				sub_hierarchies[hierarchy[i]] = []
   			end
-  			sub_hierarchies[hierarchy[i]] << hierarchy[i + 1]
+  			sub_hierarchies[hierarchy[i]] << hierarchy[i + 1] if sub_hierarchies[hierarchy[i]].index(hierarchy[i + 1]).nil?
   		end
   	end
   	return sub_hierarchies.to_s.gsub("=>",":")

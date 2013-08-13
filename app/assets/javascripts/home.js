@@ -295,28 +295,27 @@ function getCurrentTabId() {
 	function getTagIdsUnderSelectedTags() {
 		var selected_tag_ids = getSelectedTagIds();
 		if(selected_tag_ids.length == 0) {
-			tag_ids = getTopLevelTagIds();
+			var tag_ids = getTopLevelTagIds();
 		} else {
-			selected_tag_ids_sorted = 
-			tag_ids = _findLowestTagsChildren(selected_tag_ids);
+			var tag_ids = _tag_children[selected_tag_ids[selected_tag_ids.length - 1]];
+			if(tag_ids == undefined && selected_tag_ids.length > 1) {
+				console.log("no children");
+				_at_bottom_tag = true;
+				tag_ids = _tag_children[selected_tag_ids[selected_tag_ids.length - 2]];
+			} else {
+				_at_bottom_tag = false;
+			}
 		}
 		return tag_ids;
-	}
-	function _sortByHierarchy(tag_ids) { //tag ids must be in an existing hierarchy
-		sorted = [];
-		while(tag_ids.length > 0) {
-			parent = _getParentTag(tag_ids)
-			sorted.push(parent);
-			tag_ids.splice(indexOf(parent), 1);
-		}
-		return sorted;
 	}
 	function _findLowestTagsChildren(tag_ids) {
 		return _tag_children[tag_ids[tag_ids.length - 1]];
 	}
-	function _getParentTag(tag_ids) {
-		////////////working on this EOD 8/12/13
-		
+	function atBottomTag() {
+		return _at_bottom_tag;
+	}
+	function getBottomTag() {
+		return selected_tag_ids[selected_tag_ids.length - 1];
 	}
 	
 	window.getAnswer = getAnswer;
@@ -344,8 +343,7 @@ function getCurrentTabId() {
 	window.getFlashcardTagHierarchies = getFlashcardTagHierarchies;
 	window.getTopLevelTagIds = getTopLevelTagIds;
 	window.getTagIdsUnderSelectedTags = getTagIdsUnderSelectedTags;
-	//test
-	window._getSubHierarchy = _getSubHierarchy;
-	//end test
+	window.atBottomTag = atBottomTag;
+	window.getBottomTag = getBottomTag;
 	
 })(window);
