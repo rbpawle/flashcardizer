@@ -18,6 +18,7 @@ function showAnswerButtonPressed() {
 function showNextFlashcard() {
 	var flashcard_id = getNextFlashcardId();
 	showFlashcard(flashcard_id);
+	hideAnswerAndSource();
 }
 
 function hideAnswerAndSource() {

@@ -9,10 +9,10 @@ function showTab(tab) {
 	$(tab).show();
 	switch(tab) {
 	case "#update_tab":
-		showAllTags();
+		showAvailableTags();
 		break;
 	case "#flashcards_tab":
-		showAllTags();
+		showAvailableTags();
 		break;
 	}
 }
@@ -147,12 +147,13 @@ function getCurrentTabId() {
 		_flashcards[id]['s'] = src;
 	}
 	function setFlashcardAsCurrent(id) {
-		//find current flashcard, set it as not current
+		//first, find current flashcard, set it as not current
 		$.each(_flashcards, function(flashcard_id, flashcard) {
 			if(flashcard['c']) {
 				flashcard['c'] = false;
 			}
 		});
+		//then, set this flashcard as the current flashcard
 		if(id) {
 			_flashcards[id]['c'] = true;
 			_flashcards[id]['u'] = false;
@@ -211,12 +212,12 @@ function getCurrentTabId() {
 	}
 	function getNextFlashcardId() {
 		var selected_tag_ids = getSelectedTagIds();
-		var candidates = _getFlashcardIdsWithTags(selected_tag_ids);
-		if(candidates.length != 0) {
-			candidates = _filterForAvailableFlashcardIds(candidates);
-			if(candidates.length == 0) { //all must be unseen here
-				_setFlashcardsUnseen(candidates);
-				candidates = _filterForAvailableFlashcardIds(candidates);
+		var all_candidates = _getFlashcardIdsWithTags(selected_tag_ids);
+		if(all_candidates.length != 0) {
+			var candidates = _filterForAvailableFlashcardIds(all_candidates);
+			if(candidates.length == 0) {
+				_setFlashcardsUnseen(all_candidates);
+				candidates = all_candidates;
 			}
 		}
 		return candidates[Math.floor(Math.random()*candidates.length)]; //returns undefined if candidates is empty
@@ -229,16 +230,22 @@ function getCurrentTabId() {
 			});
 		}
 		else {
-			$.each(_flashcards, function(flashcard_id, flashcard) {
-				var selected_tags_not_in_flashcard_tags = $.grep(tag_ids, function(el){return $.inArray(el, flashcard['t']) == -1}); //selected_tags_not_in_flashcard_tags is the list of tags that are selected, but not in the flashcard's tags. if it is empty, then all selected tags are in flashcard's tags and we want to show the flashcard.
-				if(selected_tags_not_in_flashcard_tags.length == 0) {
-					candidates.push(parseInt(flashcard_id));
+			flashcard_ids = Object.keys(_flashcards);
+			for(var i = 0; i < flashcard_ids.length; i++) {
+				all_selected_tags_in_flashcard = true;
+				for(var j = 0; j < tag_ids.length; j++) {
+					if(_flashcards[flashcard_ids[i]]['t'].indexOf(tag_ids[j]) == -1) {
+						all_selected_tags_in_flashcard = false;
+					}
 				}
-			});
+				if(all_selected_tags_in_flashcard) {
+					candidates.push(parseInt(flashcard_ids[i]));
+				}
+			}
 		}
 		return candidates;
 	}
-	//_filterForAvailableFlashcardIds finds all flashcards among candidates. if no candidates are unseen, it sets all candidates to unseen.
+	//_filterForAvailableFlashcardIds finds all unseen flashcards among candidates.
 	function _filterForAvailableFlashcardIds(candidates) {
 		available_candidate_ids = [];
 		if (candidates.length != 0) {
@@ -251,11 +258,10 @@ function getCurrentTabId() {
 		return available_candidate_ids;
 	}
 	function _setFlashcardsUnseen(candidates) {
-		$.each(_flashcards, function(flashcard_id, flashcard) {	
-			flashcard['u'] = true;
+		$.each(candidates, function(i, flashcard_id) {	
+			_flashcards[flashcard_id]['u'] = true;
 		});
 	}
-	
 	function _alphabetizeTagIds(tag_ids) {
 		var tag_ids_by_name = {};
 		var tag_names = [];
@@ -299,7 +305,6 @@ function getCurrentTabId() {
 		} else {
 			var tag_ids = _tag_children[selected_tag_ids[selected_tag_ids.length - 1]];
 			if(tag_ids == undefined && selected_tag_ids.length > 1) {
-				console.log("no children");
 				_at_bottom_tag = true;
 				tag_ids = _tag_children[selected_tag_ids[selected_tag_ids.length - 2]];
 			} else {
@@ -345,5 +350,8 @@ function getCurrentTabId() {
 	window.getTagIdsUnderSelectedTags = getTagIdsUnderSelectedTags;
 	window.atBottomTag = atBottomTag;
 	window.getBottomTag = getBottomTag;
+	//test
+	window._getFlashcardIdsWithTags = _getFlashcardIdsWithTags;
+	//endtest
 	
 })(window);
