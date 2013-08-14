@@ -56,15 +56,6 @@ function showFlashcard(flashcard_id) {
 	showFlashcardTags(flashcard_id);
 }
 
-function showSelectedTags() {
-	var selected_tag_ids = getSelectedTagIds();
-	html_to_add = "";
-	$.each(selected_tag_ids, function(index, tag_id) {
-		html_to_add = html_to_add + "<span class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</span>";
-	});
-	$("#selected_tags").html(html_to_add);
-}
-
 function setTagsBelowTagUnselected(tag_id) {
 	selected_tags = getSelectedTagIds();
 	we_are_below_tag = false;

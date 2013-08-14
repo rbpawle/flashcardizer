@@ -9,10 +9,12 @@ function showTab(tab) {
 	$(tab).show();
 	switch(tab) {
 	case "#update_tab":
+		setAllTagsUnselected();
 		showAvailableTags();
 		$("#tags").show();
 		break;
 	case "#flashcards_tab":
+		setAllTagsUnselected();
 		showAvailableTags();
 		$("#tags").show();
 		break;
@@ -47,6 +49,15 @@ function showAvailableTags() {
 		html_to_add = html_to_add + "<div class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</div>";
 	});
 	$("#available_tags").html(html_to_add);
+}
+
+function showSelectedTags() {
+	var selected_tag_ids = getSelectedTagIds();
+	html_to_add = "";
+	$.each(selected_tag_ids, function(index, tag_id) {
+		html_to_add = html_to_add + "<span class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</span>";
+	});
+	$("#selected_tags").html(html_to_add);
 }
 
 //json interface for flashcards and tags
@@ -338,6 +349,12 @@ function showAvailableTags() {
 		selected_tag_ids = getSelectedTagIds();
 		return selected_tag_ids[selected_tag_ids.length - 1];
 	}
+	function setAllTagsUnselected() {
+		selected_tag_ids = getSelectedTagIds();
+		for(var i = 0; i < selected_tag_ids.length; i++) {
+			setTagUnselected(selected_tag_ids[i]);
+		}
+	}
 	
 	window.getAnswer = getAnswer;
 	window.getSource = getSource;
@@ -366,5 +383,6 @@ function showAvailableTags() {
 	window.getTagIdsUnderSelectedTags = getTagIdsUnderSelectedTags;
 	window.atBottomTag = atBottomTag;
 	window.getBottomTag = getBottomTag;
+	window.setAllTagsUnselected = setAllTagsUnselected;
 	
 })(window);

@@ -83,7 +83,7 @@ body{
 	clear: both;
 }
 
-button{
+button, .button {
 	height:3em;
 	padding-left:2em;
 	padding-right:2em;
@@ -149,7 +149,7 @@ $tag_window_height:16em;
 	overflow:hidden;
 }
 
-.topics_description, .flashcard_date {
+.topics_description {
 	margin-left:3em;
 	margin-right:3em;
 }
@@ -161,7 +161,7 @@ $tag_window_height:16em;
 	border-radius:0.5em;
 }
 
-.question_prefix, .answer_prefix, .source_prefix, .tag_field_header{
+.question_prefix, .answer_prefix, .source_prefix, .tag_field_header, .tags_prefix, .tag_hierarchy_prefix, .date_prefix {
 	margin-left:2em;
 	margin-bottom:0.5em;
 	margin-top:0.5em;

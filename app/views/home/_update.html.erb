@@ -13,17 +13,19 @@
 		<div id="source_field"><%= f.text_field :source %></div>
 	</div>
 	<div class="tags_area">
-		<div class="tags_prefix">THEY SHALL BE CATEGORIZED ACCORDING TO THE FOLLOWING HIERARCHIE(S):</div>
+		<div class="tags_prefix">THIS QUESION SHALL BE CATEGORIZED ACCORDING TO THE FOLLOWING:</div>
 		<div id="tags_field">
-			<%= f.fields_for :tags do |tag_f| %>
-				<%= tag_f.text_field :name %>
-			<% end %>
+			<div class="tag_hierarchy_prefix">HIERARCHY 1:</div>
+			<div id="tag_hierarchy_0" class="current_tag_hierarchy">
+				<%= f.text_field :tags_0_0, :class => "tag current_tag_field", :onkeyup => "tagFieldKeyUp(0,0)" %>
+			</div>
 		</div>
 	</div>
-	<div class="flashcard_meta">
-		<span id="flashcard_date"><%= f.text_field :date %></span>
-		<span id="flashcard_tags"><%= f.hidden_field :tags %></span>
+	<div class="hierarchy_button"><button type="button" onclick="addHierarchyButtonClicked()">ADD HIERARCHY</button></div>
+	<div class="date_area">
+		<div class="date_prefix">THE DATE THIS CARD WILL BE CONSIDERED TO HAVE BEEN MADE ON:</div>
+		<div id="date_field"><%= f.text_field :date, :value => Date.today.to_s %></div>
 	</div>
-	<%= f.submit %>
+	<%= f.submit :class => "button" %>
 </div>
 <% end %>
