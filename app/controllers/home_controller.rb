@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+	respond_to :html, :json
+
   def home
 		flashcards_json_a = []
 		flashcard_ids = []
@@ -29,10 +31,30 @@ class HomeController < ApplicationController
   
   def create
   	p = params["@new_flashcard"]
-  	if p[:topic_level_0].empty? || p[:question].empty? || p[:answer].empty? || p[:date].empty?
-  		flash[:notice] = "Flashcard not saved! Something's missing..."
-  	else
+  	#if !p[:tags_0_0].empty? && !p[:question].empty? && !p[:answer].empty? && !p[:date].empty?
+  		tag_hierarchies = _parse_tag_hierarchies(p)
+  		File.open("hierarchies.txt", "w") {|f| f.puts tag_hierarchies.to_s }
+  		@flashcard = Flashcard.new
+  		render :json => {'message' => "saved."}, :success => :ok
+		#end
+  end
+  
+  def _parse_tag_hierarchies(p)
+		tag_hierarchies = {}
+		i = 0
+		while p[("tags_" + i.to_s + "_" + j.to_s).to_sym]
+			j = 0
+			while p[("tags_" + i.to_s + "_" + j.to_s).to_sym]
+				unless p[("tags_" + i.to_s + "_" + j.to_s).to_sym].empty?
+					if tag_hierarchies[i].nil?
+						tag_hierarchies[i] = {}
+					end
+					tag_hierarchies[i][j] = p[("tags_" + i.to_s + "_" + j.to_s).to_sym]
+				end
+				j += 1
+			end
+			i += 1
 		end
-		redirect_to "/"
+		return tag_hierarchies
   end
 end

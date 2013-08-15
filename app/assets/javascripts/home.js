@@ -1,5 +1,6 @@
 function navBarClicked(tab) {
 	resetUpdateFields();
+	removeNotice();
 	hideAnswerAndSource();
 	showTab(tab);
 }
@@ -58,6 +59,16 @@ function showSelectedTags() {
 		html_to_add = html_to_add + "<span class=\"tag\" onclick=\"tagClicked(" + tag_id + ")\">" + getTagName(tag_id) + "</span>";
 	});
 	$("#selected_tags").html(html_to_add);
+}
+
+function setNotice(notice) {
+	removeNotice();
+	notice = '<div class="notice">' + notice + "</div></br>";
+	$("#container").prepend(notice)
+}
+
+function removeNotice() {
+	$(".notice").remove();
 }
 
 //json interface for flashcards and tags
